@@ -3,13 +3,11 @@ package com.example.guru2project
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.AppOpsManager
-import android.app.AppOpsManager.MODE_ALLOWED
-import android.app.AppOpsManager.OPSTR_GET_USAGE_STATS
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Process.myUid
+import android.os.Process
 import android.provider.Settings
 
 class MainActivity : AppCompatActivity() {
@@ -32,11 +30,15 @@ class MainActivity : AppCompatActivity() {
             //화면 넘어감
         }
     }
+
+
     // 사용정보 접근 권한 허용 여부 확인
     @SuppressLint("NewApi")
     private fun checkForPermission(): Boolean {
         val appOps = getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-        val mode = appOps.checkOpNoThrow(OPSTR_GET_USAGE_STATS, myUid(), packageName)
-        return mode == MODE_ALLOWED
+        val mode = appOps.checkOpNoThrow(
+            AppOpsManager.OPSTR_GET_USAGE_STATS,
+            Process.myUid(), packageName)
+        return mode == AppOpsManager.MODE_ALLOWED
     }
 }

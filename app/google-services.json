@@ -7,57 +7,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:531332245030:android:72dd50d460f1f80ca9a8e7",
-        "android_client_info": {
-          "package_name": "com.example.Guru2Project"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "531332245030-rr2lk7ritijveumh3bqvkdud4dc48gqn.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.Guru2Project",
-            "certificate_hash": "cf1f7855358f1374bf7abf510d355a022c762b48"
-          }
-        },
-        {
-          "client_id": "531332245030-g36tq90gsubjs3vhfg5u967fdus9qgos.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDq3IBhTyZ8EQSn2xsBax3wZpH9_j-_9NU"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "531332245030-g36tq90gsubjs3vhfg5u967fdus9qgos.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:531332245030:android:8e055c7830f8ca32a9a8e7",
         "android_client_info": {
           "package_name": "com.example.guru2project"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "531332245030-o8o5g78ia5f3pqmvrhhriph1almoh4j6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.guru2project",
-            "certificate_hash": "cf1f7855358f1374bf7abf510d355a022c762b48"
-          }
-        },
         {
           "client_id": "531332245030-g36tq90gsubjs3vhfg5u967fdus9qgos.apps.googleusercontent.com",
           "client_type": 3
