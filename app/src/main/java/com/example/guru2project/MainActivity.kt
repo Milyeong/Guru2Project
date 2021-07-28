@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         //사용정보 접근 권한이 허용되지 않았을때
         if (!checkForPermission()) {
             var dlg = AlertDialog.Builder(this)
