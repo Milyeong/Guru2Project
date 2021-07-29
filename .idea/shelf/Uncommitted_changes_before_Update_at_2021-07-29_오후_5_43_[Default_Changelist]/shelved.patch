@@ -1,0 +1,139 @@
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    package=\"com.example.guru2project\">\r\n\r\n    <uses-permission\r\n        android:name=\"android.permission.PACKAGE_USAGE_STATS\"\r\n        tools:ignore=\"ProtectedPermissions\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.Guru2Project\">\r\n        <activity android:name=\".SignUpActivity\"></activity>\r\n        <activity android:name=\".LoadingActivity\" />\r\n        <activity android:name=\".SettingTimeActivity\" />\r\n        <activity android:name=\".MainActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 214ca6be54e2aaa64779a1daaab39ee5ff125198)
++++ app/src/main/AndroidManifest.xml	(date 1627495637663)
+@@ -6,6 +6,7 @@
+     <uses-permission
+         android:name="android.permission.PACKAGE_USAGE_STATS"
+         tools:ignore="ProtectedPermissions" />
++    <uses-permission android:name="android.permission.INTERNET" />
+ 
+     <application
+         android:allowBackup="true"
+Index: app/src/main/java/com/example/guru2project/SettingTimeActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.guru2project\r\n\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\n\r\nclass SettingTimeActivity : AppCompatActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_setting_time)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/guru2project/SettingTimeActivity.kt	(revision 214ca6be54e2aaa64779a1daaab39ee5ff125198)
++++ app/src/main/java/com/example/guru2project/SettingTimeActivity.kt	(date 1627499420511)
+@@ -2,10 +2,15 @@
+ 
+ import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
++import com.google.firebase.auth.ktx.auth
++import com.google.firebase.ktx.Firebase
+ 
+ class SettingTimeActivity : AppCompatActivity() {
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         setContentView(R.layout.activity_setting_time)
++
++        var auth = Firebase.auth
++       // auth.signOut()
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/guru2project/SignUpActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.guru2project\r\n\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.text.TextUtils\r\nimport android.view.View\r\nimport android.widget.Button\r\nimport android.widget.EditText\r\nimport android.widget.Toast\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.auth.ktx.auth\r\nimport com.google.firebase.ktx.Firebase\r\n\r\nclass SignUpActivity : AppCompatActivity() {\r\n\r\n    private lateinit var auth:FirebaseAuth\r\n    private lateinit var edtEmail: EditText\r\n    private lateinit var edtPw: EditText\r\n    private lateinit var edtName: EditText\r\n    private lateinit var btnBackToLogin: Button\r\n    private lateinit var btnSignUp: Button\r\n\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_sign_up)\r\n\r\n        auth = Firebase.auth\r\n        //auth = FirebaseAuth.getInstance() 이거랑 뭐가 다른거지?? -> 자바에서 쓰는 형태\r\n\r\n        // 뷰 연결\r\n        edtEmail = findViewById(R.id.edt_signUp_email)\r\n        edtPw = findViewById(R.id.edt_singUp_pw)\r\n        edtName = findViewById(R.id.edt_signUp_name)\r\n        btnBackToLogin = findViewById(R.id.btnBackToLogin)\r\n        btnSignUp = findViewById(R.id.btnSignUp)\r\n\r\n\r\n\r\n        btnSignUp.setOnClickListener(View.OnClickListener {\r\n            var email = edtEmail.text.toString()\r\n            var pw = edtPw.text.toString()\r\n            var name = edtName.text.toString()\r\n\r\n            if(TextUtils.isEmpty(email)) {\r\n                Toast.makeText(applicationContext,\"이메일을 입력해주세요.\", Toast.LENGTH_SHORT).show()\r\n                return@OnClickListener\r\n            }\r\n            if(TextUtils.isEmpty(pw)){\r\n                Toast.makeText(applicationContext,\"비밀번호를 입력해주세요.\", Toast.LENGTH_SHORT).show()\r\n                return@OnClickListener\r\n            }\r\n            if(TextUtils.isEmpty(name)){\r\n                Toast.makeText(applicationContext,\"이름을 입력해주세요.\", Toast.LENGTH_SHORT).show()\r\n                return@OnClickListener\r\n            }\r\n\r\n            //사용자 계정 생성\r\n            auth.createUserWithEmailAndPassword(email, pw).addOnCompleteListener(this) { task ->\r\n\r\n            }\r\n\r\n\r\n        })\r\n\r\n        btnBackToLogin.setOnClickListener{\r\n            val intent = Intent(this, MainActivity::class.java)\r\n            startActivity(intent)\r\n            finish()\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/guru2project/SignUpActivity.kt	(revision 214ca6be54e2aaa64779a1daaab39ee5ff125198)
++++ app/src/main/java/com/example/guru2project/SignUpActivity.kt	(date 1627499049647)
+@@ -1,20 +1,26 @@
+ package com.example.guru2project
+ 
++import android.content.ContentValues.TAG
+ import android.content.Intent
+ import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
+ import android.text.TextUtils
++import android.util.Log
+ import android.view.View
+ import android.widget.Button
+ import android.widget.EditText
+ import android.widget.Toast
+ import com.google.firebase.auth.FirebaseAuth
+ import com.google.firebase.auth.ktx.auth
++import com.google.firebase.database.DatabaseReference
++import com.google.firebase.database.ktx.database
+ import com.google.firebase.ktx.Firebase
+ 
+ class SignUpActivity : AppCompatActivity() {
+ 
+     private lateinit var auth:FirebaseAuth
++    private lateinit var database: DatabaseReference
++
+     private lateinit var edtEmail: EditText
+     private lateinit var edtPw: EditText
+     private lateinit var edtName: EditText
+@@ -27,7 +33,7 @@
+         setContentView(R.layout.activity_sign_up)
+ 
+         auth = Firebase.auth
+-        //auth = FirebaseAuth.getInstance() 이거랑 뭐가 다른거지?? -> 자바에서 쓰는 형태
++        database = Firebase.database.reference
+ 
+         // 뷰 연결
+         edtEmail = findViewById(R.id.edt_signUp_email)
+@@ -58,7 +64,20 @@
+ 
+             //사용자 계정 생성
+             auth.createUserWithEmailAndPassword(email, pw).addOnCompleteListener(this) { task ->
+-
++                if(task.isSuccessful) {
++                    // 계정 생성 및 로그인 성공.
++                    Log.d(TAG, "createUserWithEmail:success")
++                    val user = auth.currentUser
++                    val uid = user?.uid
++                    writeNewUser(uid,email,name)
++                    //updateUi(user)
++                    // phoneAuth로 이동하게 만들기.
++                }else {
++                    // 실패
++                    Log.w(TAG, "createUserEmail:failure", task.exception)
++                    Toast.makeText(baseContext, "회원가입에 문제가 생겼습니다.", Toast.LENGTH_SHORT).show()
++                    //updateUi(null)
++                }
+             }
+ 
+ 
+@@ -70,4 +89,10 @@
+             finish()
+         }
+     }
++
++    private fun writeNewUser(uid: String?, email: String, name: String){
++        if(uid != null) database.child("users").child(uid).child("name").setValue(name)
++    }
++
++
+ }
+\ No newline at end of file
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    id 'com.android.application'\r\n    id 'kotlin-android'\r\n    id 'com.google.gms.google-services'\r\n}\r\n\r\nandroid {\r\n    compileSdkVersion 30\r\n\r\n    defaultConfig {\r\n        applicationId \"com.example.guru2project\"\r\n        minSdkVersion 19\r\n        targetSdkVersion 30\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n    kotlinOptions {\r\n        jvmTarget = '1.8'\r\n    }\r\n}\r\n\r\ndependencies {\r\n\r\n    implementation \"org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version\"\r\n    implementation 'androidx.core:core-ktx:1.6.0'\r\n    implementation 'androidx.appcompat:appcompat:1.3.0'\r\n    implementation 'com.google.android.material:material:1.4.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'\r\n\r\n    // 파이어베이스\r\n    //implementation 'com.firebaseui:firebase-ui-auth:7.2.0'\r\n    // Import the BoM for the Firebase platform\r\n    implementation platform('com.google.firebase:firebase-bom:28.2.1')\r\n\r\n    // Declare the dependency for the Firebase Authentication library\r\n    // When using the BoM, you don't specify versions in Firebase library dependencies\r\n    implementation 'com.google.firebase:firebase-auth-ktx'\r\n    implementation 'com.google.firebase:firebase-analytics-ktx'\r\n    //implementation 'com.google.firebase:firebase-auth:21.0.1'\r\n\r\n    testImplementation 'junit:junit:4.+'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.3'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision 214ca6be54e2aaa64779a1daaab39ee5ff125198)
++++ app/build.gradle	(date 1627497014759)
+@@ -49,6 +49,7 @@
+     // When using the BoM, you don't specify versions in Firebase library dependencies
+     implementation 'com.google.firebase:firebase-auth-ktx'
+     implementation 'com.google.firebase:firebase-analytics-ktx'
++    implementation 'com.google.firebase:firebase-database-ktx:20.0.1'
+     //implementation 'com.google.firebase:firebase-auth:21.0.1'
+ 
+     testImplementation 'junit:junit:4.+'

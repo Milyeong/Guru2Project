@@ -1,20 +1,26 @@
 package com.example.guru2project
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var auth:FirebaseAuth
+    private lateinit var database: DatabaseReference
+
     private lateinit var edtEmail: EditText
     private lateinit var edtPw: EditText
     private lateinit var edtName: EditText
@@ -27,7 +33,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         auth = Firebase.auth
-        //auth = FirebaseAuth.getInstance() 이거랑 뭐가 다른거지?? -> 자바에서 쓰는 형태
+        database = Firebase.database.reference
 
         // 뷰 연결
         edtEmail = findViewById(R.id.edt_signUp_email)
@@ -58,7 +64,20 @@ class SignUpActivity : AppCompatActivity() {
 
             //사용자 계정 생성
             auth.createUserWithEmailAndPassword(email, pw).addOnCompleteListener(this) { task ->
-
+                if(task.isSuccessful) {
+                    // 계정 생성 및 로그인 성공.
+                    Log.d(TAG, "createUserWithEmail:success")
+                    val user = auth.currentUser
+                    val uid = user?.uid
+                    writeNewUser(uid,email,name)
+                    //updateUi(user)
+                    // phoneAuth로 이동하게 만들기.
+                }else {
+                    // 실패
+                    Log.w(TAG, "createUserEmail:failure", task.exception)
+                    Toast.makeText(baseContext, "회원가입에 문제가 생겼습니다.", Toast.LENGTH_SHORT).show()
+                    //updateUi(null)
+                }
             }
 
 
@@ -70,4 +89,10 @@ class SignUpActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    private fun writeNewUser(uid: String?, email: String, name: String){
+        if(uid != null) database.child("users").child(uid).child("name").setValue(name)
+    }
+
+
 }
