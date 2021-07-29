@@ -1,0 +1,163 @@
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    package=\"com.example.guru2project\">\r\n\r\n    <uses-permission android:name=\"android.permission.PACKAGE_USAGE_STATS\"\r\n        tools:ignore=\"ProtectedPermissions\"/>\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.Guru2Project\">\r\n        <activity android:name=\".LoadingActivity\"></activity>\r\n        <activity android:name=\".SettingTimeActivity\" />\r\n        <activity android:name=\".MainActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision c07fbff45d5a3eca32e30cf656fe40431bc822db)
++++ app/src/main/AndroidManifest.xml	(date 1627458461939)
+@@ -3,8 +3,9 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     package="com.example.guru2project">
+ 
+-    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+-        tools:ignore="ProtectedPermissions"/>
++    <uses-permission
++        android:name="android.permission.PACKAGE_USAGE_STATS"
++        tools:ignore="ProtectedPermissions" />
+ 
+     <application
+         android:allowBackup="true"
+@@ -13,7 +14,8 @@
+         android:roundIcon="@mipmap/ic_launcher_round"
+         android:supportsRtl="true"
+         android:theme="@style/Theme.Guru2Project">
+-        <activity android:name=".LoadingActivity"></activity>
++        <activity android:name=".JoinActivity"></activity>
++        <activity android:name=".LoadingActivity" />
+         <activity android:name=".SettingTimeActivity" />
+         <activity android:name=".MainActivity">
+             <intent-filter>
+Index: app/src/main/res/layout/activity_setting_time.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".SettingTimeActivity\">\r\n\r\n    <CalendarView\r\n        android:id=\"@+id/calendarView\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        tools:layout_editor_absoluteX=\"45dp\"\r\n        tools:layout_editor_absoluteY=\"117dp\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_setting_time.xml	(revision c07fbff45d5a3eca32e30cf656fe40431bc822db)
++++ app/src/main/res/layout/activity_setting_time.xml	(date 1627458611446)
+@@ -1,15 +1,31 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".SettingTimeActivity">
++    android:padding="16dp"
++    tools:context=".MainActivity">
+ 
+-    <CalendarView
+-        android:id="@+id/calendarView"
+-        android:layout_width="wrap_content"
++    <TextView
++        android:id="@+id/tv_timer1"
++        android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        tools:layout_editor_absoluteX="45dp"
+-        tools:layout_editor_absoluteY="117dp" />
+-</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
++        android:layout_marginTop="80dp"
++        android:background="@android:drawable/editbox_background"
++        android:drawableTop="@drawable/ic_time"
++        android:drawablePadding="16dp"
++        android:gravity="center"
++        android:hint="시간 설정"
++        android:textColor="#9AE39D"
++        android:textSize="32sp"
++        android:textStyle="bold" />
++
++
++</LinearLayout>
++
++
++
++
++
++
+Index: app/src/main/java/com/example/guru2project/SettingTimeActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.guru2project\r\n\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\n\r\nclass SettingTimeActivity : AppCompatActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_setting_time)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/guru2project/SettingTimeActivity.kt	(revision c07fbff45d5a3eca32e30cf656fe40431bc822db)
++++ app/src/main/java/com/example/guru2project/SettingTimeActivity.kt	(date 1627458611437)
+@@ -2,10 +2,20 @@
+ 
+ import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
++import android.widget.TextView
+ 
+-class SettingTimeActivity : AppCompatActivity() {
+-    override fun onCreate(savedInstanceState: Bundle?) {
++  class SettingTimeActivity : AppCompatActivity() {
++
++
++
++   override fun onCreate(savedInstanceState: Bundle?) {
++
++
+         super.onCreate(savedInstanceState)
+         setContentView(R.layout.activity_setting_time)
++
++
++
++
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/res/drawable/ic_time.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/ic_time.xml	(date 1627457714253)
++++ app/src/main/res/drawable/ic_time.xml	(date 1627457714253)
+@@ -0,0 +1,6 @@
++<vector android:height="64dp" android:tint="#9AE39D"
++    android:viewportHeight="24" android:viewportWidth="24"
++    android:width="64dp" xmlns:android="http://schemas.android.com/apk/res/android">
++    <path android:fillColor="@android:color/white" android:pathData="M11.99,2C6.47,2 2,6.48 2,12s4.47,10 9.99,10C17.52,22 22,17.52 22,12S17.52,2 11.99,2zM12,20c-4.42,0 -8,-3.58 -8,-8s3.58,-8 8,-8 8,3.58 8,8 -3.58,8 -8,8z"/>
++    <path android:fillColor="@android:color/white" android:pathData="M12.5,7H11v6l5.25,3.15 0.75,-1.23 -4.5,-2.67z"/>
++</vector>
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"CompilerConfiguration\">\r\n    <bytecodeTargetLevel target=\"15\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(revision c07fbff45d5a3eca32e30cf656fe40431bc822db)
++++ .idea/compiler.xml	(date 1627458521959)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="CompilerConfiguration">
+-    <bytecodeTargetLevel target="15" />
++    <bytecodeTargetLevel target="1.8" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_X\" default=\"false\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision c07fbff45d5a3eca32e30cf656fe40431bc822db)
++++ .idea/misc.xml	(date 1627449472575)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">

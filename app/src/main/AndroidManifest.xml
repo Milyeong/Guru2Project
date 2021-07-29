@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.guru2project">
 
-    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions"/>
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Guru2Project">
-        <activity android:name=".LoadingActivity"></activity>
+        <activity android:name=".LeftTime"></activity>
+        <activity android:name=".LeftTImeActivity" />
+        <activity android:name=".LeftTimeActivity" />
+        <activity android:name=".LoadingActivity" />
         <activity android:name=".SettingTimeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
