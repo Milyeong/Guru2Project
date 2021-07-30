@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PersonalInformation">
+
+    <TextView
+        android:id="@+id/userEmail"
+        android:layout_width="216dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="352dp"
+        android:layout_marginEnd="44dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/userCallNum2"
+        android:layout_width="216dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="288dp"
+        android:layout_marginEnd="44dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/userJoin2"
+        android:layout_width="216dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="228dp"
+        android:layout_marginEnd="44dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/userBirth2"
+        android:layout_width="216dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="172dp"
+        android:layout_marginEnd="44dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/userName2"
+        android:layout_width="216dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="44dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Birth"
+        android:layout_width="69dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="172dp"
+        android:lineSpacingExtra="24sp"
+        android:text="생년월일"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#37AA3C"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/CallNumber"
+        android:layout_width="69dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="288dp"
+        android:lineSpacingExtra="24sp"
+        android:text="전화번호"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#37AA3C"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Email"
+        android:layout_width="69dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="352dp"
+        android:lineSpacingExtra="24sp"
+        android:text="이메일"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#37AA3C"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/join"
+        android:layout_width="69dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="228dp"
+        android:lineSpacingExtra="24sp"
+        android:text="가입일"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#37AA3C"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="69dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="112dp"
+        android:lineSpacingExtra="24sp"
+        android:text="이름"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#37AA3C"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
