@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
@@ -72,6 +73,9 @@ class SignUpActivity : AppCompatActivity() {
                     writeNewUser(uid,email,name)
                     //updateUi(user)
                     // phoneAuth로 이동하게 만들기.
+                    val intent = Intent(this, PhoneAuthActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }else {
                     // 실패
                     Log.w(TAG, "createUserEmail:failure", task.exception)

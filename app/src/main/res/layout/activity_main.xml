@@ -16,7 +16,7 @@
         android:layout_marginBottom="16dp"
         android:ems="10"
         android:hint="이메일 입력"
-        android:inputType="number"
+        android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/login_pw"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.521"

@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         if (auth.currentUser != null) {
             val intent = Intent(this, SettingTimeActivity::class.java)
             startActivity(intent)
-            finish()
+           // finish()
         }
 
         // 뷰 연결

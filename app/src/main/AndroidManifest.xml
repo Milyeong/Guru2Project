@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Guru2Project">
-        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".PhoneAuthActivity"></activity>
+        <activity android:name=".SignUpActivity" />
         <activity android:name=".LoadingActivity" />
         <activity android:name=".SettingTimeActivity" />
         <activity android:name=".MainActivity">
