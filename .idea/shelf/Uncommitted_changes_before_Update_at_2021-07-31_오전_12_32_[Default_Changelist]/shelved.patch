@@ -1,0 +1,286 @@
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    package=\"com.example.guru2project\">\r\n\r\n    <uses-permission\r\n        android:name=\"android.permission.PACKAGE_USAGE_STATS\"\r\n        tools:ignore=\"ProtectedPermissions\" />\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.Guru2Project\">\r\n        <activity android:name=\".PhoneAuthActivity\"></activity>\r\n        <activity android:name=\".SignUpActivity\" />\r\n        <activity android:name=\".LoadingActivity\" />\r\n        <activity android:name=\".SettingTimeActivity\" />\r\n        <activity android:name=\".MainActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 86781f58cb7aa68a918d20bed4e5e29698edda70)
++++ app/src/main/AndroidManifest.xml	(date 1627647322070)
+@@ -10,12 +10,14 @@
+ 
+     <application
+         android:allowBackup="true"
++
+         android:icon="@mipmap/ic_launcher"
+         android:label="@string/app_name"
+         android:roundIcon="@mipmap/ic_launcher_round"
+         android:supportsRtl="true"
+         android:theme="@style/Theme.Guru2Project">
+-        <activity android:name=".PhoneAuthActivity"></activity>
++        <activity android:name=".GifticonListActivity"></activity>
++        <activity android:name=".PhoneAuthActivity" />
+         <activity android:name=".SignUpActivity" />
+         <activity android:name=".LoadingActivity" />
+         <activity android:name=".SettingTimeActivity" />
+Index: app/src/main/java/com/example/guru2project/PhoneAuthActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.guru2project\r\n\r\nimport android.content.ContentValues.TAG\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.text.TextUtils\r\nimport android.util.Log\r\nimport android.widget.Button\r\nimport android.widget.EditText\r\nimport android.widget.Toast\r\nimport com.google.firebase.FirebaseException\r\nimport com.google.firebase.FirebaseTooManyRequestsException\r\nimport com.google.firebase.auth.*\r\nimport com.google.firebase.auth.ktx.auth\r\nimport com.google.firebase.ktx.Firebase\r\nimport java.util.concurrent.TimeUnit\r\n\r\nclass PhoneAuthActivity : AppCompatActivity() {\r\n\r\n    private lateinit var auth: FirebaseAuth\r\n    private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks\r\n    private lateinit var storedVerificationId: String\r\n    private lateinit var resendToken: PhoneAuthProvider.ForceResendingToken\r\n\r\n    private lateinit var edtPhoneNum: EditText\r\n    private lateinit var edtCode: EditText\r\n    private lateinit var btnRequest: Button\r\n    private lateinit var btnPhoneAuth: Button\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_phone_auth)\r\n\r\n        edtPhoneNum = findViewById(R.id.edt_pA_phoneNum)\r\n        edtCode = findViewById(R.id.edt_pA_code)\r\n        btnRequest = findViewById(R.id.btn_pA_code)\r\n        btnPhoneAuth = findViewById(R.id.btn_pA_phoneAuth)\r\n\r\n        auth = Firebase.auth\r\n        auth.setLanguageCode(\"ko\")\r\n        // 콜백 함수 구현\r\n        callback()\r\n\r\n        // 사용자 전화로 인증 코드 전송\r\n        btnRequest.setOnClickListener{\r\n            var input = edtPhoneNum.text.toString()\r\n            if(TextUtils.isEmpty(input)){\r\n                Toast.makeText(baseContext, \"전화번호를 입력해주세요.\", Toast.LENGTH_SHORT).show()\r\n            }\r\n\r\n            var phoneNumber = \"+82\" + input.substring(1)\r\n            Log.d(TAG, \"??:${phoneNumber}\")\r\n            val options = PhoneAuthOptions.newBuilder(auth)\r\n                .setPhoneNumber(phoneNumber)       // Phone number to verify\r\n                .setTimeout(90L, TimeUnit.SECONDS) // Timeout and unit\r\n                .setActivity(this)                 // Activity (for callback binding)\r\n                .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks\r\n                .build()\r\n            PhoneAuthProvider.verifyPhoneNumber(options)\r\n        }\r\n\r\n        // 코드로 인증하기\r\n        btnPhoneAuth.setOnClickListener{\r\n            var code = edtCode.text.toString()\r\n            if(TextUtils.isEmpty(code)){\r\n                Toast.makeText(baseContext, \"인증코드를 입력해주세요.\", Toast.LENGTH_SHORT).show()\r\n            }\r\n            try {\r\n                val credential = PhoneAuthProvider.getCredential(storedVerificationId!!, code)\r\n                linkWithPhoneAuthCredential(credential)\r\n            }catch(e:Exception){\r\n                Toast.makeText(baseContext, \"인증번호요청이 필요합니다.\", Toast.LENGTH_SHORT).show()\r\n                Log.d(TAG, \"??:${e.message}\")\r\n            }\r\n        }\r\n    }\r\n\r\n    private fun callback(){\r\n        callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {\r\n\r\n            override fun onVerificationCompleted(credential: PhoneAuthCredential) {\r\n                // This callback will be invoked in two situations:\r\n                // 1 - Instant verification. In some cases the phone number can be instantly\r\n                //     verified without needing to send or enter a verification code.\r\n                // 2 - Auto-retrieval. On some devices Google Play services can automatically\r\n                //     detect the incoming verification SMS and perform verification without\r\n                //     user action.\r\n                Log.d(TAG, \"onVerificationCompleted:$credential\")\r\n                linkWithPhoneAuthCredential(credential)\r\n            }\r\n\r\n            override fun onVerificationFailed(e: FirebaseException) {\r\n                // This callback is invoked in an invalid request for verification is made,\r\n                // for instance if the the phone number format is not valid.\r\n                Log.w(TAG, \"onVerificationFailed\", e)\r\n\r\n                if (e is FirebaseAuthInvalidCredentialsException) {\r\n                    // Invalid request\r\n                } else if (e is FirebaseTooManyRequestsException) {\r\n                    // The SMS quota for the project has been exceeded\r\n                }\r\n\r\n                // Show a message and update the UI\r\n            }\r\n\r\n            override fun onCodeSent(\r\n                verificationId: String,\r\n                token: PhoneAuthProvider.ForceResendingToken\r\n            ) {\r\n                // The SMS verification code has been sent to the provided phone number, we\r\n                // now need to ask the user to enter the code and then construct a credential\r\n                // by combining the code with a verification ID.\r\n                Log.d(TAG, \"onCodeSent:$verificationId\")\r\n\r\n                // Save verification ID and resending token so we can use them later\r\n                storedVerificationId = verificationId\r\n                resendToken = token\r\n            }\r\n        }\r\n    }\r\n\r\n    private fun linkWithPhoneAuthCredential(credential: PhoneAuthCredential) {\r\n        auth.currentUser!!.linkWithCredential(credential)\r\n            .addOnCompleteListener(this) { task ->\r\n                if (task.isSuccessful) {\r\n                    // Sign in success, update UI with the signed-in user's information\r\n                    Log.d(TAG, \"signInWithCredential:success\")\r\n\r\n                    val user = task.result?.user\r\n\r\n                    val intent = Intent(this, MainActivity::class.java)\r\n                    startActivity(intent)\r\n                    finish()\r\n                } else {\r\n                    // Sign in failed, display a message and update the UI\r\n                    Log.w(TAG, \"signInWithCredential:failure\", task.exception)\r\n                    if (task.exception is FirebaseAuthInvalidCredentialsException) {\r\n                        // The verification code entered was invalid\r\n                    }\r\n                    // Update UI\r\n                }\r\n            }\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/guru2project/PhoneAuthActivity.kt	(revision 86781f58cb7aa68a918d20bed4e5e29698edda70)
++++ app/src/main/java/com/example/guru2project/PhoneAuthActivity.kt	(date 1627635171790)
+@@ -129,7 +129,7 @@
+ 
+                     val user = task.result?.user
+ 
+-                    val intent = Intent(this, MainActivity::class.java)
++                    val intent = Intent(this, SettingTimeActivity::class.java)
+                     startActivity(intent)
+                     finish()
+                 } else {
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    id 'com.android.application'\r\n    id 'kotlin-android'\r\n    id 'com.google.gms.google-services'\r\n}\r\n\r\nandroid {\r\n    compileSdkVersion 30\r\n\r\n    defaultConfig {\r\n        applicationId \"com.example.guru2project\"\r\n        minSdkVersion 19\r\n        targetSdkVersion 30\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n    kotlinOptions {\r\n        jvmTarget = '1.8'\r\n    }\r\n}\r\n\r\ndependencies {\r\n\r\n    implementation \"org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version\"\r\n    implementation 'androidx.core:core-ktx:1.6.0'\r\n    implementation 'androidx.appcompat:appcompat:1.3.0'\r\n    implementation 'com.google.android.material:material:1.4.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'\r\n\r\n    // 파이어베이스\r\n    //implementation 'com.firebaseui:firebase-ui-auth:7.2.0'\r\n    // Import the BoM for the Firebase platform\r\n    implementation platform('com.google.firebase:firebase-bom:28.2.1')\r\n\r\n    // Declare the dependency for the Firebase Authentication library\r\n    // When using the BoM, you don't specify versions in Firebase library dependencies\r\n    implementation 'com.google.firebase:firebase-auth-ktx'\r\n    implementation 'com.google.firebase:firebase-analytics-ktx'\r\n    implementation 'com.google.firebase:firebase-database-ktx:20.0.1'\r\n    //implementation 'com.google.firebase:firebase-auth:21.0.1'\r\n\r\n    testImplementation 'junit:junit:4.+'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.3'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision 86781f58cb7aa68a918d20bed4e5e29698edda70)
++++ app/build.gradle	(date 1627658000366)
+@@ -2,7 +2,9 @@
+     id 'com.android.application'
+     id 'kotlin-android'
+     id 'com.google.gms.google-services'
++    id 'kotlin-kapt'
+ }
++
+ 
+ android {
+     compileSdkVersion 30
+@@ -13,6 +15,7 @@
+         targetSdkVersion 30
+         versionCode 1
+         versionName "1.0"
++        multiDexEnabled true
+ 
+         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+     }
+@@ -50,9 +53,19 @@
+     implementation 'com.google.firebase:firebase-auth-ktx'
+     implementation 'com.google.firebase:firebase-analytics-ktx'
+     implementation 'com.google.firebase:firebase-database-ktx:20.0.1'
++    implementation 'com.google.firebase:firebase-storage-ktx:20.0.0'
++    implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
+     //implementation 'com.google.firebase:firebase-auth:21.0.1'
++    implementation 'androidx.multidex:multidex:2.0.1'
++
++    implementation 'com.github.bumptech.glide:glide:4.9.0'
++    kapt "android.arch.lifecycle:compiler:1.0.0"
++    kapt 'com.github.bumptech.glide:compiler:4.9.0'
++
++
+ 
+     testImplementation 'junit:junit:4.+'
+     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
++
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/guru2project/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.guru2project\r\n\r\nimport android.annotation.SuppressLint\r\nimport android.app.AlertDialog\r\nimport android.app.AppOpsManager\r\nimport android.content.ContentValues.TAG\r\nimport android.content.Context\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.os.Process\r\nimport android.provider.Settings\r\nimport android.text.TextUtils\r\nimport android.util.Log\r\nimport android.view.View\r\nimport android.widget.Button\r\nimport android.widget.EditText\r\nimport android.widget.Toast\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.auth.ktx.auth\r\nimport com.google.firebase.ktx.Firebase\r\n\r\nclass MainActivity : AppCompatActivity() {\r\n\r\n    private lateinit var auth: FirebaseAuth\r\n    private lateinit var input_email: EditText\r\n    private lateinit var input_pw: EditText\r\n    private lateinit var btnJoin: Button\r\n    private lateinit var btnlogin: Button\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_main)\r\n\r\n        //사용정보 접근 권한이 허용되지 않았을때\r\n        if (!checkForPermission()) {\r\n            var dlg = AlertDialog.Builder(this)\r\n            dlg.setTitle(\"권한이 필요한 이유\")\r\n            dlg.setMessage(\"어플 사용을 위해서 사용정보 접근 허용이 필요합니다.\")\r\n            dlg.setPositiveButton( \"확인\") { dialog, which ->\r\n                startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))\r\n            }\r\n            dlg.setNegativeButton(\"취소\", null)\r\n            dlg.show()\r\n\r\n        } else { //이미 권한이 허용된 경우\r\n            //화면 넘어감\r\n        }\r\n\r\n        // 사용자 로그인상태 확인\r\n        auth = Firebase.auth\r\n\r\n        // 사용자가 로그인되어 있다면(자동로그인) SettingTimeAcitivity로\r\n        if (auth.currentUser != null) {\r\n            val intent = Intent(this, SettingTimeActivity::class.java)\r\n            startActivity(intent)\r\n           // finish()\r\n        }\r\n\r\n        // 뷰 연결\r\n        input_email = findViewById(R.id.login_email)\r\n        input_pw = findViewById(R.id.login_pw)\r\n        btnJoin = findViewById(R.id.btnBackToSignUp)\r\n        btnlogin = findViewById(R.id.btnLogin)\r\n\r\n        btnJoin.setOnClickListener{\r\n            val intent = Intent(this, SignUpActivity::class.java)\r\n            startActivity(intent)\r\n            finish()\r\n        }\r\n\r\n        btnlogin.setOnClickListener(View.OnClickListener {\r\n            var email = input_email.text.toString()\r\n            var pw = input_pw.text.toString()\r\n\r\n            if(TextUtils.isEmpty(email)) {\r\n                Toast.makeText(applicationContext,\"이메일을 입력해주세요.\", Toast.LENGTH_SHORT).show()\r\n                return@OnClickListener\r\n            }\r\n            if(TextUtils.isEmpty(pw)){\r\n                Toast.makeText(applicationContext,\"비밀번호를 입력해주세요.\", Toast.LENGTH_SHORT).show()\r\n                return@OnClickListener\r\n            }\r\n\r\n            // 로그인 시도\r\n            auth.signInWithEmailAndPassword(email, pw).addOnCompleteListener(this) {task ->\r\n                if(task.isSuccessful) {\r\n                    Log.d(TAG, \"로그인:성공\")\r\n                    val user = auth.currentUser\r\n                    // updateUi(user) 함수 사용 - 만들어야 함.\r\n                } else {\r\n                    Log.w(TAG, \"로그인:실패\", task.exception)\r\n                    Toast.makeText(baseContext, \"인증에 실패했습니다.\", Toast.LENGTH_SHORT).show()\r\n                    //updateUI(null)\r\n                }\r\n\r\n            }\r\n\r\n        })\r\n\r\n\r\n\r\n\r\n\r\n    }\r\n\r\n\r\n    // 사용정보 접근 권한 허용 여부 확인\r\n    @SuppressLint(\"NewApi\")\r\n    private fun checkForPermission(): Boolean {\r\n        val appOps = getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager\r\n        val mode = appOps.checkOpNoThrow(\r\n            AppOpsManager.OPSTR_GET_USAGE_STATS,\r\n            Process.myUid(), packageName)\r\n        return mode == AppOpsManager.MODE_ALLOWED\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/guru2project/MainActivity.kt	(revision 86781f58cb7aa68a918d20bed4e5e29698edda70)
++++ app/src/main/java/com/example/guru2project/MainActivity.kt	(date 1627645640428)
+@@ -41,7 +41,7 @@
+                 startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+             }
+             dlg.setNegativeButton("취소", null)
+-            dlg.show()
++//            dlg.show()
+ 
+         } else { //이미 권한이 허용된 경우
+             //화면 넘어감
+@@ -52,9 +52,9 @@
+ 
+         // 사용자가 로그인되어 있다면(자동로그인) SettingTimeAcitivity로
+         if (auth.currentUser != null) {
+-            val intent = Intent(this, SettingTimeActivity::class.java)
++            val intent = Intent(this, GifticonListActivity::class.java)
+             startActivity(intent)
+-           // finish()
++           finish()
+         }
+ 
+         // 뷰 연결
+@@ -87,6 +87,10 @@
+                 if(task.isSuccessful) {
+                     Log.d(TAG, "로그인:성공")
+                     val user = auth.currentUser
++
++                    val intent = Intent(this, SettingTimeActivity::class.java)
++                    startActivity(intent)
++                    finish()
+                     // updateUi(user) 함수 사용 - 만들어야 함.
+                 } else {
+                     Log.w(TAG, "로그인:실패", task.exception)
+Index: app/src/main/res/layout/activity_gifticon_list.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_gifticon_list.xml	(date 1627634017800)
++++ app/src/main/res/layout/activity_gifticon_list.xml	(date 1627634017800)
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".GifticonListActivity">
++
++    <ScrollView
++        android:layout_width="match_parent"
++        android:layout_height="match_parent">
++
++        <LinearLayout
++            android:id="@+id/layout_gl"
++            android:layout_width="match_parent"
++            android:layout_height="match_parent"
++            android:orientation="vertical" />
++    </ScrollView>
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/guru2project/GifticonListActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/guru2project/GifticonListActivity.kt	(date 1627658434781)
++++ app/src/main/java/com/example/guru2project/GifticonListActivity.kt	(date 1627658434781)
+@@ -0,0 +1,117 @@
++package com.example.guru2project
++
++import android.content.ContentValues.TAG
++import android.net.Uri
++import android.nfc.Tag
++import androidx.appcompat.app.AppCompatActivity
++import android.os.Bundle
++import android.util.Log
++import android.widget.ImageView
++import android.widget.LinearLayout
++import android.widget.TextView
++import com.bumptech.glide.GenericTransitionOptions.with
++import com.bumptech.glide.Glide
++import com.bumptech.glide.Glide.with
++import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions.with
++import com.google.firebase.auth.ktx.auth
++import com.google.firebase.ktx.Firebase
++import com.google.firebase.storage.FirebaseStorage
++import com.google.firebase.storage.StorageReference
++import com.google.firebase.storage.ktx.storage
++import com.google.firebase.storage.ktx.component1
++import com.google.firebase.storage.ktx.component2
++
++class GifticonListActivity : AppCompatActivity() {
++
++    private lateinit var storage: FirebaseStorage
++    private lateinit var storageRef: StorageReference
++
++    private lateinit var layout: LinearLayout
++
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        setContentView(R.layout.activity_gifticon_list)
++
++        layout = findViewById(R.id.layout_gl)
++
++        storage = Firebase.storage
++        storageRef = storage.reference.child("gifticon")
++
++        getFolderList()
++
++        //var auth = Firebase.auth
++        //auth.signOut()
++
++        // 1. 파이어베이스에서 이미지 불러오기
++        // 먼저 gifticon 내 폴더 리스트 만들고, (함수 1)
++        // 그 폴더 리스트 내에 있는 이미지 리스트 만들고 ( 함수 2)
++        // 그 이미지 리스트 참고하여 레이아웃 리스트 만들기 (함수 3)
++        // 2. 불러온 이미지(url) 리스트에 저장하기
++        // 3. 리스트를 통해 새 레이아웃 아이템 만들고 기존 레이아웃에 더하기
++
++    }
++
++    // 리스트를 반환해야 겠지? 아님 전체 변수로 선언하는 것도 좋을 듯.
++    private fun getFolderList(){
++        var folderList: ArrayList<String> = ArrayList<String>()
++
++        storageRef.listAll()
++            .addOnSuccessListener { (items, prefixes) ->
++                prefixes.forEach { prefix ->
++                    getGifticonList(prefix.name)
++                }
++
++                items.forEach { item ->
++                    //getGifticonList(item.name)
++                }
++            }
++            .addOnFailureListener {
++                Log.d(TAG,"실패")
++            }
++    }
++
++    private fun getGifticonList(folderName: String) {
++        val gifticonRef = storage.reference.child("gifticon").child("$folderName")
++
++        gifticonRef.listAll()
++            .addOnSuccessListener { (items, prefixes) ->
++                prefixes.forEach{ prefix ->
++                    var layout_item: LinearLayout = LinearLayout(this)
++                    var tvName: TextView = TextView(this)
++                    tvName.text = "1" + prefix.name.toString()
++                    layout.addView(layout_item)
++                    layout_item.addView(tvName)
++                    Log.d(TAG,"1")
++                }
++
++                items.forEach{ item ->
++                    var layout_item: LinearLayout = LinearLayout(this)
++                    var tvName: TextView = TextView(this)
++                    tvName.text = "2" + item.toString() + "     " + item.name
++                    var image: ImageView = ImageView(this)
++                   // image.width = 200
++                    //image.height = 200
++                    var ref = storage.getReferenceFromUrl(item.toString())
++                    ref.downloadUrl.addOnCompleteListener(){
++                        if(it.isSuccessful){
++                            Glide.with(this /* context */)
++                                .load(it.result)
++                                .override(500,500)
++                                .into(image)
++                            layout_item.addView(image)
++                            layout.addView(layout_item)
++                        }
++                    }
++
++                    //image.setImageURI(Uri.parse(item.toString()))
++                    layout_item.addView(tvName)
++                    //layout_item.addView(image)
++                   // layout.addView(layout_item)
++                    Log.d(TAG,"2")
++                }
++            }
++            .addOnFailureListener{
++
++            }
++    }
++}
+\ No newline at end of file

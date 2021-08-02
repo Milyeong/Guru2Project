@@ -129,7 +129,7 @@ class PhoneAuthActivity : AppCompatActivity() {
 
                     val user = task.result?.user
 
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, SettingTimeActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {

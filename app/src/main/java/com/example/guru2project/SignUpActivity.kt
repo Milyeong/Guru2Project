@@ -95,7 +95,10 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun writeNewUser(uid: String?, email: String, name: String){
-        if(uid != null) database.child("users").child(uid).child("name").setValue(name)
+        if(uid != null) {
+            database.child("users").child(uid).child("name").setValue(name)
+            database.child("users").child(uid).child("mileage").setValue(0)
+        }
     }
 
 
