@@ -110,12 +110,13 @@ class GifticonDetailActivity : AppCompatActivity() {
                     val current = LocalDateTime.now()
                     val formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분")
                     val formatted = current.format(formatter)
-
+                    val date = current.toString().replace(".",":")
+                    // 구매기록 데이터베이스에 저장
                     val uid = user.uid
-                    database.child("gifticonRecord").child(uid).child("date").setValue(formatted)
-                    database.child("gifticonRecord").child(uid).child("giftName").setValue(giftName)
-                    database.child("gifticonRecord").child(uid).child("giftImage").setValue(giftImage)
-                    database.child("gifticonRecord").child(uid).child("cost").setValue(giftCost)
+                    database.child("gifticonRecord").child(uid).child(date).child("date").setValue(formatted)
+                    database.child("gifticonRecord").child(uid).child(date).child("giftName").setValue(giftName)
+                    database.child("gifticonRecord").child(uid).child(date).child("giftImage").setValue(giftImage)
+                    database.child("gifticonRecord").child(uid).child(date).child("cost").setValue(giftCost)
                     Toast.makeText(this, "구매되었습니다.", Toast.LENGTH_SHORT).show()
                 }
             }

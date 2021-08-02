@@ -34,6 +34,7 @@ class GifticonListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gifticon_list)
+        //supportActionBar.setTitle()
 
         gridView = findViewById(R.id.gridView_gl)
         tvMileage = findViewById(R.id.tv_gL_mileage)
@@ -56,12 +57,13 @@ class GifticonListActivity : AppCompatActivity() {
         }
         //auth.signOut()
 
-
+        // 판매 중인 기프티콘 데이터 가져오기.
         getView()
 
         adapter = GridAdapter(array)
         gridView.adapter = adapter
 
+        // gridView 클릭이벤트리스너
         gridView.setOnItemClickListener{ parent: AdapterView<*>, view: View, position: Int, id: Long ->
             val item: GifticonItem = parent.getItemAtPosition(position) as GifticonItem
             val intent = Intent(this, GifticonDetailActivity::class.java)
@@ -81,7 +83,7 @@ class GifticonListActivity : AppCompatActivity() {
 
     }
 
-    // 리스트를 반환해야 겠지? 아님 전체 변수로 선언하는 것도 좋을 듯.
+    // 판매 중인 기프티콘 데이터 받기.
     private fun getView(){
         val listListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -92,15 +94,13 @@ class GifticonListActivity : AppCompatActivity() {
                     for(giftSnapshot in storeSnapshot.children){
                         var data = giftSnapshot.getValue(GifticonItem::class.java)
                         Log.d(TAG,data?.image.toString())
+                        // 데이터가 있으면 array에 추가 및 어댑터 갱신
                         if(data != null) {
                             array.add(data)
                             adapter.notifyDataSetChanged()
                         }
                     }
                 }
-                // 어댑터에 리스트 넣기.
-                //adapter = GridAdapter(array)
-                //gridView.adapter = adapter
             }
 
             override fun onCancelled(error: DatabaseError) {

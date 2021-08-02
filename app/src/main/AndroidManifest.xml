@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Guru2Project"
         android:usesCleartextTraffic="true">
-        <activity android:name=".GifticonDetailActivity"></activity>
+        <activity android:name=".UserGifticonListActivity"></activity>
+        <activity android:name=".GifticonDetailActivity" />
         <activity android:name=".MileageUse" />
         <activity android:name=".PersonalInformation" />
         <activity android:name=".HoursOfUse" />
