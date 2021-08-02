@@ -1,0 +1,107 @@
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    package=\"com.example.guru2project\">\r\n\r\n    <uses-permission\r\n        android:name=\"android.permission.PACKAGE_USAGE_STATS\"\r\n        tools:ignore=\"ProtectedPermissions\" />\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.Guru2Project\"\r\n        android:usesCleartextTraffic=\"true\">\r\n        <activity android:name=\".GifticonDetailActivity\"></activity>\r\n        <activity android:name=\".MileageUse\" />\r\n        <activity android:name=\".PersonalInformation\" />\r\n        <activity android:name=\".HoursOfUse\" />\r\n        <activity\r\n            android:name=\".Menu\"\r\n            android:label=\"@string/title_activity_menu\"\r\n            android:theme=\"@style/Theme.Guru2Project.NoActionBar\" />\r\n        <activity android:name=\".PhoneAuthActivity\" />\r\n        <activity android:name=\".GifticonListActivity\" />\r\n        <activity android:name=\".SignUpActivity\" />\r\n        <activity android:name=\".LoadingActivity\" />\r\n        <activity android:name=\".SettingTimeActivity\" />\r\n        <activity android:name=\".MainActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision e8a15fd94f231e01b6d04f67a20e0e8bf68ad56f)
++++ app/src/main/AndroidManifest.xml	(date 1627895285439)
+@@ -20,10 +20,10 @@
+         <activity android:name=".MileageUse" />
+         <activity android:name=".PersonalInformation" />
+         <activity android:name=".HoursOfUse" />
+-        <activity
++       <!--<activity
+             android:name=".Menu"
+             android:label="@string/title_activity_menu"
+-            android:theme="@style/Theme.Guru2Project.NoActionBar" />
++            android:theme="@style/Theme.Guru2Project.NoActionBar" />-->
+         <activity android:name=".PhoneAuthActivity" />
+         <activity android:name=".GifticonListActivity" />
+         <activity android:name=".SignUpActivity" />
+Index: app/src/main/java/com/example/guru2project/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.guru2project\r\n\r\nimport android.annotation.SuppressLint\r\nimport android.app.AlertDialog\r\nimport android.app.AppOpsManager\r\nimport android.content.ContentValues.TAG\r\nimport android.content.Context\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.os.Process\r\nimport android.provider.Settings\r\nimport android.text.TextUtils\r\nimport android.util.Log\r\nimport android.view.View\r\nimport android.widget.Button\r\nimport android.widget.EditText\r\nimport android.widget.Toast\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.auth.ktx.auth\r\nimport com.google.firebase.ktx.Firebase\r\n\r\nclass MainActivity : AppCompatActivity() {\r\n\r\n    private lateinit var auth: FirebaseAuth\r\n    private lateinit var input_email: EditText\r\n    private lateinit var input_pw: EditText\r\n    private lateinit var btnJoin: Button\r\n    private lateinit var btnlogin: Button\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_main)\r\n\r\n        //사용정보 접근 권한이 허용되지 않았을때\r\n        if (!checkForPermission()) {\r\n            var dlg = AlertDialog.Builder(this)\r\n            dlg.setTitle(\"권한이 필요한 이유\")\r\n            dlg.setMessage(\"어플 사용을 위해서 사용정보 접근 허용이 필요합니다.\")\r\n            dlg.setPositiveButton( \"확인\") { dialog, which ->\r\n                startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))\r\n            }\r\n            dlg.setNegativeButton(\"취소\", null)\r\n//            dlg.show()\r\n\r\n        } else { //이미 권한이 허용된 경우\r\n            //화면 넘어감\r\n        }\r\n\r\n        // 사용자 로그인상태 확인\r\n        //auth = Firebase.auth\r\n\r\n        // 사용자가 로그인되어 있다면(자동로그인) SettingTimeAcitivity로\r\n       // if (auth.currentUser != null) {\r\n            val intent = Intent(this, GifticonListActivity::class.java)\r\n            startActivity(intent)\r\n           finish()\r\n        //}\r\n\r\n        // 뷰 연결\r\n        input_email = findViewById(R.id.login_email)\r\n        input_pw = findViewById(R.id.login_pw)\r\n        btnJoin = findViewById(R.id.btnBackToSignUp)\r\n        btnlogin = findViewById(R.id.btnLogin)\r\n\r\n        btnJoin.setOnClickListener{\r\n            val intent = Intent(this, SignUpActivity::class.java)\r\n            startActivity(intent)\r\n            finish()\r\n        }\r\n\r\n        btnlogin.setOnClickListener(View.OnClickListener {\r\n            var email = input_email.text.toString()\r\n            var pw = input_pw.text.toString()\r\n\r\n            if(TextUtils.isEmpty(email)) {\r\n                Toast.makeText(applicationContext,\"이메일을 입력해주세요.\", Toast.LENGTH_SHORT).show()\r\n                return@OnClickListener\r\n            }\r\n            if(TextUtils.isEmpty(pw)){\r\n                Toast.makeText(applicationContext,\"비밀번호를 입력해주세요.\", Toast.LENGTH_SHORT).show()\r\n                return@OnClickListener\r\n            }\r\n\r\n            // 로그인 시도\r\n            auth.signInWithEmailAndPassword(email, pw).addOnCompleteListener(this) {task ->\r\n                if(task.isSuccessful) {\r\n                    Log.d(TAG, \"로그인:성공\")\r\n                    val user = auth.currentUser\r\n\r\n                    val intent = Intent(this, SettingTimeActivity::class.java)\r\n                    startActivity(intent)\r\n                    finish()\r\n                    // updateUi(user) 함수 사용 - 만들어야 함.\r\n                } else {\r\n                    Log.w(TAG, \"로그인:실패\", task.exception)\r\n                    Toast.makeText(baseContext, \"인증에 실패했습니다.\", Toast.LENGTH_SHORT).show()\r\n                    //updateUI(null)\r\n                }\r\n\r\n            }\r\n\r\n        })\r\n\r\n\r\n\r\n\r\n\r\n    }\r\n\r\n\r\n    // 사용정보 접근 권한 허용 여부 확인\r\n    @SuppressLint(\"NewApi\")\r\n    private fun checkForPermission(): Boolean {\r\n        val appOps = getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager\r\n        val mode = appOps.checkOpNoThrow(\r\n            AppOpsManager.OPSTR_GET_USAGE_STATS,\r\n            Process.myUid(), packageName)\r\n        return mode == AppOpsManager.MODE_ALLOWED\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/guru2project/MainActivity.kt	(revision e8a15fd94f231e01b6d04f67a20e0e8bf68ad56f)
++++ app/src/main/java/com/example/guru2project/MainActivity.kt	(date 1627897314592)
+@@ -41,7 +41,7 @@
+                 startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+             }
+             dlg.setNegativeButton("취소", null)
+-//            dlg.show()
++            dlg.show()
+ 
+         } else { //이미 권한이 허용된 경우
+             //화면 넘어감
+@@ -52,9 +52,9 @@
+ 
+         // 사용자가 로그인되어 있다면(자동로그인) SettingTimeAcitivity로
+        // if (auth.currentUser != null) {
+-            val intent = Intent(this, GifticonListActivity::class.java)
++            /*val intent = Intent(this, GifticonListActivity::class.java)
+             startActivity(intent)
+-           finish()
++           finish()*/
+         //}
+ 
+         // 뷰 연결
+Index: .idea/runConfigurations.xml
+===================================================================
+--- .idea/runConfigurations.xml	(revision e8a15fd94f231e01b6d04f67a20e0e8bf68ad56f)
++++ .idea/runConfigurations.xml	(revision e8a15fd94f231e01b6d04f67a20e0e8bf68ad56f)
+@@ -1,10 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="RunConfigurationProducerService">
+-    <option name="ignoredProducers">
+-      <set>
+-        <option value="com.android.tools.idea.compose.preview.runconfiguration.ComposePreviewRunConfigurationProducer" />
+-      </set>
+-    </option>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_11\" default=\"true\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision e8a15fd94f231e01b6d04f67a20e0e8bf68ad56f)
++++ .idea/misc.xml	(date 1627894719293)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"CompilerConfiguration\">\r\n    <bytecodeTargetLevel target=\"11\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(revision e8a15fd94f231e01b6d04f67a20e0e8bf68ad56f)
++++ .idea/compiler.xml	(date 1627894719318)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="CompilerConfiguration">
+-    <bytecodeTargetLevel target="11" />
++    <bytecodeTargetLevel target="15" />
+   </component>
+ </project>
+\ No newline at end of file
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_2021-07-31__12_32__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Update_at_2021-07-31__12_32__Default_Changelist_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_2021-07-28__2_15__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Update_at_2021-07-28__2_15__Default_Changelist_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_2021-07-29__5_43__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Update_at_2021-07-29__5_43__Default_Changelist_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_2021-07-28__4_50__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Update_at_2021-07-28__4_50__Default_Changelist_.xml
