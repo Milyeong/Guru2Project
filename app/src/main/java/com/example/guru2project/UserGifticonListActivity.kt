@@ -1,6 +1,7 @@
 package com.example.guru2project
 
 import android.content.ContentValues
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -17,12 +18,16 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import org.w3c.dom.Text
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class UserGifticonListActivity : AppCompatActivity() {
 
     private lateinit var userGiftRecordRef : DatabaseReference
     private var recordArray = ArrayList<GifticonRecordItem>()
     private lateinit var adapter: UserGiftListAdapter
+   // private var exDate : String = "" // 기프티콘 만료일
 
     private lateinit var listView : ListView
 
@@ -46,6 +51,19 @@ class UserGifticonListActivity : AppCompatActivity() {
 
         adapter = UserGiftListAdapter(recordArray)
         listView.adapter = adapter
+
+        listView.setOnItemClickListener{ parent: AdapterView<*>, view: View, position: Int, id: Long ->
+            val item: GifticonRecordItem = parent.getItemAtPosition(position) as GifticonRecordItem
+            val intent = Intent(this, UserGifticonDetailActivity::class.java)
+            var tVDate = view.findViewById<TextView>(R.id.tv_ugli_date)
+            intent.putExtra("giftName", item.giftName)
+            intent.putExtra("cost", item.cost)
+            intent.putExtra("giftImage",item.giftImage)
+            intent.putExtra("date",tVDate.text)
+            startActivity(intent)
+
+            //Toast.makeText(this, item.title, Toast.LENGTH_SHORT).show()
+        }
 
     }
 
@@ -98,14 +116,23 @@ class UserGifticonListActivity : AppCompatActivity() {
             }
 
             var item = list.get(position)
-            var giftName = item.giftName + " " + item.cost + "원"
-            var dateArray = item.date.split(" ")
 
+            // 기프티콘 이름 설정
+            var giftName = item.giftName + " " + item.cost + "원"
             var tvName: TextView? = view?.findViewById<TextView>(R.id.tv_ugli_giftName)
             if(tvName != null) tvName.text = giftName
 
+            // 기프티콘 만료일 설정 - 임의로 구매일로부터 3달 후로 설정.
+            var dateArray = item.date.split(" ")
+            var format = SimpleDateFormat("yyyy-MM-dd")
+            var calendar = Calendar.getInstance()
+            calendar.set(dateArray[0].replace("년","").toInt(), dateArray[1].replace("월","").toInt(), dateArray[2].replace("일","").toInt())
+            calendar.add(Calendar.MONTH,+3)
+            var exDate = format.format(calendar.time)
+
             var tvDate: TextView? = view?.findViewById<TextView>(R.id.tv_ugli_date)
-            if(tvDate!= null) tvDate.text = dateArray[0] + dateArray[1] + dateArray[2] + " 구매"
+            if(tvDate!= null) tvDate.text = exDate
+            //if(tvDate!= null) tvDate.text = dateArray[0] + dateArray[1] + dateArray[2] + "구매"
 
             return view
 

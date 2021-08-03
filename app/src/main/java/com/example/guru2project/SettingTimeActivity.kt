@@ -27,9 +27,9 @@ class SettingTimeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting_time)
 
-        hourSpinner = findViewById(R.id.hour_spinner)
-        minuteSpinner = findViewById(R.id.minute_spinner)
-        btnTimeSet = findViewById(R.id.btnSetTime)
+        //hourSpinner = findViewById(R.id.hour_spinner)
+        //minuteSpinner = findViewById(R.id.minute_spinner)
+        //btnTimeSet = findViewById(R.id.btnSetTime)
 
         //hourSpinner.setSelection(0) 원하는 포지션 이동(나중에 추가)
 

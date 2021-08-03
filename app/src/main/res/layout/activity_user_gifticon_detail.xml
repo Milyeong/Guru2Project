@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserGifticonDetailActivity">
+
+    <ImageView
+        android:id="@+id/imageView_ugd"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_image_not_supported_24" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ugd_name"
+        app:srcCompat="@drawable/barcode" />
+
+    <TextView
+        android:id="@+id/tv_ugd_name"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="기프티콘 이름"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView_ugd"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_ugd" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="교환처"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView_ugd"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <TextView
+        android:id="@+id/tv_ugd_usePlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="장소"
+        android:textAlignment="textEnd"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_ugd"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="유효기간"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/textView9"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <TextView
+        android:id="@+id/tv_ugd_expiration_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="기간"
+        android:textAlignment="textEnd"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_ugd_usePlace"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ugd_usePlace" />
+</androidx.constraintlayout.widget.ConstraintLayout>

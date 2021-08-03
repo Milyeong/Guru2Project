@@ -58,6 +58,7 @@ class GifticonDetailActivity : AppCompatActivity() {
         imageView = findViewById(R.id.imageView_gd)
         btnBuy = findViewById(R.id.btn_gd_buy)
 
+        // 파이어베이스 auth 불러오기.
         var auth = Firebase.auth
         database = Firebase.database.reference
 
