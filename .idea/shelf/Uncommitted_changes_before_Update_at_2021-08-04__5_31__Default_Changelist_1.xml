@@ -1,0 +1,24 @@
+<changelist name="Uncommitted_changes_before_Update_at_2021-08-04_오전_5_31_[Default_Changelist]1" date="1628022720714" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2021-08-04_오전_5_31_[Default_Changelist]1/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 2021-08-04 오전 5:31 [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable-v24/image_main.PNG" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2021-08-04_오전_5_31_[Default_Changelist]1/image_main.PNG" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable-v24/image_timeimage.jpg" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2021-08-04_오전_5_31_[Default_Changelist]1/image_timeimage.jpg" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable-v24/image_information.PNG" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2021-08-04_오전_5_31_[Default_Changelist]1/image_information.PNG" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/src/main/res/drawable-v24/image_lefttime.jpg" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable-v24/image_lefttime.jpg" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2021-08-04_오전_5_31_[Default_Changelist]1/image_lefttime.jpg" />
+  </binary>
+</changelist>

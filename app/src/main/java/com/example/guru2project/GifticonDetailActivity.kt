@@ -118,6 +118,7 @@ class GifticonDetailActivity : AppCompatActivity() {
                     database.child("gifticonRecord").child(uid).child(date).child("giftName").setValue(giftName)
                     database.child("gifticonRecord").child(uid).child(date).child("giftImage").setValue(giftImage)
                     database.child("gifticonRecord").child(uid).child(date).child("cost").setValue(giftCost)
+                    database.child("gifticonRecord").child(uid).child(date).child("leftMileage").setValue(balance)
                     Toast.makeText(this, "구매되었습니다.", Toast.LENGTH_SHORT).show()
                 }
             }

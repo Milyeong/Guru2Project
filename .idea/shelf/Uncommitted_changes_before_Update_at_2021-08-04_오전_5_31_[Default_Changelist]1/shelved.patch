@@ -1,0 +1,134 @@
+Index: app/src/main/res/layout/activity_personal_information.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@drawable/image_joinbackground\"\r\n    tools:context=\".PersonalInformation\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/userName2\"\r\n        android:layout_width=\"216dp\"\r\n        android:layout_height=\"24dp\"\r\n        android:layout_marginTop=\"92dp\"\r\n        android:layout_marginEnd=\"44dp\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/userEmail\"\r\n        android:layout_width=\"216dp\"\r\n        android:layout_height=\"24dp\"\r\n        android:layout_marginTop=\"332dp\"\r\n        android:layout_marginEnd=\"44dp\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/userCallNum2\"\r\n        android:layout_width=\"216dp\"\r\n        android:layout_height=\"24dp\"\r\n        android:layout_marginTop=\"268dp\"\r\n        android:layout_marginEnd=\"44dp\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/userJoin2\"\r\n        android:layout_width=\"216dp\"\r\n        android:layout_height=\"24dp\"\r\n        android:layout_marginTop=\"208dp\"\r\n        android:layout_marginEnd=\"44dp\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/userBirth2\"\r\n        android:layout_width=\"216dp\"\r\n        android:layout_height=\"24dp\"\r\n        android:layout_marginTop=\"152dp\"\r\n        android:layout_marginEnd=\"44dp\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/CallNumber\"\r\n        android:layout_width=\"69dp\"\r\n        android:layout_height=\"27dp\"\r\n        android:layout_marginStart=\"48dp\"\r\n        android:layout_marginTop=\"268dp\"\r\n        android:fontFamily=\"@font/hangul_font\"\r\n        android:lineSpacingExtra=\"24sp\"\r\n        android:text=\"전화번호\"\r\n        android:textAlignment=\"center\"\r\n        android:textAllCaps=\"true\"\r\n        android:textColor=\"#37AA3C\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/Email\"\r\n        android:layout_width=\"69dp\"\r\n        android:layout_height=\"27dp\"\r\n        android:layout_marginStart=\"48dp\"\r\n        android:layout_marginTop=\"332dp\"\r\n        android:fontFamily=\"@font/hangul_font\"\r\n        android:lineSpacingExtra=\"24sp\"\r\n        android:text=\"이메일\"\r\n        android:textAlignment=\"center\"\r\n        android:textAllCaps=\"true\"\r\n        android:textColor=\"#37AA3C\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/join\"\r\n        android:layout_width=\"69dp\"\r\n        android:layout_height=\"27dp\"\r\n        android:layout_marginStart=\"48dp\"\r\n        android:layout_marginTop=\"208dp\"\r\n        android:fontFamily=\"@font/hangul_font\"\r\n        android:lineSpacingExtra=\"24sp\"\r\n        android:text=\"가입일\"\r\n        android:textAlignment=\"center\"\r\n        android:textAllCaps=\"true\"\r\n        android:textColor=\"#37AA3C\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/name\"\r\n        android:layout_width=\"69dp\"\r\n        android:layout_height=\"27dp\"\r\n        android:layout_marginStart=\"48dp\"\r\n        android:layout_marginTop=\"92dp\"\r\n        android:fontFamily=\"@font/hangul_font\"\r\n        android:lineSpacingExtra=\"24sp\"\r\n        android:text=\"이름\"\r\n        android:textAlignment=\"center\"\r\n        android:textAllCaps=\"true\"\r\n        android:textColor=\"#37AA3C\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/Birth\"\r\n        android:layout_width=\"69dp\"\r\n        android:layout_height=\"27dp\"\r\n        android:layout_marginStart=\"48dp\"\r\n        android:layout_marginTop=\"152dp\"\r\n        android:fontFamily=\"@font/hangul_font\"\r\n        android:lineSpacingExtra=\"24sp\"\r\n        android:text=\"생년월일\"\r\n        android:textAlignment=\"center\"\r\n        android:textAllCaps=\"true\"\r\n        android:textColor=\"#37AA3C\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_personal_information.xml	(revision 61d101e0923c20d0c1fe0f026da00375a5f09bcf)
++++ app/src/main/res/layout/activity_personal_information.xml	(date 1628022550669)
+@@ -4,7 +4,6 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="@drawable/image_joinbackground"
+     tools:context=".PersonalInformation">
+ 
+     <TextView
+@@ -137,4 +136,14 @@
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
++    <ImageView
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="14dp"
++        android:src="@drawable/image_information"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.0"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/CallNumber" />
++
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_left_time.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@drawable/image_lefttime\"\r\n    tools:context=\".LeftTime\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/LeftTImeText\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"116dp\"\r\n        android:layout_marginTop=\"88dp\"\r\n        android:layout_marginEnd=\"116dp\"\r\n        android:fontFamily=\"@font/hangul_font\"\r\n        android:text=\"남은 시간\"\r\n        android:textColor=\"#9AE39D\"\r\n        android:textSize=\"36sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.486\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_left_time.xml	(revision 61d101e0923c20d0c1fe0f026da00375a5f09bcf)
++++ app/src/main/res/layout/activity_left_time.xml	(date 1628022680083)
+@@ -4,9 +4,20 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="@drawable/image_lefttime"
+     tools:context=".LeftTime">
+ 
++    <ImageView
++        android:layout_width="296dp"
++        android:layout_height="341dp"
++        android:layout_marginStart="100dp"
++        android:layout_marginTop="177dp"
++        android:layout_marginEnd="100dp"
++        android:src="@drawable/image_lefttime"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.611"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/LeftTImeText" />
++
+     <TextView
+         android:id="@+id/LeftTImeText"
+         android:layout_width="wrap_content"
+@@ -23,4 +34,6 @@
+         app:layout_constraintHorizontal_bias="0.486"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
++
++
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_phone_auth.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@drawable/image_joinbackground\"\r\n    tools:context=\".PhoneAuthActivity\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"16dp\"\r\n        android:layout_marginTop=\"16dp\"\r\n        android:text=\"본인인증\"\r\n        android:fontFamily=\"@font/hangul_font\"\r\n        android:textAppearance=\"@style/TextAppearance.AppCompat.Large\"\r\n        android:textSize=\"32sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/edt_pA_phoneNum\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"20dp\"\r\n        android:layout_marginTop=\"10dp\"\r\n        android:layout_marginEnd=\"20dp\"\r\n        android:ems=\"10\"\r\n        android:hint=\"예시: 01011112222\"\r\n        android:fontFamily=\"@font/hangul_font\"\r\n        android:inputType=\"phone\"\r\n        app:layout_constraintEnd_toStartOf=\"@+id/btn_pA_code\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView5\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/btn_pA_code\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginEnd=\"20dp\"\r\n        android:text=\"인증번호요청\"\r\n        android:fontFamily=\"@font/hangul_font\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/edt_pA_phoneNum\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/edt_pA_phoneNum\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView5\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"20dp\"\r\n        android:layout_marginTop=\"24dp\"\r\n        android:text=\"휴대전화번호 \"\r\n        android:fontFamily=\"@font/hangul_font\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView6\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"20dp\"\r\n        android:layout_marginTop=\"40dp\"\r\n        android:text=\"인증 번호 입력\"\r\n        android:fontFamily=\"@font/hangul_font\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/edt_pA_phoneNum\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/edt_pA_code\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"20dp\"\r\n        android:layout_marginTop=\"10dp\"\r\n        android:layout_marginEnd=\"20dp\"\r\n        android:ems=\"10\"\r\n        android:inputType=\"number\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView6\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/btn_pA_phoneAuth\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"50dp\"\r\n        android:text=\"인증하기\"\r\n        android:fontFamily=\"@font/hangul_font\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/edt_pA_code\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_phone_auth.xml	(revision 61d101e0923c20d0c1fe0f026da00375a5f09bcf)
++++ app/src/main/res/layout/activity_phone_auth.xml	(date 1628022550659)
+@@ -4,7 +4,6 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="@drawable/image_joinbackground"
+     tools:context=".PhoneAuthActivity">
+ 
+     <TextView
+@@ -91,4 +90,15 @@
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/edt_pA_code" />
++
++
++    <ImageView
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="14dp"
++        android:src="@drawable/image_information"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/edt_pA_code" />
++
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_sign_up.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    android:paddingLeft=\"20dp\"\r\n    android:paddingTop=\"50dp\"\r\n    android:paddingEnd=\"20dp\"\r\n    android:paddingRight=\"20dp\"\r\n    android:background=\"@drawable/image_joinbackground\"\r\n    tools:context=\".SignUpActivity\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"horizontal\"\r\n        android:paddingBottom=\"20dp\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/textView2\"\r\n            android:layout_width=\"80sp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"이메일\"\r\n            android:fontFamily=\"@font/hangul_font\"/>\r\n\r\n        <EditText\r\n            android:id=\"@+id/edt_signUp_email\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:ems=\"10\"\r\n            android:inputType=\"textEmailAddress\" />\r\n    </LinearLayout>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"horizontal\"\r\n        android:paddingBottom=\"20dp\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/textView3\"\r\n            android:layout_width=\"80sp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"비밀번호\"\r\n            android:fontFamily=\"@font/hangul_font\"/>\r\n\r\n        <EditText\r\n            android:id=\"@+id/edt_singUp_pw\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:ems=\"10\"\r\n            android:inputType=\"textPassword\" />\r\n    </LinearLayout>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"horizontal\"\r\n        android:paddingBottom=\"10dp\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/textView4\"\r\n            android:layout_width=\"80sp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"닉네임\"\r\n            android:fontFamily=\"@font/hangul_font\"/>\r\n\r\n        <EditText\r\n            android:id=\"@+id/edt_signUp_name\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:ems=\"10\"\r\n            android:inputType=\"textPersonName\" />\r\n    </LinearLayout>\r\n\r\n    <Button\r\n        android:id=\"@+id/btnSignUp\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"회원가입\"\r\n        android:fontFamily=\"@font/hangul_font\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        tools:layout_editor_absoluteY=\"306dp\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/btnBackToLogin\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"로그인화면으로 돌아가기\"\r\n        android:fontFamily=\"@font/hangul_font\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/btnSignUp\" />\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_sign_up.xml	(revision 61d101e0923c20d0c1fe0f026da00375a5f09bcf)
++++ app/src/main/res/layout/activity_sign_up.xml	(date 1627980179158)
+@@ -9,7 +9,6 @@
+     android:paddingTop="50dp"
+     android:paddingEnd="20dp"
+     android:paddingRight="20dp"
+-    android:background="@drawable/image_joinbackground"
+     tools:context=".SignUpActivity">
+ 
+     <LinearLayout
+@@ -95,4 +94,9 @@
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
+ 
++    <ImageView
++        android:layout_width="wrap_content"
++        android:layout_height="319dp"
++        android:src="@drawable/image_information" />
++
+ </LinearLayout>
+\ No newline at end of file
