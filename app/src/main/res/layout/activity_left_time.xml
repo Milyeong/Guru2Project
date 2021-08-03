@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".LeftTime">
 
+    <ImageView
+        android:layout_width="296dp"
+        android:layout_height="341dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="177dp"
+        android:layout_marginEnd="100dp"
+        android:src="@drawable/image_lefttime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.611"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LeftTImeText" />
+
     <TextView
         android:id="@+id/LeftTImeText"
         android:layout_width="wrap_content"
@@ -22,4 +34,6 @@
         app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
