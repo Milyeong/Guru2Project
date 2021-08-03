@@ -24,6 +24,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="5dp"
         android:text="보유 마일리지 :"
+        android:fontFamily="@font/hangul_font"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/tv_gd_mileage"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,6 +36,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="0"
+        android:fontFamily="@font/hangul_font"
         android:textAlignment="textEnd"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="기프티콘 이름"
+        android:fontFamily="@font/hangul_font"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -59,6 +62,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="40dp"
         android:text="구매"
+        android:fontFamily="@font/hangul_font"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_gd_giftCost" />
 
@@ -68,6 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="필요 마일리지 :"
+        android:fontFamily="@font/hangul_font"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -81,6 +86,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
         android:text="0"
+        android:fontFamily="@font/hangul_font"
         android:textAlignment="textEnd"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/textView10"

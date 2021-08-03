@@ -22,7 +22,8 @@
             android:id="@+id/textView2"
             android:layout_width="80sp"
             android:layout_height="wrap_content"
-            android:text="이메일" />
+            android:text="이메일"
+            android:fontFamily="@font/hangul_font"/>
 
         <EditText
             android:id="@+id/edt_signUp_email"
@@ -42,7 +43,8 @@
             android:id="@+id/textView3"
             android:layout_width="80sp"
             android:layout_height="wrap_content"
-            android:text="비밀번호" />
+            android:text="비밀번호"
+            android:fontFamily="@font/hangul_font"/>
 
         <EditText
             android:id="@+id/edt_singUp_pw"
@@ -62,7 +64,8 @@
             android:id="@+id/textView4"
             android:layout_width="80sp"
             android:layout_height="wrap_content"
-            android:text="닉네임" />
+            android:text="닉네임"
+            android:fontFamily="@font/hangul_font"/>
 
         <EditText
             android:id="@+id/edt_signUp_name"
@@ -77,6 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="회원가입"
+        android:fontFamily="@font/hangul_font"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="306dp" />
@@ -86,6 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="로그인화면으로 돌아가기"
+        android:fontFamily="@font/hangul_font"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />

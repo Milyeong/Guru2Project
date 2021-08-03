@@ -34,6 +34,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="5dp"
         android:text=" 보유 마일리지 :"
+        android:fontFamily="@font/hangul_font"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/tv_gL_mileage"
         app:layout_constraintTop_toTopOf="parent" />

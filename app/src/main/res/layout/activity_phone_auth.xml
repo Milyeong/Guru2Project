@@ -14,6 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="본인인증"
+        android:fontFamily="@font/hangul_font"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="32sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,6 +29,7 @@
         android:layout_marginEnd="20dp"
         android:ems="10"
         android:hint="예시: 01011112222"
+        android:fontFamily="@font/hangul_font"
         android:inputType="phone"
         app:layout_constraintEnd_toStartOf="@+id/btn_pA_code"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,6 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:text="인증번호요청"
+        android:fontFamily="@font/hangul_font"
         app:layout_constraintBottom_toBottomOf="@+id/edt_pA_phoneNum"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/edt_pA_phoneNum" />
@@ -50,6 +53,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
         android:text="휴대전화번호 "
+        android:fontFamily="@font/hangul_font"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -60,6 +64,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:text="인증 번호 입력"
+        android:fontFamily="@font/hangul_font"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_pA_phoneNum" />
 
@@ -82,6 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="인증하기"
+        android:fontFamily="@font/hangul_font"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_pA_code" />

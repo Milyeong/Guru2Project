@@ -33,6 +33,7 @@
         android:layout_marginBottom="20dp"
         android:gravity="center"
         android:text="기프티콘 이름"
+        android:fontFamily="@font/hangul_font"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
