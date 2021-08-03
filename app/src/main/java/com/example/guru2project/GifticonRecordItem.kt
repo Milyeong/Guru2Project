@@ -8,7 +8,8 @@ data class GifticonRecordItem(
     var giftName: String = "",
     var giftImage: String = "",
     var date: String = "",
-    var cost: Int = 0
+    var cost: Int = 0,
+    var leftMileage: Int = 0
 ){
     @Exclude
     fun toMap(): Map<String, Any?> {
@@ -16,7 +17,8 @@ data class GifticonRecordItem(
             "giftName" to giftName,
             "giftImage" to giftImage,
             "date" to date,
-            "cost" to cost
+            "cost" to cost,
+            "leftMileage" to leftMileage
         )
     }
 }

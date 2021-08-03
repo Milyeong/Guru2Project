@@ -5,16 +5,134 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".PersonalInformation">
+    tools:context=".PersonalInformationActivity">
 
     <TextView
-        android:id="@+id/userName2"
+        android:id="@+id/tv_pi_name"
         android:layout_width="216dp"
         android:layout_height="24dp"
+        android:layout_marginStart="34dp"
         android:layout_marginTop="92dp"
+        android:text="-"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/textView19"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_pi_email"
+        android:layout_width="216dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="268dp"
         android:layout_marginEnd="44dp"
+        android:text="-"
+        android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_pi_phoneNum"
+        android:layout_width="216dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="208dp"
+        android:layout_marginEnd="44dp"
+        android:text="-"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_pi_date"
+        android:layout_width="216dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="152dp"
+        android:layout_marginEnd="44dp"
+        android:text="-"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/TextView20"
+        android:layout_width="69dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="268dp"
+        android:fontFamily="@font/hangul_font"
+        android:lineSpacingExtra="24sp"
+        android:text="이메일"
+        android:textAlignment="textEnd"
+        android:textAllCaps="true"
+        android:textColor="#37AA3C"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/TextView21"
+        android:layout_width="69dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="208dp"
+        android:fontFamily="@font/hangul_font"
+        android:lineSpacingExtra="24sp"
+        android:text="전화번호"
+        android:textAlignment="textEnd"
+        android:textAllCaps="true"
+        android:textColor="#37AA3C"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="69dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="92dp"
+        android:fontFamily="@font/hangul_font"
+        android:lineSpacingExtra="24sp"
+        android:text="이름"
+        android:textAlignment="textEnd"
+        android:textAllCaps="true"
+        android:textColor="#37AA3C"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="69dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="152dp"
+        android:fontFamily="@font/hangul_font"
+        android:lineSpacingExtra="24sp"
+        android:text="가입일"
+        android:textAlignment="textEnd"
+        android:textAllCaps="true"
+        android:textColor="#37AA3C"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--
+    <TextView
+        android:id="@+id/Email"
+        android:layout_width="69dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="332dp"
+        android:fontFamily="@font/hangul_font"
+        android:lineSpacingExtra="24sp"
+        android:text="생년월일"
+        android:textAlignment="textEnd"
+        android:textAllCaps="true"
+        android:textColor="#37AA3C"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -27,114 +145,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/userCallNum2"
-        android:layout_width="216dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="268dp"
-        android:layout_marginEnd="44dp"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/userJoin2"
-        android:layout_width="216dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="208dp"
-        android:layout_marginEnd="44dp"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/userBirth2"
-        android:layout_width="216dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="152dp"
-        android:layout_marginEnd="44dp"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/CallNumber"
-        android:layout_width="69dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="268dp"
-        android:fontFamily="@font/hangul_font"
-        android:lineSpacingExtra="24sp"
-        android:text="전화번호"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="#37AA3C"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/Email"
-        android:layout_width="69dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="332dp"
-        android:fontFamily="@font/hangul_font"
-        android:lineSpacingExtra="24sp"
-        android:text="이메일"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="#37AA3C"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/join"
-        android:layout_width="69dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="208dp"
-        android:fontFamily="@font/hangul_font"
-        android:lineSpacingExtra="24sp"
-        android:text="가입일"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="#37AA3C"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="69dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="92dp"
-        android:fontFamily="@font/hangul_font"
-        android:lineSpacingExtra="24sp"
-        android:text="이름"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="#37AA3C"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/Birth"
-        android:layout_width="69dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="152dp"
-        android:fontFamily="@font/hangul_font"
-        android:lineSpacingExtra="24sp"
-        android:text="생년월일"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="#37AA3C"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+    -->
 </androidx.constraintlayout.widget.ConstraintLayout>

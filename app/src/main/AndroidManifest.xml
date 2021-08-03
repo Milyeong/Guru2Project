@@ -20,8 +20,8 @@
         <activity android:name=".UserGifticonListActivity" />
         <activity android:name=".GifticonDetailActivity" />
         <activity android:name=".LeftTime"/>
-        <activity android:name=".MileageUse" />
-        <activity android:name=".PersonalInformation" />
+        <activity android:name=".MileageUseActivity" />
+        <activity android:name=".PersonalInformationActivity" />
         <activity android:name=".HoursOfUse" />
        <!--<activity
             android:name=".Menu"
