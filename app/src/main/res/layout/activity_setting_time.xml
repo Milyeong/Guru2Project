@@ -1,77 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".SettingTimeActivity">
 
 
-    <ImageView
-        android:id="@+id/image_timer"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="92dp"
-        android:background="@android:drawable/editbox_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_time"
-        android:contentDescription="TODO" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/btnSetTime"
-        app:layout_constraintTop_toBottomOf="@+id/image_timer"
-        app:layout_constraintVertical_bias="0.26">
-
-        <Spinner
-            android:id="@+id/hour_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/hour_array"
-            android:background="@drawable/spinner_background"
-            android:layout_weight="1" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/시간" />
-
-        <Spinner
-            android:id="@+id/minute_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/minute_array"
-            android:background="@drawable/spinner_background"
-            android:layout_weight="1" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="분" />
-
-    </LinearLayout>
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="377dp"
+        android:layout_height="243dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="209dp"
+        android:layout_marginEnd="17dp"
+        android:timePickerMode="spinner" />
 
     <Button
-        android:id="@+id/btnSetTime"
+        android:id="@+id/button"
         android:layout_width="215dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="176dp"
-        android:text="@string/설정"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="95dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="76dp"
+        android:text="설정"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tv_timer1"
+        android:layout_width="172dp"
+        android:layout_height="69dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="117dp"
+        android:layout_marginTop="100dp"
+        android:background="@android:drawable/editbox_background"
+        android:drawableTop="@drawable/ic_time"
+        android:drawablePadding="16dp"
+        android:gravity="center"
+        android:textColor="#9AE39D"
+        android:textSize="10sp"
+        android:textStyle="bold" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

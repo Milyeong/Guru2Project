@@ -24,7 +24,7 @@
         <activity android:name=".HoursOfUse" />
        <!--<activity
             android:name=".Menu"
-            android:label="@string/title_activity_menu"
+            android:label="Menu"
             android:theme="@style/Theme.Guru2Project.NoActionBar" />-->
         <activity android:name=".PhoneAuthActivity" />
         <activity android:name=".GifticonListActivity" />
