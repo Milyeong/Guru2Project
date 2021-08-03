@@ -1,0 +1,212 @@
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    package=\"com.example.guru2project\">\r\n\r\n    <uses-permission\r\n        android:name=\"android.permission.PACKAGE_USAGE_STATS\"\r\n        tools:ignore=\"ProtectedPermissions\" />\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.Guru2Project\">\r\n        <activity android:name=\".MileageUse\"></activity>\r\n        <activity android:name=\".PersonalInformation\" />\r\n        <activity android:name=\".HoursOfUse\" />\r\n        <activity\r\n            android:name=\".Menu\"\r\n            android:label=\"@string/title_activity_menu\"\r\n            android:theme=\"@style/Theme.Guru2Project.NoActionBar\" />\r\n        <activity android:name=\".PhoneAuthActivity\" />\r\n        <activity android:name=\".SignUpActivity\" />\r\n        <activity android:name=\".LoadingActivity\" />\r\n        <activity android:name=\".SettingTimeActivity\" />\r\n        <activity android:name=\".MainActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision b8cdb452283f4dbf57c9d33f8efdc9a8ca1c6288)
++++ app/src/main/AndroidManifest.xml	(date 1627969462749)
+@@ -20,7 +20,7 @@
+         <activity android:name=".HoursOfUse" />
+         <activity
+             android:name=".Menu"
+-            android:label="@string/title_activity_menu"
++            android:label="Menu"
+             android:theme="@style/Theme.Guru2Project.NoActionBar" />
+         <activity android:name=".PhoneAuthActivity" />
+         <activity android:name=".SignUpActivity" />
+Index: app/src/main/res/layout/activity_setting_time.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RelativeLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".SettingTimeActivity\">\r\n\r\n\r\n    <TimePicker\r\n        android:id=\"@+id/timePicker\"\r\n        android:layout_width=\"377dp\"\r\n        android:layout_height=\"243dp\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:layout_alignParentEnd=\"true\"\r\n        android:layout_centerInParent=\"true\"\r\n        android:layout_marginTop=\"209dp\"\r\n        android:layout_marginEnd=\"17dp\"\r\n        android:timePickerMode=\"spinner\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/button\"\r\n        android:layout_width=\"215dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentEnd=\"true\"\r\n        android:layout_alignParentBottom=\"true\"\r\n        android:layout_centerHorizontal=\"true\"\r\n        android:layout_marginStart=\"95dp\"\r\n        android:layout_marginEnd=\"100dp\"\r\n        android:layout_marginBottom=\"76dp\"\r\n        android:text=\"설정\"\r\n        android:textSize=\"24sp\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/tv_timer1\"\r\n        android:layout_width=\"172dp\"\r\n        android:layout_height=\"69dp\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_centerHorizontal=\"true\"\r\n        android:layout_marginStart=\"117dp\"\r\n        android:layout_marginTop=\"100dp\"\r\n        android:background=\"@android:drawable/editbox_background\"\r\n        android:drawableTop=\"@drawable/ic_time\"\r\n        android:drawablePadding=\"16dp\"\r\n        android:gravity=\"center\"\r\n        android:textColor=\"#9AE39D\"\r\n        android:textSize=\"10sp\"\r\n        android:textStyle=\"bold\" />\r\n\r\n\r\n</RelativeLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_setting_time.xml	(revision b8cdb452283f4dbf57c9d33f8efdc9a8ca1c6288)
++++ app/src/main/res/layout/activity_setting_time.xml	(date 1627969495995)
+@@ -4,6 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
++    android:background="@drawable/image_commonbackground"
+     tools:context=".SettingTimeActivity">
+ 
+ 
+@@ -14,8 +15,8 @@
+         android:layout_alignParentTop="true"
+         android:layout_alignParentEnd="true"
+         android:layout_centerInParent="true"
+-        android:layout_marginTop="209dp"
+-        android:layout_marginEnd="17dp"
++        android:layout_marginTop="206dp"
++        android:layout_marginEnd="37dp"
+         android:timePickerMode="spinner" />
+ 
+     <Button
+@@ -26,9 +27,9 @@
+         android:layout_alignParentEnd="true"
+         android:layout_alignParentBottom="true"
+         android:layout_centerHorizontal="true"
+-        android:layout_marginStart="95dp"
+-        android:layout_marginEnd="100dp"
+-        android:layout_marginBottom="76dp"
++        android:layout_marginStart="105dp"
++        android:layout_marginEnd="90dp"
++        android:layout_marginBottom="118dp"
+         android:text="설정"
+         android:textSize="24sp" />
+ 
+@@ -37,9 +38,10 @@
+         android:layout_width="172dp"
+         android:layout_height="69dp"
+         android:layout_alignParentStart="true"
++        android:layout_alignParentTop="true"
+         android:layout_centerHorizontal="true"
+-        android:layout_marginStart="117dp"
+-        android:layout_marginTop="100dp"
++        android:layout_marginStart="155dp"
++        android:layout_marginTop="49dp"
+         android:background="@android:drawable/editbox_background"
+         android:drawableTop="@drawable/ic_time"
+         android:drawablePadding="16dp"
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".MainActivity\">\r\n\r\n    <EditText\r\n        android:id=\"@+id/login_email\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"16dp\"\r\n        android:layout_marginTop=\"150dp\"\r\n        android:layout_marginEnd=\"16dp\"\r\n        android:layout_marginBottom=\"16dp\"\r\n        android:ems=\"10\"\r\n        android:hint=\"이메일 입력\"\r\n        android:inputType=\"textEmailAddress\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/login_pw\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.521\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/login_pw\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"16dp\"\r\n        android:layout_marginTop=\"16dp\"\r\n        android:layout_marginEnd=\"16dp\"\r\n        android:ems=\"10\"\r\n        android:hint=\"PW 입력\"\r\n        android:inputType=\"textPersonName\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.521\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/login_email\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/btnBackToSignUp\"\r\n        android:layout_width=\"180dp\"\r\n        android:layout_height=\"63dp\"\r\n        android:layout_marginStart=\"16dp\"\r\n        android:layout_marginTop=\"8dp\"\r\n        android:hint=\"회원가입\"\r\n        android:textAlignment=\"center\"\r\n        app:backgroundTint=\"#9AE39D\"\r\n        app:elevation=\"2dp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/login_pw\"\r\n        tools:textSize=\"24sp\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/btnLogin\"\r\n        android:layout_width=\"180dp\"\r\n        android:layout_height=\"63dp\"\r\n        android:layout_marginTop=\"8dp\"\r\n        android:layout_marginEnd=\"24dp\"\r\n        android:hint=\"로그인\"\r\n        android:textAlignment=\"center\"\r\n        app:backgroundTint=\"#9AE39D\"\r\n        app:elevation=\"2dp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/login_pw\"\r\n        tools:textSize=\"24sp\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_main.xml	(revision b8cdb452283f4dbf57c9d33f8efdc9a8ca1c6288)
++++ app/src/main/res/layout/activity_main.xml	(date 1627969462738)
+@@ -4,8 +4,23 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
++    android:background="@drawable/image_commonbackground"
+     tools:context=".MainActivity">
+ 
++    <Button
++        android:id="@+id/btnLogin"
++        android:layout_width="180dp"
++        android:layout_height="63dp"
++        android:layout_marginTop="12dp"
++        android:layout_marginEnd="16dp"
++        android:hint="로그인"
++        android:textAlignment="center"
++        app:backgroundTint="#9AE39D"
++        app:elevation="2dp"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/login_pw"
++        tools:textSize="24sp" />
++
+     <EditText
+         android:id="@+id/login_email"
+         android:layout_width="0dp"
+@@ -19,7 +34,7 @@
+         android:inputType="textEmailAddress"
+         app:layout_constraintBottom_toTopOf="@+id/login_pw"
+         app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="0.521"
++        app:layout_constraintHorizontal_bias="1.0"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+@@ -28,13 +43,13 @@
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="16dp"
+-        android:layout_marginTop="16dp"
++        android:layout_marginTop="24dp"
+         android:layout_marginEnd="16dp"
+         android:ems="10"
+         android:hint="PW 입력"
+         android:inputType="textPersonName"
+         app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="0.521"
++        app:layout_constraintHorizontal_bias="1.0"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/login_email" />
+ 
+@@ -42,8 +57,8 @@
+         android:id="@+id/btnBackToSignUp"
+         android:layout_width="180dp"
+         android:layout_height="63dp"
+-        android:layout_marginStart="16dp"
+-        android:layout_marginTop="8dp"
++        android:layout_marginStart="24dp"
++        android:layout_marginTop="12dp"
+         android:hint="회원가입"
+         android:textAlignment="center"
+         app:backgroundTint="#9AE39D"
+@@ -52,18 +67,4 @@
+         app:layout_constraintTop_toBottomOf="@+id/login_pw"
+         tools:textSize="24sp" />
+ 
+-    <Button
+-        android:id="@+id/btnLogin"
+-        android:layout_width="180dp"
+-        android:layout_height="63dp"
+-        android:layout_marginTop="8dp"
+-        android:layout_marginEnd="24dp"
+-        android:hint="로그인"
+-        android:textAlignment="center"
+-        app:backgroundTint="#9AE39D"
+-        app:elevation="2dp"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintTop_toBottomOf="@+id/login_pw"
+-        tools:textSize="24sp" />
+-
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_personal_information.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".PersonalInformation\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/userEmail\"\r\n        android:layout_width=\"216dp\"\r\n        android:layout_height=\"24dp\"\r\n        android:layout_marginTop=\"352dp\"\r\n        android:layout_marginEnd=\"44dp\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/userCallNum2\"\r\n        android:layout_width=\"216dp\"\r\n        android:layout_height=\"24dp\"\r\n        android:layout_marginTop=\"288dp\"\r\n        android:layout_marginEnd=\"44dp\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/userJoin2\"\r\n        android:layout_width=\"216dp\"\r\n        android:layout_height=\"24dp\"\r\n        android:layout_marginTop=\"228dp\"\r\n        android:layout_marginEnd=\"44dp\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/userBirth2\"\r\n        android:layout_width=\"216dp\"\r\n        android:layout_height=\"24dp\"\r\n        android:layout_marginTop=\"172dp\"\r\n        android:layout_marginEnd=\"44dp\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/userName2\"\r\n        android:layout_width=\"216dp\"\r\n        android:layout_height=\"24dp\"\r\n        android:layout_marginTop=\"112dp\"\r\n        android:layout_marginEnd=\"44dp\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/Birth\"\r\n        android:layout_width=\"69dp\"\r\n        android:layout_height=\"27dp\"\r\n        android:layout_marginStart=\"48dp\"\r\n        android:layout_marginTop=\"172dp\"\r\n        android:lineSpacingExtra=\"24sp\"\r\n        android:text=\"생년월일\"\r\n        android:textAlignment=\"center\"\r\n        android:textAllCaps=\"true\"\r\n        android:textColor=\"#37AA3C\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/CallNumber\"\r\n        android:layout_width=\"69dp\"\r\n        android:layout_height=\"27dp\"\r\n        android:layout_marginStart=\"48dp\"\r\n        android:layout_marginTop=\"288dp\"\r\n        android:lineSpacingExtra=\"24sp\"\r\n        android:text=\"전화번호\"\r\n        android:textAlignment=\"center\"\r\n        android:textAllCaps=\"true\"\r\n        android:textColor=\"#37AA3C\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/Email\"\r\n        android:layout_width=\"69dp\"\r\n        android:layout_height=\"27dp\"\r\n        android:layout_marginStart=\"48dp\"\r\n        android:layout_marginTop=\"352dp\"\r\n        android:lineSpacingExtra=\"24sp\"\r\n        android:text=\"이메일\"\r\n        android:textAlignment=\"center\"\r\n        android:textAllCaps=\"true\"\r\n        android:textColor=\"#37AA3C\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/join\"\r\n        android:layout_width=\"69dp\"\r\n        android:layout_height=\"27dp\"\r\n        android:layout_marginStart=\"48dp\"\r\n        android:layout_marginTop=\"228dp\"\r\n        android:lineSpacingExtra=\"24sp\"\r\n        android:text=\"가입일\"\r\n        android:textAlignment=\"center\"\r\n        android:textAllCaps=\"true\"\r\n        android:textColor=\"#37AA3C\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/name\"\r\n        android:layout_width=\"69dp\"\r\n        android:layout_height=\"27dp\"\r\n        android:layout_marginStart=\"48dp\"\r\n        android:layout_marginTop=\"112dp\"\r\n        android:lineSpacingExtra=\"24sp\"\r\n        android:text=\"이름\"\r\n        android:textAlignment=\"center\"\r\n        android:textAllCaps=\"true\"\r\n        android:textColor=\"#37AA3C\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_personal_information.xml	(revision b8cdb452283f4dbf57c9d33f8efdc9a8ca1c6288)
++++ app/src/main/res/layout/activity_personal_information.xml	(date 1627969135491)
+@@ -4,6 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
++    android:background="@drawable/image_joinbackground"
+     tools:context=".PersonalInformation">
+ 
+     <TextView
+Index: app/src/main/res/layout/activity_phone_auth.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".PhoneAuthActivity\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"16dp\"\r\n        android:layout_marginTop=\"16dp\"\r\n        android:text=\"본인인증\"\r\n        android:textAppearance=\"@style/TextAppearance.AppCompat.Large\"\r\n        android:textSize=\"32sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/edt_pA_phoneNum\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"20dp\"\r\n        android:layout_marginTop=\"10dp\"\r\n        android:layout_marginEnd=\"20dp\"\r\n        android:ems=\"10\"\r\n        android:hint=\"예시: 01011112222\"\r\n        android:inputType=\"phone\"\r\n        app:layout_constraintEnd_toStartOf=\"@+id/btn_pA_code\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView5\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/btn_pA_code\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginEnd=\"20dp\"\r\n        android:text=\"인증번호요청\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/edt_pA_phoneNum\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/edt_pA_phoneNum\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView5\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"20dp\"\r\n        android:layout_marginTop=\"24dp\"\r\n        android:text=\"휴대전화번호 \"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView6\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"20dp\"\r\n        android:layout_marginTop=\"40dp\"\r\n        android:text=\"인증 번호 입력\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/edt_pA_phoneNum\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/edt_pA_code\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"20dp\"\r\n        android:layout_marginTop=\"10dp\"\r\n        android:layout_marginEnd=\"20dp\"\r\n        android:ems=\"10\"\r\n        android:inputType=\"number\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView6\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/btn_pA_phoneAuth\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"50dp\"\r\n        android:text=\"인증하기\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/edt_pA_code\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_phone_auth.xml	(revision b8cdb452283f4dbf57c9d33f8efdc9a8ca1c6288)
++++ app/src/main/res/layout/activity_phone_auth.xml	(date 1627969135468)
+@@ -4,6 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
++    android:background="@drawable/image_joinbackground"
+     tools:context=".PhoneAuthActivity">
+ 
+     <TextView
+Index: app/src/main/res/layout/activity_sign_up.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    android:paddingLeft=\"20dp\"\r\n    android:paddingTop=\"50dp\"\r\n    android:paddingEnd=\"20dp\"\r\n    android:paddingRight=\"20dp\"\r\n    tools:context=\".SignUpActivity\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"horizontal\"\r\n        android:paddingBottom=\"20dp\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/textView2\"\r\n            android:layout_width=\"80sp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"이메일\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/edt_signUp_email\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:ems=\"10\"\r\n            android:inputType=\"textEmailAddress\" />\r\n    </LinearLayout>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"horizontal\"\r\n        android:paddingBottom=\"20dp\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/textView3\"\r\n            android:layout_width=\"80sp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"비밀번호\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/edt_singUp_pw\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:ems=\"10\"\r\n            android:inputType=\"textPassword\" />\r\n    </LinearLayout>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"horizontal\"\r\n        android:paddingBottom=\"10dp\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/textView4\"\r\n            android:layout_width=\"80sp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"닉네임\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/edt_signUp_name\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:ems=\"10\"\r\n            android:inputType=\"textPersonName\" />\r\n    </LinearLayout>\r\n\r\n    <Button\r\n        android:id=\"@+id/btnSignUp\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"회원가입\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        tools:layout_editor_absoluteY=\"306dp\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/btnBackToLogin\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"로그인화면으로 돌아가기\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/btnSignUp\" />\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_sign_up.xml	(revision b8cdb452283f4dbf57c9d33f8efdc9a8ca1c6288)
++++ app/src/main/res/layout/activity_sign_up.xml	(date 1627969135514)
+@@ -9,6 +9,7 @@
+     android:paddingTop="50dp"
+     android:paddingEnd="20dp"
+     android:paddingRight="20dp"
++    android:background="@drawable/image_joinbackground"
+     tools:context=".SignUpActivity">
+ 
+     <LinearLayout
