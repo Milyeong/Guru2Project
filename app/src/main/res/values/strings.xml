@@ -12,5 +12,7 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="설정">설정</string>
-    <string name="시간">시간</string>
+    <string name="hours">시간</string>
+    <string name="left_hours">남은 시간</string>
+    <string name="minute">분</string>
 </resources>

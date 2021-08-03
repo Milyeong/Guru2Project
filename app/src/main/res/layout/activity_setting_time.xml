@@ -4,23 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".SettingTimeActivity">
 
 
-    <TimePicker
-        android:id="@+id/timePicker"
-        android:layout_width="377dp"
-        android:layout_height="243dp"
+    <Spinner
+        android:id="@+id/hour_spinner"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="118dp"
-        android:layout_marginEnd="34dp"
-        android:timePickerMode="spinner" />
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="145dp"
+        android:entries="@array/hour_array"
+        android:spinnerMode="dialog"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="145dp"
+        android:layout_toRightOf="@id/hour_spinner"
+        android:text="@string/hours"
+        android:textSize="18dp" />
+
+    <Spinner
+        android:id="@+id/minute_spinner"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="213dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="145dp"
+        android:layout_toRightOf="@+id/hour"
+        android:entries="@array/minute_array"
+        android:spinnerMode="dialog"
+        android:textAlignment="center" />
+
+
+    <TextView
+        android:id="@+id/minute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="145dp"
+        android:layout_toRightOf="@id/minute_spinner"
+        android:text="@string/minute"
+        android:textSize="18dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnSetTime"
         android:layout_width="215dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
