@@ -1,16 +1,23 @@
 package com.example.guru2project
 
 import android.content.ContentValues
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -23,20 +30,23 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MileageUseActivity : AppCompatActivity() {
+class MileageUseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var userGiftRecordRef: DatabaseReference
     private var recordArray = ArrayList<GifticonRecordItem>()
     private lateinit var adapter: UserUseMileageListAdapter
 
+    private lateinit var drawLayout: DrawerLayout
     private lateinit var listView: ListView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mileage_use)
 
+        this.init()
         listView = findViewById(R.id.listView_um)
+
 
         // 사용자 정보 불러오기
         auth = Firebase.auth
@@ -52,6 +62,77 @@ class MileageUseActivity : AppCompatActivity() {
 
         adapter = UserUseMileageListAdapter(recordArray)
         listView.adapter = adapter
+    }
+
+    // 슬라이드 메뉴 (Drawer) 초기화
+    private fun init(){
+        var toolbar = findViewById<Toolbar>(R.id.toolbar_mu)
+        toolbar.title = "마일리지 사용 기록"
+        if(toolbar!= null) {
+            setSupportActionBar(toolbar)
+        }
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+
+        drawLayout = findViewById<DrawerLayout>(R.id.drawer_layout_mu)
+        var navigationView = findViewById<NavigationView>(R.id.nav_view_mu)
+
+        val actionBarDrawerToggle = ActionBarDrawerToggle(
+            this,
+            drawLayout,
+            toolbar,
+            R.string.open,
+            R.string.close
+        );
+
+        drawLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState()
+        navigationView.setNavigationItemSelectedListener(this)
+    }
+
+    // 슬라이드 메뉴에서 메뉴 선택시의 이벤트 처리
+    override fun onNavigationItemSelected(item: MenuItem):Boolean{
+        when(item.itemId){
+            R.id.nav_personnal_information ->{
+                val intent = Intent(this,PersonalInformationActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            R.id.nav_time_record -> {
+
+            }
+            R.id.nav_gifticon -> {
+                val intent = Intent(this,GifticonListActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            R.id.nav_user_gifticon -> {
+                val intent = Intent(this,UserGifticonListActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            R.id.nav_mileage_record -> {
+                drawLayout.closeDrawer(GravityCompat.START);
+            }
+            R.id.nav_logout -> {
+                auth.signOut()
+                val intent = Intent(this,MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
+
+        return true
+    }
+
+    override fun onBackPressed() {
+        // Drawer(슬라이드 메뉴)가 열려있으면 닫기
+        if (drawLayout.isDrawerOpen(GravityCompat.START)) {
+            drawLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     // 사용자 기프티콘 목록 불러오기
