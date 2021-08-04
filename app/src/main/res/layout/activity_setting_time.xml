@@ -81,5 +81,16 @@
         android:fontFamily="@font/hangul_font"
         android:textSize="24sp" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="11dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="-235dp"
+        android:src="@drawable/image_timeimage" />
+
 
 </RelativeLayout>
