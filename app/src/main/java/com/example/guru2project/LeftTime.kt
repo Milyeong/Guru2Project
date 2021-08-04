@@ -3,6 +3,7 @@ package com.example.guru2project
 import android.app.usage.UsageEvents
 import android.app.usage.UsageStatsManager
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
@@ -14,16 +15,24 @@ import kotlin.collections.HashMap
 
 class LeftTime : AppCompatActivity() {
 
-    lateinit var usageMap: HashMap<String, Long>
-    lateinit var appName: TextView
-    lateinit var appUsageTime: TextView
+    private lateinit var appName: TextView
+    private lateinit var appUsageTime: TextView
+    private lateinit var tvHours: TextView
+    private lateinit var tvMinuts: TextView
 
+    private lateinit var usageMap: HashMap<String, Long>
+
+    private var totalTime: Long = 0
+    private var goalHours: Long = 0
+    private var leftHours: Int = 0
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_left_time)
 
+        tvHours = findViewById(R.id.tvHours)
+        tvMinuts = findViewById(R.id.tvMinutes)
 
         var tz= TimeZone.getDefault()
         var tzId= tz.toZoneId()
@@ -32,7 +41,6 @@ class LeftTime : AppCompatActivity() {
 
         usageMap = mapUsageTimes(dtStart, System.currentTimeMillis())
 
-        var totalTime: Long = 0
         usageMap.forEach {it->
             totalTime += it.value
         }
@@ -46,13 +54,22 @@ class LeftTime : AppCompatActivity() {
 
                 //print(result[i].first)
                 //println(result[i].second)
+            //텍스트뷰로 어플 이름과 사용시간 보이기
         }
+        val pref = getSharedPreferences("pref", MODE_PRIVATE)
+        goalHours = pref.getLong("GOAL_HOURS", 57600000)
 
+        //남은 시간
+        leftHours = (goalHours-totalTime).toInt()
+        val min = (leftHours/ (1000*60) )% 60
+        val hour =(leftHours / (1000*60*60))%24
+        tvHours.text="$min"
+        tvMinuts.text="$hour"
 
 
     }
 
-    //하루동안 사용한 앱의 패키지 이름과 사용시간을 MutableList로 가져오기
+    //하루동안 사용한 앱의 패키지 이름과 사용시간을 Map으로 가져오기
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun mapUsageTimes(startTime: Long, endTime: Long) : HashMap<String, Long>{
         var currentEvent: UsageEvents.Event
@@ -92,4 +109,11 @@ class LeftTime : AppCompatActivity() {
 
         return map
     }
+
+    private fun a(){
+
+    }
 }
+
+
+

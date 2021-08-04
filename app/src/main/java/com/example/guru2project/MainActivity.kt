@@ -6,6 +6,7 @@ import android.app.AppOpsManager
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Process
@@ -16,9 +17,13 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnJoin: Button
     private lateinit var btnlogin: Button
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -47,6 +53,33 @@ class MainActivity : AppCompatActivity() {
             //화면 넘어감
         }
 
+        val pref = getSharedPreferences("pref", MODE_PRIVATE)
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val currentDate = sdf.format(Date())
+        val editor = pref.edit()
+        // 오늘 이미 실행했을 때
+        if (pref.getString("LAST_LAUNCH_DATE", "nodate")!!.contains(currentDate)) {
+
+            //시간을 설정했을때
+            if (pref.getLong("GOAL_HOURS", 0)>0){
+                val intent = Intent(this, LeftTime::class.java)
+                startActivity(intent)
+                finish()
+            } else{ //시간을 설정 안했을때
+                val intent = Intent(this, SettingTimeActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+
+        } else {//오늘 처음 실행했을때
+
+            // 설정시간 초기화
+            editor.putLong("GOAL_HOURS", 0)
+            editor.putString("LAST_LAUNCH_DATE", currentDate)
+            editor.apply()
+
+            // 어제 사용기록 가져온 후 어제 목표(데이터베이스에서 가져오기)보다 작으면 적립(함수로 구현)
+        }
         // 사용자 로그인상태 확인
         auth = Firebase.auth
 

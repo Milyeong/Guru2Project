@@ -1,17 +1,15 @@
 package com.example.guru2project
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import android.widget.*
-import androidx.annotation.RequiresApi
 
 class SettingTimeActivity : AppCompatActivity() {
+
 
     private var setHour : Int = 0
     private var setMinute : Int = 0
@@ -20,9 +18,8 @@ class SettingTimeActivity : AppCompatActivity() {
     private lateinit var minuteSpinner: Spinner
     private lateinit var btnTimeSet: Button
 
-    /*val DEFAULT_INTERVAL = 5
-    val MINUTES_MIN = 0
-    val MINUTES_MAX = 60*/
+    var goalHours : Long =0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +28,6 @@ class SettingTimeActivity : AppCompatActivity() {
         hourSpinner = findViewById(R.id.hour_spinner)
         minuteSpinner = findViewById(R.id.minute_spinner)
         btnTimeSet = findViewById(R.id.btnSetTime)
-
-        //hourSpinner.setSelection(0) 원하는 포지션 이동(나중에 추가)
 
 
         //시간 선택
@@ -58,7 +53,15 @@ class SettingTimeActivity : AppCompatActivity() {
             var dlg = AlertDialog.Builder(this)
             dlg.setMessage("${setHour}시간 ${setMinute}분으로 설정하시겠습니까?")
             dlg.setPositiveButton( "확인") { dialog, which ->
-                startActivity(Intent(this, LeftTime::class.java))
+                //목표시간 pref에 저장
+                goalHours = ( (setHour.toLong() * 60) + setMinute.toLong() ) *60*60
+                val pref = getSharedPreferences("pref", MODE_PRIVATE)
+                val editor = pref.edit()
+                editor.putLong("GOAL_HOURS", goalHours)
+                editor.apply()
+                //LeftTime으로
+                val intent = Intent(this, LeftTime::class.java)
+                startActivity(intent)
                 finish()
             }
             dlg.setNegativeButton("취소", null)
