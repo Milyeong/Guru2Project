@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_login)
 
         //사용정보 접근 권한이 허용되지 않았을때
         if (!checkForPermission()) {
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         // 사용자가 로그인되어 있다면(자동로그인) SettingTimeAcitivity로
         if (auth.currentUser != null) {
-            val intent = Intent(this, PersonalInformationActivity::class.java)
+            val intent = Intent(this, SettingTimeActivity::class.java)
             startActivity(intent)
             finish()
         }

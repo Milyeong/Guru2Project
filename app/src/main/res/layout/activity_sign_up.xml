@@ -9,7 +9,6 @@
     android:paddingTop="50dp"
     android:paddingEnd="20dp"
     android:paddingRight="20dp"
-    android:background="@drawable/image_joinbackground"
     tools:context=".SignUpActivity">
 
     <LinearLayout
