@@ -127,7 +127,9 @@ class GifticonListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 super.onBackPressed();
             }
             R.id.nav_time_record -> {
-
+                val intent = Intent(this,HoursOfUse::class.java)
+                startActivity(intent)
+                finish()
             }
             R.id.nav_gifticon -> {
                 drawLayout.closeDrawer(GravityCompat.START);

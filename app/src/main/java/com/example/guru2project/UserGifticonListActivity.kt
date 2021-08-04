@@ -139,7 +139,9 @@ class UserGifticonListActivity : AppCompatActivity(),
                 super.onBackPressed();
             }
             R.id.nav_time_record -> {
-
+                val intent = Intent(this,HoursOfUse::class.java)
+                startActivity(intent)
+                finish()
             }
             R.id.nav_gifticon -> {
                 val intent = Intent(this,GifticonListActivity::class.java)

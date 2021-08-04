@@ -146,7 +146,9 @@ class LeftTime : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
                 drawLayout.closeDrawer(GravityCompat.START);
             }
             R.id.nav_time_record -> {
-
+                val intent = Intent(this,HoursOfUse::class.java)
+                startActivity(intent)
+                drawLayout.closeDrawer(GravityCompat.START);
             }
             R.id.nav_gifticon -> {
                 val intent = Intent(this,GifticonListActivity::class.java)

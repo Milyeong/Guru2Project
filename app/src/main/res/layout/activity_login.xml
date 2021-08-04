@@ -34,6 +34,8 @@
         android:hint="이메일 입력"
         android:fontFamily="@font/hangul_font"
         android:inputType="textEmailAddress"
+        android:textColor="@color/black"
+        app:passwordToggleTint="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/login_pw"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -51,11 +53,12 @@
         android:fontFamily="@font/hangul_font"
         android:hint="PW 입력"
         android:inputType="textPassword"
-        app:passwordToggleTint="@color/black"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_email" />
+        app:layout_constraintTop_toBottomOf="@+id/login_email"
+        app:passwordToggleTint="@color/black" />
 
     <Button
         android:id="@+id/btnBackToSignUp"
