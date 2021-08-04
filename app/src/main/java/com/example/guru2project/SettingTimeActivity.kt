@@ -1,7 +1,7 @@
 package com.example.guru2project
 
 import android.app.AlertDialog
-import android.content.Context
+import android.widget.Toast
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -27,21 +27,21 @@ class SettingTimeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting_time)
 
+        hourSpinner = findViewById(R.id.hour_spinner)
+        minuteSpinner = findViewById(R.id.minute_spinner)
+        btnTimeSet = findViewById(R.id.btnSetTime)
 
         val pref = getSharedPreferences("pref", MODE_PRIVATE)
         val sdf = SimpleDateFormat("yyyy-MM-dd")
         val currentDate = sdf.format(Date())
         val editor = pref.edit()
+
         // 오늘 이미 실행했을 때
         if (pref.getString("LAST_LAUNCH_DATE", "nodate")!!.contains(currentDate)) {
 
-            //시간을 설정했을때
+            //시간을 이미 설정했을때
             if (pref.getLong("GOAL_HOURS", 0)>0){
                 val intent = Intent(this, LeftTime::class.java)
-                startActivity(intent)
-                finish()
-            } else{ //시간을 설정 안했을때
-                val intent = Intent(this, SettingTimeActivity::class.java)
                 startActivity(intent)
                 finish()
             }
@@ -55,11 +55,6 @@ class SettingTimeActivity : AppCompatActivity() {
 
             // 어제 사용기록 가져온 후 어제 목표(데이터베이스에서 가져오기)보다 작으면 적립(함수로 구현)
         }
-
-
-        hourSpinner = findViewById(R.id.hour_spinner)
-        minuteSpinner = findViewById(R.id.minute_spinner)
-        btnTimeSet = findViewById(R.id.btnSetTime)
 
 
         //시간 선택
@@ -82,65 +77,30 @@ class SettingTimeActivity : AppCompatActivity() {
 
         //시간설정 확인
         btnTimeSet.setOnClickListener {
-            var dlg = AlertDialog.Builder(this)
-            dlg.setMessage("${setHour}시간 ${setMinute}분으로 설정하시겠습니까?")
-            dlg.setPositiveButton( "확인") { dialog, which ->
-                //목표시간 pref에 저장
-                goalHours = ( (setHour.toLong() * 60 ) + setMinute.toLong() ) *60*1000
-                val pref = getSharedPreferences("pref", MODE_PRIVATE)
-                val editor = pref.edit()
-                //editor.clear()
-                editor.putLong("GOAL_HOURS", goalHours)
-                editor.apply()
-                editor.commit()
-                //LeftTime으로
-                val intent = Intent(this, LeftTime::class.java)
-                startActivity(intent)
-                finish()
-            }
-            dlg.setNegativeButton("취소", null)
-            dlg.show()
-
-        }
-
-    }
-
-
-        /*@SuppressLint("PrivateApi")
-        fun TimePicker.setTimeInterval(
-                timeInterval: Int = DEFAULT_INTERVAL
-        ) {
-            try {
-                val classForId = Class.forName("com.android.internal.R\$id")
-                val fieldId = classForId.getField("minute").getInt(null)
-
-                (this.findViewById(fieldId) as NumberPicker).apply {
-                    minValue = MINUTES_MIN
-                    maxValue = MINUTES_MAX / timeInterval - 1
-                    displayedValues = getDisplayedValue(timeInterval)
+            if(setHour == 0 && setMinute == 0) {
+                Toast.makeText(this, "최소 30분부터 설정 가능합니다", Toast.LENGTH_LONG).show()
+            } else{
+                var dlg = AlertDialog.Builder(this)
+                dlg.setMessage("${setHour}시간 ${setMinute}분으로 설정하시겠습니까?")
+                dlg.setPositiveButton( "확인") { dialog, which ->
+                    //목표시간 pref에 저장
+                    goalHours = ( (setHour.toLong() * 60 ) + setMinute.toLong() ) *60*1000
+                    editor.putLong("GOAL_HOURS", goalHours)
+                    editor.apply()
+                    //LeftTime으로
+                    val intent = Intent(this, LeftTime::class.java)
+                    startActivity(intent)
+                    finish()
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
+                dlg.setNegativeButton("취소", null)
+                dlg.show()
             }
+
+
         }
 
-
-
-
-
-
-
-    private fun getDisplayedValue(timeInterval: Int = DEFAULT_INTERVAL): Array<String> {
-        val minutesArray = ArrayList<String>()
-        for (i in 0 until MINUTES_MAX step timeInterval) {
-            minutesArray.add(i.toString())
-        }
-
-        return minutesArray.toArray(arrayOf(""))
     }
 
-    private fun TimePicker.getDisplayedMinute(
 
-            timeInterval: Int = DEFAULT_INTERVAL
-    ): Int = minute * timeInterval*/
+
 }

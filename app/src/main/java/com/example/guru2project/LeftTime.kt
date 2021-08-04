@@ -68,15 +68,14 @@ class LeftTime : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
 
         var nameId:Int
         var timeId:Int
-
         for(i in result.indices) {
             if(i==3)
                 break
-            nameId=resources.getIdentifier("tvAppName${i+1}","id", packageName)
-            timeId=resources.getIdentifier("tvUsageTimes${i+1}","id", packageName)
+            nameId = resources.getIdentifier("tvAppName${i+1}","id", packageName)
+            timeId = resources.getIdentifier("tvUsageTimes${i+1}","id", packageName)
 
-            var appName=findViewById<TextView>(nameId)
-            var appUsageT=findViewById<TextView>(timeId)
+            var appName = findViewById<TextView>(nameId)
+            var appUsageT = findViewById<TextView>(timeId)
 
 
             var appInfo = packageManager.getApplicationInfo(result[i].first, PackageManager.GET_META_DATA)
@@ -88,9 +87,6 @@ class LeftTime : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
 
         }
         val pref = getSharedPreferences("pref", MODE_PRIVATE)
-        /*val editor = pref.edit()
-        editor.putLong("GOAL_HOURS", 86400000)
-        editor.apply()*/
         goalHours = pref.getLong("GOAL_HOURS", 0)
         leftHours = (goalHours-totalTime).toInt()
 
@@ -100,7 +96,6 @@ class LeftTime : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
             tvLeftTime.text="다음엔 더 노력해 봅시다!!"
 
         } else{
-
             val min = (leftHours/ (1000*60))% 60
             val hour =(leftHours / (1000*60*60))%24
             tvHours.text="$hour"
