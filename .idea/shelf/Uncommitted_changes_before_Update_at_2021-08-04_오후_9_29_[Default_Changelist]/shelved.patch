@@ -1,0 +1,338 @@
+Index: app/src/main/res/layout/activity_left_time.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    tools:context=\".LeftTime\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/LeftTImeText\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"center_horizontal\"\r\n        android:layout_marginStart=\"116dp\"\r\n        android:layout_marginTop=\"78dp\"\r\n        android:layout_marginEnd=\"116dp\"\r\n        android:layout_marginBottom=\"50dp\"\r\n        android:fontFamily=\"@font/hangul_font\"\r\n        android:text=\"@string/left_hours\"\r\n        android:textColor=\"#9AE39D\"\r\n        android:textSize=\"36sp\"\r\n        android:textStyle=\"bold\" />\r\n\r\n    <LinearLayout\r\n        android:id=\"@+id/linear\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:orientation=\"vertical\">\r\n\r\n        <androidx.constraintlayout.widget.ConstraintLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"180dp\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/tvHours\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"0\"\r\n                android:textSize=\"50dp\"\r\n                app:layout_constraintBaseline_toBaselineOf=\"@+id/textView13\"\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                app:layout_constraintEnd_toStartOf=\"@+id/textView13\"\r\n                app:layout_constraintHorizontal_bias=\"0.854\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\"\r\n                app:layout_constraintVertical_bias=\"0.584\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/textView13\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"@string/hours\"\r\n                android:textSize=\"30dp\"\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintHorizontal_bias=\"0.391\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\"\r\n                app:layout_constraintVertical_bias=\"0.564\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/tvMinutes\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"00\"\r\n                android:textSize=\"50dp\"\r\n                app:layout_constraintBaseline_toBaselineOf=\"@+id/textView14\"\r\n                app:layout_constraintEnd_toStartOf=\"@+id/textView14\"\r\n                app:layout_constraintHorizontal_bias=\"0.911\"\r\n                app:layout_constraintStart_toEndOf=\"@+id/textView13\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/textView14\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginEnd=\"104dp\"\r\n                android:text=\"@string/minute\"\r\n                android:textSize=\"30dp\"\r\n                app:layout_constraintBaseline_toBaselineOf=\"@+id/textView13\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\" />\r\n        </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n        <androidx.constraintlayout.widget.ConstraintLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/tvAppName\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginStart=\"50dp\"\r\n                android:layout_marginTop=\"26dp\"\r\n                android:text=\"사용기록 없음\"\r\n                android:textSize=\"24sp\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/tvUsageTimes\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginEnd=\"50dp\"\r\n                android:text=\"시간\"\r\n                android:textSize=\"20sp\"\r\n                app:layout_constraintBaseline_toBaselineOf=\"@+id/tvAppName\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\" />\r\n        </androidx.constraintlayout.widget.ConstraintLayout>\r\n    </LinearLayout>\r\n\r\n\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_left_time.xml	(revision 2e8b7e80a776bf799ffbd470ba049637b5f3ff13)
++++ app/src/main/res/layout/activity_left_time.xml	(date 1628076313583)
+@@ -37,7 +37,7 @@
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="0"
+-                android:textSize="50dp"
++                android:textSize="50sp"
+                 app:layout_constraintBaseline_toBaselineOf="@+id/textView13"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintEnd_toStartOf="@+id/textView13"
+@@ -51,7 +51,7 @@
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/hours"
+-                android:textSize="30dp"
++                android:textSize="30sp"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 app:layout_constraintHorizontal_bias="0.391"
+@@ -64,7 +64,7 @@
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="00"
+-                android:textSize="50dp"
++                android:textSize="50sp"
+                 app:layout_constraintBaseline_toBaselineOf="@+id/textView14"
+                 app:layout_constraintEnd_toStartOf="@+id/textView14"
+                 app:layout_constraintHorizontal_bias="0.911"
+@@ -76,7 +76,7 @@
+                 android:layout_height="wrap_content"
+                 android:layout_marginEnd="104dp"
+                 android:text="@string/minute"
+-                android:textSize="30dp"
++                android:textSize="30sp"
+                 app:layout_constraintBaseline_toBaselineOf="@+id/textView13"
+                 app:layout_constraintEnd_toEndOf="parent" />
+         </androidx.constraintlayout.widget.ConstraintLayout>
+@@ -86,7 +86,7 @@
+             android:layout_height="match_parent">
+ 
+             <TextView
+-                android:id="@+id/tvAppName"
++                android:id="@+id/tvAppName1"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginStart="50dp"
+@@ -97,13 +97,55 @@
+                 app:layout_constraintTop_toTopOf="parent" />
+ 
+             <TextView
+-                android:id="@+id/tvUsageTimes"
++                android:id="@+id/tvUsageTimes1"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_marginEnd="50dp"
++                android:text="시간"
++                android:textSize="20sp"
++                app:layout_constraintBaseline_toBaselineOf="@+id/tvAppName1"
++                app:layout_constraintEnd_toEndOf="parent" />
++
++            <TextView
++                android:id="@+id/tvAppName2"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_marginStart="50dp"
++                android:layout_marginTop="88dp"
++                android:text="사용기록 없음"
++                android:textSize="24sp"
++                app:layout_constraintStart_toStartOf="parent"
++                app:layout_constraintTop_toTopOf="parent" />
++
++            <TextView
++                android:id="@+id/tvUsageTimes2"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginEnd="50dp"
+                 android:text="시간"
+                 android:textSize="20sp"
+-                app:layout_constraintBaseline_toBaselineOf="@+id/tvAppName"
++                app:layout_constraintBaseline_toBaselineOf="@+id/tvAppName2"
++                app:layout_constraintEnd_toEndOf="parent" />
++
++            <TextView
++                android:id="@+id/tvAppName3"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_marginStart="50dp"
++                android:layout_marginTop="164dp"
++                android:text="사용기록 없음"
++                android:textSize="24sp"
++                app:layout_constraintStart_toStartOf="parent"
++                app:layout_constraintTop_toTopOf="parent" />
++
++            <TextView
++                android:id="@+id/tvUsageTimes3"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_marginEnd="50dp"
++                android:text="시간"
++                android:textSize="20sp"
++                app:layout_constraintBaseline_toBaselineOf="@+id/tvAppName3"
+                 app:layout_constraintEnd_toEndOf="parent" />
+         </androidx.constraintlayout.widget.ConstraintLayout>
+     </LinearLayout>
+Index: app/src/main/java/com/example/guru2project/HoursOfUse.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.guru2project\r\n\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\n\r\nclass HoursOfUse : AppCompatActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_hours_of_use)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/guru2project/HoursOfUse.kt	(revision 2e8b7e80a776bf799ffbd470ba049637b5f3ff13)
++++ app/src/main/java/com/example/guru2project/HoursOfUse.kt	(date 1628067573411)
+@@ -1,11 +1,28 @@
+ package com.example.guru2project
+ 
+-import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
++import android.widget.CalendarView
++import android.widget.CalendarView.OnDateChangeListener
++import androidx.appcompat.app.AppCompatActivity
++
+ 
+ class HoursOfUse : AppCompatActivity() {
++
++    lateinit var calendarView: CalendarView
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         setContentView(R.layout.activity_hours_of_use)
++
++        calendarView.setOnDateChangeListener(OnDateChangeListener { view, year, month, dayOfMonth ->
++            /*diaryTextView.setVisibility(View.VISIBLE)
++            save_Btn.setVisibility(View.VISIBLE)
++            contextEditText.setVisibility(View.VISIBLE)
++            textView2.setVisibility(View.INVISIBLE)
++            cha_Btn.setVisibility(View.INVISIBLE)
++            del_Btn.setVisibility(View.INVISIBLE)
++            diaryTextView.setText(String.format("%d / %d / %d", year, month + 1, dayOfMonth))
++            contextEditText.setText("")
++            checkDay(year, month, dayOfMonth, userID)*/
++        })
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/guru2project/SettingTimeActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.guru2project\r\n\r\nimport android.app.AlertDialog\r\nimport android.content.Context\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.view.View\r\nimport android.widget.*\r\n\r\nclass SettingTimeActivity : AppCompatActivity() {\r\n\r\n\r\n    private var setHour : Int = 0\r\n    private var setMinute : Int = 0\r\n\r\n    private lateinit var hourSpinner: Spinner\r\n    private lateinit var minuteSpinner: Spinner\r\n    private lateinit var btnTimeSet: Button\r\n\r\n    var goalHours : Long =0\r\n\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_setting_time)\r\n\r\n        hourSpinner = findViewById(R.id.hour_spinner)\r\n        minuteSpinner = findViewById(R.id.minute_spinner)\r\n        btnTimeSet = findViewById(R.id.btnSetTime)\r\n\r\n\r\n        //시간 선택\r\n        hourSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {\r\n            override fun onNothingSelected(parent: AdapterView<*>?) {\r\n            }\r\n            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {\r\n                setHour = hourSpinner.getItemAtPosition(position).toString().toInt()\r\n            }\r\n        }\r\n        //분 선택\r\n        minuteSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {\r\n            override fun onNothingSelected(parent: AdapterView<*>?) {\r\n\r\n            }\r\n            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {\r\n                setMinute = minuteSpinner.getItemAtPosition(position).toString().toInt()\r\n            }\r\n        }\r\n\r\n        //시간설정 확인\r\n        btnTimeSet.setOnClickListener {\r\n            var dlg = AlertDialog.Builder(this)\r\n            dlg.setMessage(\"${setHour}시간 ${setMinute}분으로 설정하시겠습니까?\")\r\n            dlg.setPositiveButton( \"확인\") { dialog, which ->\r\n                //목표시간 pref에 저장\r\n                goalHours = ( (setHour.toLong() * 60) + setMinute.toLong() ) *60*60\r\n                val pref = getSharedPreferences(\"pref\", MODE_PRIVATE)\r\n                val editor = pref.edit()\r\n                editor.putLong(\"GOAL_HOURS\", goalHours)\r\n                editor.apply()\r\n                //LeftTime으로\r\n                val intent = Intent(this, LeftTime::class.java)\r\n                startActivity(intent)\r\n                finish()\r\n            }\r\n            dlg.setNegativeButton(\"취소\", null)\r\n            dlg.show()\r\n\r\n        }\r\n\r\n    }\r\n\r\n\r\n        /*@SuppressLint(\"PrivateApi\")\r\n        fun TimePicker.setTimeInterval(\r\n                timeInterval: Int = DEFAULT_INTERVAL\r\n        ) {\r\n            try {\r\n                val classForId = Class.forName(\"com.android.internal.R\\$id\")\r\n                val fieldId = classForId.getField(\"minute\").getInt(null)\r\n\r\n                (this.findViewById(fieldId) as NumberPicker).apply {\r\n                    minValue = MINUTES_MIN\r\n                    maxValue = MINUTES_MAX / timeInterval - 1\r\n                    displayedValues = getDisplayedValue(timeInterval)\r\n                }\r\n            } catch (e: Exception) {\r\n                e.printStackTrace()\r\n            }\r\n        }\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n    private fun getDisplayedValue(timeInterval: Int = DEFAULT_INTERVAL): Array<String> {\r\n        val minutesArray = ArrayList<String>()\r\n        for (i in 0 until MINUTES_MAX step timeInterval) {\r\n            minutesArray.add(i.toString())\r\n        }\r\n\r\n        return minutesArray.toArray(arrayOf(\"\"))\r\n    }\r\n\r\n    private fun TimePicker.getDisplayedMinute(\r\n\r\n            timeInterval: Int = DEFAULT_INTERVAL\r\n    ): Int = minute * timeInterval*/\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/guru2project/SettingTimeActivity.kt	(revision 2e8b7e80a776bf799ffbd470ba049637b5f3ff13)
++++ app/src/main/java/com/example/guru2project/SettingTimeActivity.kt	(date 1628071625486)
+@@ -54,7 +54,7 @@
+             dlg.setMessage("${setHour}시간 ${setMinute}분으로 설정하시겠습니까?")
+             dlg.setPositiveButton( "확인") { dialog, which ->
+                 //목표시간 pref에 저장
+-                goalHours = ( (setHour.toLong() * 60) + setMinute.toLong() ) *60*60
++                goalHours = ( (setHour.toLong() * 60 ) + setMinute.toLong() ) *60*1000
+                 val pref = getSharedPreferences("pref", MODE_PRIVATE)
+                 val editor = pref.edit()
+                 editor.putLong("GOAL_HOURS", goalHours)
+Index: app/src/main/java/com/example/guru2project/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.guru2project\r\n\r\nimport android.annotation.SuppressLint\r\nimport android.app.AlertDialog\r\nimport android.app.AppOpsManager\r\nimport android.content.ContentValues.TAG\r\nimport android.content.Context\r\nimport android.content.Intent\r\nimport android.os.Build\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.os.Process\r\nimport android.provider.Settings\r\nimport android.text.TextUtils\r\nimport android.util.Log\r\nimport android.view.View\r\nimport android.widget.Button\r\nimport android.widget.EditText\r\nimport android.widget.Toast\r\nimport androidx.annotation.RequiresApi\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.auth.ktx.auth\r\nimport com.google.firebase.ktx.Firebase\r\nimport java.text.SimpleDateFormat\r\nimport java.time.LocalDate\r\nimport java.util.*\r\n\r\nclass MainActivity : AppCompatActivity() {\r\n\r\n    private lateinit var auth: FirebaseAuth\r\n    private lateinit var input_email: EditText\r\n    private lateinit var input_pw: EditText\r\n    private lateinit var btnJoin: Button\r\n    private lateinit var btnlogin: Button\r\n\r\n    @RequiresApi(Build.VERSION_CODES.O)\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_login)\r\n\r\n        //사용정보 접근 권한이 허용되지 않았을때\r\n        if (!checkForPermission()) {\r\n            var dlg = AlertDialog.Builder(this)\r\n            dlg.setTitle(\"권한이 필요한 이유\")\r\n            dlg.setMessage(\"어플 사용을 위해서 사용정보 접근 허용이 필요합니다.\")\r\n            dlg.setPositiveButton( \"확인\") { dialog, which ->\r\n                startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))\r\n            }\r\n            dlg.setNegativeButton(\"취소\", null)\r\n            //dlg.show()\r\n\r\n        } else { //이미 권한이 허용된 경우\r\n            //화면 넘어감\r\n        }\r\n\r\n        val pref = getSharedPreferences(\"pref\", MODE_PRIVATE)\r\n        val sdf = SimpleDateFormat(\"yyyy-MM-dd\")\r\n        val currentDate = sdf.format(Date())\r\n        val editor = pref.edit()\r\n        // 오늘 이미 실행했을 때\r\n        if (pref.getString(\"LAST_LAUNCH_DATE\", \"nodate\")!!.contains(currentDate)) {\r\n\r\n            //시간을 설정했을때\r\n            if (pref.getLong(\"GOAL_HOURS\", 0)>0){\r\n                val intent = Intent(this, LeftTime::class.java)\r\n                startActivity(intent)\r\n                finish()\r\n            } else{ //시간을 설정 안했을때\r\n                val intent = Intent(this, SettingTimeActivity::class.java)\r\n                startActivity(intent)\r\n                finish()\r\n            }\r\n\r\n        } else {//오늘 처음 실행했을때\r\n\r\n            // 설정시간 초기화\r\n            editor.putLong(\"GOAL_HOURS\", 0)\r\n            editor.putString(\"LAST_LAUNCH_DATE\", currentDate)\r\n            editor.apply()\r\n\r\n            // 어제 사용기록 가져온 후 어제 목표(데이터베이스에서 가져오기)보다 작으면 적립(함수로 구현)\r\n        }\r\n        // 사용자 로그인상태 확인\r\n        auth = Firebase.auth\r\n\r\n        // 사용자가 로그인되어 있다면(자동로그인) SettingTimeAcitivity로\r\n        if (auth.currentUser != null) {\r\n            val intent = Intent(this, GifticonListActivity::class.java)\r\n            startActivity(intent)\r\n            finish()\r\n        }\r\n\r\n        // 뷰 연결\r\n        input_email = findViewById(R.id.login_email)\r\n        input_pw = findViewById(R.id.login_pw)\r\n        btnJoin = findViewById(R.id.btnBackToSignUp)\r\n        btnlogin = findViewById(R.id.btnLogin)\r\n\r\n        btnJoin.setOnClickListener{\r\n            val intent = Intent(this, SignUpActivity::class.java)\r\n            startActivity(intent)\r\n            finish()\r\n        }\r\n\r\n        btnlogin.setOnClickListener(View.OnClickListener {\r\n            var email = input_email.text.toString()\r\n            var pw = input_pw.text.toString()\r\n\r\n            if(TextUtils.isEmpty(email)) {\r\n                Toast.makeText(applicationContext,\"이메일을 입력해주세요.\", Toast.LENGTH_SHORT).show()\r\n                return@OnClickListener\r\n            }\r\n            if(TextUtils.isEmpty(pw)){\r\n                Toast.makeText(applicationContext,\"비밀번호를 입력해주세요.\", Toast.LENGTH_SHORT).show()\r\n                return@OnClickListener\r\n            }\r\n\r\n            // 로그인 시도\r\n            auth.signInWithEmailAndPassword(email, pw).addOnCompleteListener(this) {task ->\r\n                if(task.isSuccessful) {\r\n                    Log.d(TAG, \"로그인:성공\")\r\n                    val user = auth.currentUser\r\n\r\n                    val intent = Intent(this, SettingTimeActivity::class.java)\r\n                    startActivity(intent)\r\n                    finish()\r\n                    // updateUi(user) 함수 사용 - 만들어야 함.\r\n                } else {\r\n                    Log.w(TAG, \"로그인:실패\", task.exception)\r\n                    Toast.makeText(baseContext, \"인증에 실패했습니다.\", Toast.LENGTH_SHORT).show()\r\n                    //updateUI(null)\r\n                }\r\n\r\n            }\r\n\r\n        })\r\n\r\n\r\n\r\n\r\n\r\n    }\r\n\r\n\r\n    // 사용정보 접근 권한 허용 여부 확인\r\n    @SuppressLint(\"NewApi\")\r\n    private fun checkForPermission(): Boolean {\r\n        val appOps = getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager\r\n        val mode = appOps.checkOpNoThrow(\r\n            AppOpsManager.OPSTR_GET_USAGE_STATS,\r\n            Process.myUid(), packageName)\r\n        return mode == AppOpsManager.MODE_ALLOWED\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/guru2project/MainActivity.kt	(revision 2e8b7e80a776bf799ffbd470ba049637b5f3ff13)
++++ app/src/main/java/com/example/guru2project/MainActivity.kt	(date 1628070668230)
+@@ -36,7 +36,8 @@
+     @RequiresApi(Build.VERSION_CODES.O)
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+-        setContentView(R.layout.activity_login)
++        setContentView(R.layout.activity_loading)
++
+ 
+         //사용정보 접근 권한이 허용되지 않았을때
+         if (!checkForPermission()) {
+@@ -47,7 +48,7 @@
+                 startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+             }
+             dlg.setNegativeButton("취소", null)
+-            //dlg.show()
++            dlg.show()
+ 
+         } else { //이미 권한이 허용된 경우
+             //화면 넘어감
+@@ -80,12 +81,12 @@
+ 
+             // 어제 사용기록 가져온 후 어제 목표(데이터베이스에서 가져오기)보다 작으면 적립(함수로 구현)
+         }
+-        // 사용자 로그인상태 확인
++        /*// 사용자 로그인상태 확인
+         auth = Firebase.auth
+ 
+         // 사용자가 로그인되어 있다면(자동로그인) SettingTimeAcitivity로
+         if (auth.currentUser != null) {
+-            val intent = Intent(this, GifticonListActivity::class.java)
++            val intent = Intent(this, LeftTime::class.java)
+             startActivity(intent)
+             finish()
+         }
+@@ -133,8 +134,7 @@
+ 
+             }
+ 
+-        })
+-
++        })*/
+ 
+ 
+ 
+@@ -151,4 +151,5 @@
+             Process.myUid(), packageName)
+         return mode == AppOpsManager.MODE_ALLOWED
+     }
++
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/guru2project/LeftTime.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.guru2project\r\n\r\nimport android.app.usage.UsageEvents\r\nimport android.app.usage.UsageStatsManager\r\nimport android.content.Context\r\nimport android.content.SharedPreferences\r\nimport android.os.Build\r\nimport android.os.Bundle\r\nimport android.widget.TextView\r\nimport androidx.annotation.RequiresApi\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport java.time.LocalDate\r\nimport java.util.*\r\nimport kotlin.collections.HashMap\r\n\r\nclass LeftTime : AppCompatActivity() {\r\n\r\n    private lateinit var appName: TextView\r\n    private lateinit var appUsageTime: TextView\r\n    private lateinit var tvHours: TextView\r\n    private lateinit var tvMinuts: TextView\r\n\r\n    private lateinit var usageMap: HashMap<String, Long>\r\n\r\n    private var totalTime: Long = 0\r\n    private var goalHours: Long = 0\r\n    private var leftHours: Int = 0\r\n\r\n    @RequiresApi(Build.VERSION_CODES.O)\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_left_time)\r\n\r\n        tvHours = findViewById(R.id.tvHours)\r\n        tvMinuts = findViewById(R.id.tvMinutes)\r\n\r\n        var tz= TimeZone.getDefault()\r\n        var tzId= tz.toZoneId()\r\n        var dtNow = LocalDate.now()\r\n        var dtStart = dtNow.atStartOfDay(tzId).toInstant().toEpochMilli()\r\n\r\n        usageMap = mapUsageTimes(dtStart, System.currentTimeMillis())\r\n\r\n        usageMap.forEach {it->\r\n            totalTime += it.value\r\n        }\r\n\r\n        // 사용시간을 기준으로 내림차순으로 배열\r\n        val result = usageMap.toList().sortedByDescending { (_, value) -> value}\r\n        //val list:MutableList<Pair<String, Long>> = mutableListOf()\r\n        //하루동안 제일 많이 사용한 어플 3개\r\n        for (i in 0..2) {\r\n            //list.add(Pair(result[i].first, result[i].second))\r\n\r\n                println(result[i].first)\r\n                println(result[i].second)\r\n            //텍스트뷰로 어플 이름과 사용시간 보이기\r\n        }\r\n        val pref = getSharedPreferences(\"pref\", MODE_PRIVATE)\r\n        goalHours = pref.getLong(\"GOAL_HOURS\", 57600000)\r\n\r\n        //남은 시간\r\n        leftHours = (goalHours-totalTime).toInt()\r\n        val min = (leftHours/ (1000*60) )% 60\r\n        val hour =(leftHours / (1000*60*60))%24\r\n        tvHours.text=\"$min\"\r\n        tvMinuts.text=\"$hour\"\r\n\r\n\r\n    }\r\n\r\n    //하루동안 사용한 앱의 패키지 이름과 사용시간을 Map으로 가져오기\r\n    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)\r\n    private fun mapUsageTimes(startTime: Long, endTime: Long) : HashMap<String, Long>{\r\n        var currentEvent: UsageEvents.Event\r\n        val allEvents: MutableList<UsageEvents.Event> = ArrayList()\r\n        val map: HashMap<String, Long> = HashMap()\r\n        val mUsageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager\r\n        // 발생 이벤트를 쿼리\r\n        val usageEvents = mUsageStatsManager.queryEvents(startTime, endTime)\r\n\r\n        while (usageEvents.hasNextEvent()) {\r\n            currentEvent = UsageEvents.Event()\r\n            usageEvents.getNextEvent(currentEvent)\r\n            val packageName = currentEvent.packageName\r\n            //추가 이벤트가 발견되면 이벤트 목록에 추가\r\n            if (currentEvent.eventType == UsageEvents.Event.ACTIVITY_RESUMED || currentEvent.eventType == UsageEvents.Event.ACTIVITY_PAUSED || currentEvent.eventType == UsageEvents.Event.ACTIVITY_STOPPED) {\r\n                allEvents.add(currentEvent)\r\n                if (!map.containsKey(packageName)) {\r\n                    map[packageName] = 0\r\n                }\r\n            }\r\n        }\r\n\r\n        //이벤트 발생시\r\n        for (i in 0 until (allEvents.size - 1) step 1) {\r\n            val event0 = allEvents[i]\r\n            val event1 = allEvents[i + 1]\r\n\r\n            //앱 실행할때마다 사용시간 측정\r\n            if (event0.eventType == UsageEvents.Event.ACTIVITY_RESUMED &&\r\n                (event1.eventType == UsageEvents.Event.ACTIVITY_PAUSED || event1.eventType == UsageEvents.Event.ACTIVITY_STOPPED)\r\n                && event0.packageName == event1.packageName) {\r\n                val runtime = event1.timeStamp - event0.timeStamp\r\n                val tInForeground = map[event0.packageName]!!.plus(runtime)\r\n                map[event0.packageName] = tInForeground\r\n            }\r\n        }\r\n\r\n        return map\r\n    }\r\n\r\n    private fun a(){\r\n\r\n    }\r\n}\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/guru2project/LeftTime.kt	(revision 2e8b7e80a776bf799ffbd470ba049637b5f3ff13)
++++ app/src/main/java/com/example/guru2project/LeftTime.kt	(date 1628075923516)
+@@ -3,7 +3,7 @@
+ import android.app.usage.UsageEvents
+ import android.app.usage.UsageStatsManager
+ import android.content.Context
+-import android.content.SharedPreferences
++import android.content.pm.PackageManager
+ import android.os.Build
+ import android.os.Bundle
+ import android.widget.TextView
+@@ -15,8 +15,8 @@
+ 
+ class LeftTime : AppCompatActivity() {
+ 
+-    private lateinit var appName: TextView
+-    private lateinit var appUsageTime: TextView
++    private lateinit var appName1: TextView
++    private lateinit var appUsageTime1: TextView
+     private lateinit var tvHours: TextView
+     private lateinit var tvMinuts: TextView
+ 
+@@ -33,6 +33,8 @@
+ 
+         tvHours = findViewById(R.id.tvHours)
+         tvMinuts = findViewById(R.id.tvMinutes)
++        appName1 = findViewById(R.id.tvAppName1)
++        appUsageTime1 = findViewById(R.id.tvUsageTimes1)
+ 
+         var tz= TimeZone.getDefault()
+         var tzId= tz.toZoneId()
+@@ -47,24 +49,58 @@
+ 
+         // 사용시간을 기준으로 내림차순으로 배열
+         val result = usageMap.toList().sortedByDescending { (_, value) -> value}
+-        //val list:MutableList<Pair<String, Long>> = mutableListOf()
+         //하루동안 제일 많이 사용한 어플 3개
+-        for (i in 0..2) {
+-            //list.add(Pair(result[i].first, result[i].second))
++        /*if(result.size>=3) {
++            for (i in 0..2) {
+ 
+                 println(result[i].first)
+                 println(result[i].second)
+-            //텍스트뷰로 어플 이름과 사용시간 보이기
++                //텍스트뷰로 어플 이름과 사용시간 보이기
++                val a = resources.getIdentifier("tvAppName${i+1}","id", packageName)
++            }
++
++        } else {
++            for(i in result.indices) {
++                //텍스트뷰로 없애고 "다음 번엔 더 노력해봅시다!"
++
++            }
++        }*/
++        var nameId:Int
++        var timeId:Int
++
++        for(i in result.indices) {
++            if(i==3)
++                break
++            nameId=resources.getIdentifier("tvAppName${i+1}","id", packageName)
++            timeId=resources.getIdentifier("tvUsageTimes${i+1}","id", packageName)
++
++            var appName=findViewById<TextView>(nameId)
++            var appUsageT=findViewById<TextView>(timeId)
++
++
++            var appInfo = packageManager.getApplicationInfo(result[i].first, PackageManager.GET_META_DATA)
++
++            var appLabel = packageManager.getApplicationLabel(appInfo)
++            appName.text=appLabel
++            appUsageT.text=result[i].second.toString()
++
++
+         }
+         val pref = getSharedPreferences("pref", MODE_PRIVATE)
+-        goalHours = pref.getLong("GOAL_HOURS", 57600000)
+-
+-        //남은 시간
++        goalHours = pref.getLong("GOAL_HOURS", 0)
+         leftHours = (goalHours-totalTime).toInt()
+-        val min = (leftHours/ (1000*60) )% 60
+-        val hour =(leftHours / (1000*60*60))%24
+-        tvHours.text="$min"
+-        tvMinuts.text="$hour"
++
++        //남은 시간
++        if(leftHours < 0){
++            //목표달성 실패
++        } else{
++            val min = (leftHours/ (1000*60) )% 60
++            val hour =(leftHours / (1000*60*60))%24
++            tvHours.text="$hour"
++            tvMinuts.text="$min"
++        }
++
++
+ 
+ 
+     }

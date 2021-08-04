@@ -3,7 +3,7 @@ package com.example.guru2project
 import android.app.usage.UsageEvents
 import android.app.usage.UsageStatsManager
 import android.content.Context
-import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
@@ -15,10 +15,11 @@ import kotlin.collections.HashMap
 
 class LeftTime : AppCompatActivity() {
 
-    private lateinit var appName: TextView
-    private lateinit var appUsageTime: TextView
+    private lateinit var appName1: TextView
+    private lateinit var appUsageTime1: TextView
     private lateinit var tvHours: TextView
     private lateinit var tvMinuts: TextView
+    private lateinit var tvLeftTime: TextView
 
     private lateinit var usageMap: HashMap<String, Long>
 
@@ -33,6 +34,7 @@ class LeftTime : AppCompatActivity() {
 
         tvHours = findViewById(R.id.tvHours)
         tvMinuts = findViewById(R.id.tvMinutes)
+        tvLeftTime = findViewById(R.id.LeftTimeText)
 
         var tz= TimeZone.getDefault()
         var tzId= tz.toZoneId()
@@ -47,24 +49,49 @@ class LeftTime : AppCompatActivity() {
 
         // 사용시간을 기준으로 내림차순으로 배열
         val result = usageMap.toList().sortedByDescending { (_, value) -> value}
-        //val list:MutableList<Pair<String, Long>> = mutableListOf()
-        //하루동안 제일 많이 사용한 어플 3개
-        for (i in 0..2) {
-            //list.add(Pair(result[i].first, result[i].second))
 
-                println(result[i].first)
-                println(result[i].second)
-            //텍스트뷰로 어플 이름과 사용시간 보이기
+        var nameId:Int
+        var timeId:Int
+
+        for(i in result.indices) {
+            if(i==3)
+                break
+            nameId=resources.getIdentifier("tvAppName${i+1}","id", packageName)
+            timeId=resources.getIdentifier("tvUsageTimes${i+1}","id", packageName)
+
+            var appName=findViewById<TextView>(nameId)
+            var appUsageT=findViewById<TextView>(timeId)
+
+
+            var appInfo = packageManager.getApplicationInfo(result[i].first, PackageManager.GET_META_DATA)
+            var appLabel = packageManager.getApplicationLabel(appInfo)
+
+            appName.text=appLabel
+            appUsageT.text="${(result[i].second / (1000*60*60)) % 24}시간 ${((result[i].second)/(1000*60))%60}분"
+
+
         }
         val pref = getSharedPreferences("pref", MODE_PRIVATE)
-        goalHours = pref.getLong("GOAL_HOURS", 57600000)
+        /*val editor = pref.edit()
+        editor.putLong("GOAL_HOURS", 86400000)
+        editor.apply()*/
+        goalHours = pref.getLong("GOAL_HOURS", 0)
+        leftHours = (goalHours-totalTime).toInt()
 
         //남은 시간
-        leftHours = (goalHours-totalTime).toInt()
-        val min = (leftHours/ (1000*60) )% 60
-        val hour =(leftHours / (1000*60*60))%24
-        tvHours.text="$min"
-        tvMinuts.text="$hour"
+        if(leftHours < 0){
+            //목표달성 실패
+            tvLeftTime.text="다음엔 더 노력해 봅시다!!"
+
+        } else{
+
+            val min = (leftHours/ (1000*60))% 60
+            val hour =(leftHours / (1000*60*60))%24
+            tvHours.text="$hour"
+            tvMinuts.text="$min"
+        }
+
+
 
 
     }
@@ -110,9 +137,7 @@ class LeftTime : AppCompatActivity() {
         return map
     }
 
-    private fun a(){
 
-    }
 }
 
 

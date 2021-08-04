@@ -86,7 +86,7 @@ class SettingTimeActivity : AppCompatActivity() {
             dlg.setMessage("${setHour}시간 ${setMinute}분으로 설정하시겠습니까?")
             dlg.setPositiveButton( "확인") { dialog, which ->
                 //목표시간 pref에 저장
-                goalHours = ( (setHour.toLong() * 60) + setMinute.toLong() ) *60*60
+                goalHours = ( (setHour.toLong() * 60 ) + setMinute.toLong() ) *60*1000
                 val pref = getSharedPreferences("pref", MODE_PRIVATE)
                 val editor = pref.edit()
                 //editor.clear()
