@@ -47,13 +47,13 @@ class LeftTime : AppCompatActivity() {
 
         // 사용시간을 기준으로 내림차순으로 배열
         val result = usageMap.toList().sortedByDescending { (_, value) -> value}
-        val list:MutableList<Pair<String, Long>> = mutableListOf()
+        //val list:MutableList<Pair<String, Long>> = mutableListOf()
         //하루동안 제일 많이 사용한 어플 3개
         for (i in 0..2) {
-            list.add(Pair(result[i].first, result[i].second))
+            //list.add(Pair(result[i].first, result[i].second))
 
-                //print(result[i].first)
-                //println(result[i].second)
+                println(result[i].first)
+                println(result[i].second)
             //텍스트뷰로 어플 이름과 사용시간 보이기
         }
         val pref = getSharedPreferences("pref", MODE_PRIVATE)
