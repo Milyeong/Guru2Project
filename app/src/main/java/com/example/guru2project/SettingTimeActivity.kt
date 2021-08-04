@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SettingTimeActivity : AppCompatActivity() {
 
@@ -24,6 +26,36 @@ class SettingTimeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting_time)
+
+
+        val pref = getSharedPreferences("pref", MODE_PRIVATE)
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val currentDate = sdf.format(Date())
+        val editor = pref.edit()
+        // 오늘 이미 실행했을 때
+        if (pref.getString("LAST_LAUNCH_DATE", "nodate")!!.contains(currentDate)) {
+
+            //시간을 설정했을때
+            if (pref.getLong("GOAL_HOURS", 0)>0){
+                val intent = Intent(this, LeftTime::class.java)
+                startActivity(intent)
+                finish()
+            } else{ //시간을 설정 안했을때
+                val intent = Intent(this, SettingTimeActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+
+        } else {//오늘 처음 실행했을때
+
+            // 설정시간 초기화
+            editor.putLong("GOAL_HOURS", 0)
+            editor.putString("LAST_LAUNCH_DATE", currentDate)
+            editor.apply()
+
+            // 어제 사용기록 가져온 후 어제 목표(데이터베이스에서 가져오기)보다 작으면 적립(함수로 구현)
+        }
+
 
         hourSpinner = findViewById(R.id.hour_spinner)
         minuteSpinner = findViewById(R.id.minute_spinner)
@@ -57,8 +89,10 @@ class SettingTimeActivity : AppCompatActivity() {
                 goalHours = ( (setHour.toLong() * 60) + setMinute.toLong() ) *60*60
                 val pref = getSharedPreferences("pref", MODE_PRIVATE)
                 val editor = pref.edit()
+                //editor.clear()
                 editor.putLong("GOAL_HOURS", goalHours)
                 editor.apply()
+                editor.commit()
                 //LeftTime으로
                 val intent = Intent(this, LeftTime::class.java)
                 startActivity(intent)
