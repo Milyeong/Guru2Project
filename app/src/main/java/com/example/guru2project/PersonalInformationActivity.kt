@@ -1,9 +1,17 @@
 package com.example.guru2project
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -12,8 +20,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class PersonalInformationActivity : AppCompatActivity() {
+class PersonalInformationActivity : AppCompatActivity(),
+    NavigationView.OnNavigationItemSelectedListener {
 
+    private lateinit var auth: FirebaseAuth
+
+    private lateinit var drawLayout: DrawerLayout
     private lateinit var tvName: TextView
     private lateinit var tvPhoneNum : TextView
     private lateinit var tvEmail : TextView
@@ -29,8 +41,9 @@ class PersonalInformationActivity : AppCompatActivity() {
         tvEmail = findViewById(R.id.tv_pi_email)
         tvSignUpDate = findViewById(R.id.tv_pi_date)
 
+        this.init()
 
-        var auth = Firebase.auth
+        auth = Firebase.auth
 
         var user = auth.currentUser
         if (user != null) {
@@ -65,6 +78,76 @@ class PersonalInformationActivity : AppCompatActivity() {
         }else{
             Toast.makeText(this, "사용자 정보를 가져올 수 없습니다.", Toast.LENGTH_SHORT).show()
         }
+    }
 
+    // 슬라이드 메뉴 (Drawer) 초기화
+    private fun init(){
+        var toolbar = findViewById<Toolbar>(R.id.toolbar_pi)
+        toolbar.title = "사용자 개인 정보"
+        if(toolbar!= null) {
+            setSupportActionBar(toolbar)
+        }
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+
+        drawLayout = findViewById<DrawerLayout>(R.id.drawer_layout_pi)
+        var navigationView = findViewById<NavigationView>(R.id.nav_view_pi)
+
+        val actionBarDrawerToggle = ActionBarDrawerToggle(
+            this,
+            drawLayout,
+            toolbar,
+            R.string.open,
+            R.string.close
+        );
+
+        drawLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState()
+        navigationView.setNavigationItemSelectedListener(this)
+    }
+
+    // 슬라이드 메뉴에서 메뉴 선택시의 이벤트 처리
+    override fun onNavigationItemSelected(item: MenuItem):Boolean{
+        when(item.itemId){
+            R.id.nav_personnal_information ->{
+                drawLayout.closeDrawer(GravityCompat.START);
+            }
+            R.id.nav_time_record -> {
+
+            }
+            R.id.nav_gifticon -> {
+                val intent = Intent(this,GifticonListActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            R.id.nav_user_gifticon -> {
+                val intent = Intent(this,UserGifticonListActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            R.id.nav_mileage_record -> {
+                val intent = Intent(this,MileageUseActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            R.id.nav_logout -> {
+                auth.signOut()
+                val intent = Intent(this,MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
+
+        return true
+    }
+
+    override fun onBackPressed() {
+        // Drawer(슬라이드 메뉴)가 열려있으면 닫기
+        if (drawLayout.isDrawerOpen(GravityCompat.START)) {
+            drawLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

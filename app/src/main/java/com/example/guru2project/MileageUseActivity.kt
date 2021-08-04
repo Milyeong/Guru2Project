@@ -11,6 +11,7 @@ import android.widget.BaseAdapter
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -24,6 +25,7 @@ import kotlin.collections.ArrayList
 
 class MileageUseActivity : AppCompatActivity() {
 
+    private lateinit var auth: FirebaseAuth
     private lateinit var userGiftRecordRef: DatabaseReference
     private var recordArray = ArrayList<GifticonRecordItem>()
     private lateinit var adapter: UserUseMileageListAdapter
@@ -37,7 +39,7 @@ class MileageUseActivity : AppCompatActivity() {
         listView = findViewById(R.id.listView_um)
 
         // 사용자 정보 불러오기
-        var auth = Firebase.auth
+        auth = Firebase.auth
         var user = auth.currentUser
 
         if(user != null){

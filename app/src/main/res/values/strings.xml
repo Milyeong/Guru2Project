@@ -15,4 +15,7 @@
     <string name="hours">시간</string>
     <string name="left_hours">남은 시간</string>
     <string name="minute">분</string>
+
+    <string name="open">open</string>
+    <string name="close">close</string>
 </resources>

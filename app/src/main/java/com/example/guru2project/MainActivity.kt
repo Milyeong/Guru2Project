@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         // 사용자가 로그인되어 있다면(자동로그인) SettingTimeAcitivity로
         if (auth.currentUser != null) {
-            val intent = Intent(this, SettingTimeActivity::class.java)
+            val intent = Intent(this, GifticonListActivity::class.java)
             startActivity(intent)
             finish()
         }
