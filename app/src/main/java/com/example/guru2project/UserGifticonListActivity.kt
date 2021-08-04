@@ -135,6 +135,9 @@ class UserGifticonListActivity : AppCompatActivity(),
                 startActivity(intent)
                 finish()
             }
+            R.id.nav_main -> {
+                super.onBackPressed();
+            }
             R.id.nav_time_record -> {
 
             }
@@ -153,7 +156,7 @@ class UserGifticonListActivity : AppCompatActivity(),
             }
             R.id.nav_logout -> {
                 auth.signOut()
-                val intent = Intent(this,MainActivity::class.java)
+                val intent = Intent(this,LoadingActivity::class.java)
                 startActivity(intent)
                 finish()
             }

@@ -3,24 +3,36 @@ package com.example.guru2project
 import android.app.usage.UsageEvents
 import android.app.usage.UsageStatsManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.time.LocalDate
 import java.util.*
 import kotlin.collections.HashMap
 
-class LeftTime : AppCompatActivity() {
+class LeftTime : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    private lateinit var drawLayout: DrawerLayout
     private lateinit var appName1: TextView
     private lateinit var appUsageTime1: TextView
     private lateinit var tvHours: TextView
     private lateinit var tvMinuts: TextView
     private lateinit var tvLeftTime: TextView
 
+    private lateinit var auth: FirebaseAuth
     private lateinit var usageMap: HashMap<String, Long>
 
     private var totalTime: Long = 0
@@ -32,9 +44,13 @@ class LeftTime : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_left_time)
 
+        this.init()
+
         tvHours = findViewById(R.id.tvHours)
         tvMinuts = findViewById(R.id.tvMinutes)
         tvLeftTime = findViewById(R.id.LeftTimeText)
+
+        auth =  Firebase.auth
 
         var tz= TimeZone.getDefault()
         var tzId= tz.toZoneId()
@@ -95,6 +111,83 @@ class LeftTime : AppCompatActivity() {
 
 
     }
+
+    // 슬라이드 메뉴 (Drawer) 초기화
+    private fun init(){
+        var toolbar = findViewById<Toolbar>(R.id.toolbar_lt)
+        toolbar.title = "남은 시간"
+        if(toolbar!= null) {
+            setSupportActionBar(toolbar)
+        }
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+
+        drawLayout = findViewById<DrawerLayout>(R.id.drawer_layout_lt)
+        var navigationView = findViewById<NavigationView>(R.id.nav_view_lt)
+
+        val actionBarDrawerToggle = ActionBarDrawerToggle(
+            this,
+            drawLayout,
+            toolbar,
+            R.string.open,
+            R.string.close
+        );
+
+        drawLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState()
+        navigationView.setNavigationItemSelectedListener(this)
+    }
+
+    // 슬라이드 메뉴에서 메뉴 선택시의 이벤트 처리
+    override fun onNavigationItemSelected(item: MenuItem):Boolean{
+        when(item.itemId){
+            R.id.nav_personnal_information ->{
+                val intent = Intent(this,PersonalInformationActivity::class.java)
+                startActivity(intent)
+                drawLayout.closeDrawer(GravityCompat.START);
+            }
+            R.id.nav_main ->{
+                drawLayout.closeDrawer(GravityCompat.START);
+            }
+            R.id.nav_time_record -> {
+
+            }
+            R.id.nav_gifticon -> {
+                val intent = Intent(this,GifticonListActivity::class.java)
+                startActivity(intent)
+                drawLayout.closeDrawer(GravityCompat.START);
+            }
+            R.id.nav_user_gifticon -> {
+                val intent = Intent(this,UserGifticonListActivity::class.java)
+                startActivity(intent)
+                drawLayout.closeDrawer(GravityCompat.START);
+            }
+            R.id.nav_mileage_record -> {
+                val intent = Intent(this,MileageUseActivity::class.java)
+                startActivity(intent)
+                drawLayout.closeDrawer(GravityCompat.START);
+            }
+            R.id.nav_logout -> {
+                auth.signOut()
+                val intent = Intent(this,LoadingActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
+
+        return true
+    }
+
+    override fun onBackPressed() {
+        // Drawer(슬라이드 메뉴)가 열려있으면 닫기
+        if (drawLayout.isDrawerOpen(GravityCompat.START)) {
+            drawLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 
     //하루동안 사용한 앱의 패키지 이름과 사용시간을 Map으로 가져오기
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)

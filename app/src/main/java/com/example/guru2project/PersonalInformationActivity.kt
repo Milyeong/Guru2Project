@@ -113,8 +113,13 @@ class PersonalInformationActivity : AppCompatActivity(),
             R.id.nav_personnal_information ->{
                 drawLayout.closeDrawer(GravityCompat.START);
             }
+            R.id.nav_main -> {
+                val intent = Intent(this,LeftTime::class.java)
+                startActivity(intent)
+                finish()
+            }
             R.id.nav_time_record -> {
-
+                super.onBackPressed();
             }
             R.id.nav_gifticon -> {
                 val intent = Intent(this,GifticonListActivity::class.java)
@@ -133,7 +138,7 @@ class PersonalInformationActivity : AppCompatActivity(),
             }
             R.id.nav_logout -> {
                 auth.signOut()
-                val intent = Intent(this,MainActivity::class.java)
+                val intent = Intent(this,LoadingActivity::class.java)
                 startActivity(intent)
                 finish()
             }
