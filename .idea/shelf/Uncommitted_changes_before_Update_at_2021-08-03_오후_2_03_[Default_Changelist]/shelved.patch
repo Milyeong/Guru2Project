@@ -1,0 +1,184 @@
+Index: app/src/main/java/com/example/guru2project/UserGifticonListActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.guru2project\r\n\r\nimport android.content.ContentValues\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.*\r\nimport androidx.core.content.ContextCompat\r\nimport com.google.firebase.auth.ktx.auth\r\nimport com.google.firebase.database.DataSnapshot\r\nimport com.google.firebase.database.DatabaseError\r\nimport com.google.firebase.database.DatabaseReference\r\nimport com.google.firebase.database.ValueEventListener\r\nimport com.google.firebase.database.ktx.database\r\nimport com.google.firebase.ktx.Firebase\r\nimport org.w3c.dom.Text\r\n\r\nclass UserGifticonListActivity : AppCompatActivity() {\r\n\r\n    private lateinit var userGiftRecordRef : DatabaseReference\r\n    private var recordArray = ArrayList<GifticonRecordItem>()\r\n    private lateinit var adapter: UserGiftListAdapter\r\n\r\n    private lateinit var listView : ListView\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_user_gifticon_list)\r\n\r\n        listView = findViewById(R.id.listView_ugl)\r\n\r\n        // 사용자 정보 불러오기\r\n        var auth = Firebase.auth\r\n        var user = auth.currentUser\r\n\r\n        if(user != null){\r\n            var uid = user.uid\r\n            userGiftRecordRef = Firebase.database.reference.child(\"gifticonRecord\").child(uid)\r\n            setListenerToRef()\r\n        } else {\r\n            Toast.makeText(this, \"사용자 정보를 가져올 수 없습니다.\", Toast.LENGTH_SHORT).show()\r\n        }\r\n\r\n        adapter = UserGiftListAdapter(recordArray)\r\n        listView.adapter = adapter\r\n\r\n    }\r\n\r\n    // 사용자 기프티콘 목록 불러오기\r\n    private fun setListenerToRef(){\r\n        val listListener = object : ValueEventListener {\r\n            override fun onDataChange(snapshot: DataSnapshot) {\r\n                Log.d(ContentValues.TAG,\"확인\" + snapshot.childrenCount)\r\n                recordArray.clear()\r\n\r\n                for(itemSnapshot in snapshot.children){\r\n                    var data =  itemSnapshot.getValue(GifticonRecordItem::class.java)\r\n                    if(data != null){\r\n                        recordArray.add(data)\r\n                        adapter.notifyDataSetChanged()\r\n                    }\r\n                }\r\n            }\r\n\r\n            override fun onCancelled(error: DatabaseError) {\r\n                Log.d(ContentValues.TAG, \"오류가 발생했습니다: 목록\")\r\n            }\r\n        }\r\n        userGiftRecordRef.addValueEventListener(listListener)\r\n\r\n    }\r\n\r\n\r\n    inner class UserGiftListAdapter(val list: ArrayList<GifticonRecordItem>) : BaseAdapter() {\r\n        private lateinit var inflater: LayoutInflater\r\n\r\n        override fun getCount(): Int {\r\n            return list.size\r\n        }\r\n\r\n        override fun getItem(position: Int): Any {\r\n            return list.get(position)\r\n        }\r\n\r\n        override fun getItemId(position: Int): Long {\r\n            return position.toLong()\r\n        }\r\n\r\n        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {\r\n            inflater = LayoutInflater.from(parent?.context)\r\n\r\n            var view = convertView\r\n            if (view == null) {\r\n                view = inflater.inflate(R.layout.user_gifticon_list_item, null)\r\n            }\r\n\r\n            var item = list.get(position)\r\n            var giftName = item.giftName + \" \" + item.cost + \"원\"\r\n            var dateArray = item.date.split(\" \")\r\n\r\n            var tvName: TextView? = view?.findViewById<TextView>(R.id.tv_ugli_giftName)\r\n            if(tvName != null) tvName.text = giftName\r\n\r\n            var tvDate: TextView? = view?.findViewById<TextView>(R.id.tv_ugli_date)\r\n            if(tvDate!= null) tvDate.text = dateArray[0] + dateArray[1] + dateArray[2] + \" 구매\"\r\n\r\n            return view\r\n\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/guru2project/UserGifticonListActivity.kt	(revision 9c04d93aae014ce54c5bef4302bd3c6b4f76ae3f)
++++ app/src/main/java/com/example/guru2project/UserGifticonListActivity.kt	(date 1627926632474)
+@@ -1,6 +1,7 @@
+ package com.example.guru2project
+ 
+ import android.content.ContentValues
++import android.content.Intent
+ import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
+ import android.util.Log
+@@ -47,6 +48,17 @@
+         adapter = UserGiftListAdapter(recordArray)
+         listView.adapter = adapter
+ 
++        listView.setOnItemClickListener{ parent: AdapterView<*>, view: View, position: Int, id: Long ->
++            //val item: GifticonItem = parent.getItemAtPosition(position) as GifticonItem
++            val intent = Intent(this, UserGifticonDetailActivity::class.java)
++            //intent.putExtra("itemName", item.name)
++            //intent.putExtra("itemCost", item.cost)
++            //intent.putExtra("itemImage",item.image)
++            startActivity(intent)
++
++            //Toast.makeText(this, item.title, Toast.LENGTH_SHORT).show()
++        }
++
+     }
+ 
+     // 사용자 기프티콘 목록 불러오기
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    package=\"com.example.guru2project\">\r\n\r\n    <uses-permission\r\n        android:name=\"android.permission.PACKAGE_USAGE_STATS\"\r\n        tools:ignore=\"ProtectedPermissions\" />\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.Guru2Project\"\r\n        android:usesCleartextTraffic=\"true\">\r\n        <activity android:name=\".UserGifticonListActivity\"></activity>\r\n        <activity android:name=\".GifticonDetailActivity\" />\r\n        <activity android:name=\".MileageUse\" />\r\n        <activity android:name=\".PersonalInformation\" />\r\n        <activity android:name=\".HoursOfUse\" />\r\n        <activity\r\n            android:name=\".Menu\"\r\n            android:label=\"@string/title_activity_menu\"\r\n            android:theme=\"@style/Theme.Guru2Project.NoActionBar\" />\r\n        <activity android:name=\".PhoneAuthActivity\" />\r\n        <activity android:name=\".GifticonListActivity\" />\r\n        <activity android:name=\".SignUpActivity\" />\r\n        <activity android:name=\".LoadingActivity\" />\r\n        <activity android:name=\".SettingTimeActivity\" />\r\n        <activity android:name=\".MainActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 9c04d93aae014ce54c5bef4302bd3c6b4f76ae3f)
++++ app/src/main/AndroidManifest.xml	(date 1627926630587)
+@@ -16,7 +16,8 @@
+         android:supportsRtl="true"
+         android:theme="@style/Theme.Guru2Project"
+         android:usesCleartextTraffic="true">
+-        <activity android:name=".UserGifticonListActivity"></activity>
++        <activity android:name=".UserGifticonDetailActivity"></activity>
++        <activity android:name=".UserGifticonListActivity" />
+         <activity android:name=".GifticonDetailActivity" />
+         <activity android:name=".MileageUse" />
+         <activity android:name=".PersonalInformation" />
+Index: app/src/main/res/drawable/ic_baseline_error_24.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/ic_baseline_error_24.xml	(date 1627930530962)
++++ app/src/main/res/drawable/ic_baseline_error_24.xml	(date 1627930530962)
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24"
++    android:tint="?attr/colorControlNormal">
++  <path
++      android:fillColor="@android:color/white"
++      android:pathData="M12,2C6.48,2 2,6.48 2,12s4.48,10 10,10 10,-4.48 10,-10S17.52,2 12,2zM13,17h-2v-2h2v2zM13,13h-2L11,7h2v6z"/>
++</vector>
+Index: app/src/main/java/com/example/guru2project/UserGifticonDetailActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/guru2project/UserGifticonDetailActivity.kt	(date 1627926630469)
++++ app/src/main/java/com/example/guru2project/UserGifticonDetailActivity.kt	(date 1627926630469)
+@@ -0,0 +1,11 @@
++package com.example.guru2project
++
++import androidx.appcompat.app.AppCompatActivity
++import android.os.Bundle
++
++class UserGifticonDetailActivity : AppCompatActivity() {
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        setContentView(R.layout.activity_user_gifticon_detail)
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_user_gifticon_detail.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_user_gifticon_detail.xml	(date 1627932173596)
++++ app/src/main/res/layout/activity_user_gifticon_detail.xml	(date 1627932173596)
+@@ -0,0 +1,83 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".UserGifticonDetailActivity">
++
++    <ImageView
++        android:id="@+id/imageView_ugd"
++        android:layout_width="270"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="45dp"
++        android:adjustViewBounds="true"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent"
++        app:srcCompat="@drawable/ic_baseline_image_not_supported_24" />
++
++    <ImageView
++        android:id="@+id/imageView3"
++        android:layout_width="270"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="15dp"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/tv_ugd_name"
++        app:srcCompat="@drawable/ic_baseline_error_24" />
++
++    <TextView
++        android:id="@+id/tv_ugd_name"
++        android:layout_width="270dp"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="15dp"
++        android:text="TextView"
++        android:textSize="24sp"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.0"
++        app:layout_constraintStart_toStartOf="@+id/imageView_ugd"
++        app:layout_constraintTop_toBottomOf="@+id/imageView_ugd" />
++
++    <TextView
++        android:id="@+id/textView9"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="55dp"
++        android:text="교환처"
++        android:textSize="18sp"
++        app:layout_constraintStart_toStartOf="@+id/imageView_ugd"
++        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
++
++    <TextView
++        android:id="@+id/tv_ugd_usePlace"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="55dp"
++        android:text="TextView"
++        android:textAlignment="textEnd"
++        android:textSize="18sp"
++        app:layout_constraintEnd_toEndOf="@+id/imageView_ugd"
++        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
++
++    <TextView
++        android:id="@+id/textView12"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="20dp"
++        android:text="유효기간"
++        android:textSize="18sp"
++        app:layout_constraintStart_toStartOf="@+id/textView9"
++        app:layout_constraintTop_toBottomOf="@+id/textView9" />
++
++    <TextView
++        android:id="@+id/tv_ugd_expiration_date"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="20dp"
++        android:text="TextView"
++        android:textAlignment="textEnd"
++        android:textSize="18sp"
++        app:layout_constraintEnd_toEndOf="@+id/tv_ugd_usePlace"
++        app:layout_constraintTop_toBottomOf="@+id/tv_ugd_usePlace" />
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
