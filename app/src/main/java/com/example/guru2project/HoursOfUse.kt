@@ -15,6 +15,8 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HoursOfUse : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -117,8 +119,31 @@ class HoursOfUse : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                 startActivity(intent)
                 finish()
             }
-            R.id.nav_main -> {
-                super.onBackPressed();
+            R.id.nav_setting_time -> {
+                val pref = getSharedPreferences("pref", MODE_PRIVATE)
+
+                //시간을 이미 설정했을때
+                if (pref.getLong("GOAL_HOURS", 0) > 0) {
+                    drawLayout.closeDrawer(GravityCompat.START);
+                    Toast.makeText(this, "오늘의 시간 약속은 이미 정했습니다.", Toast.LENGTH_LONG).show()
+                } else{
+                    val intent = Intent(this, SettingTimeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+            R.id.nav_left_time -> {
+                val pref = getSharedPreferences("pref", MODE_PRIVATE)
+                //시간을 이미 설정했을때
+                if (pref.getLong("GOAL_HOURS", 0)>0){
+                    super.onBackPressed();
+//                    val intent = Intent(this, LeftTime::class.java)
+//                    startActivity(intent)
+//                    finish()
+                }else{
+                    drawLayout.closeDrawer(GravityCompat.START);
+                    Toast.makeText(this, "아직 시간 약속을 정하지 않았습니다.", Toast.LENGTH_LONG).show()
+                }
             }
             R.id.nav_time_record -> {
                 drawLayout.closeDrawer(GravityCompat.START);

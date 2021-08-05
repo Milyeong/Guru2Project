@@ -118,7 +118,7 @@ class SettingTimeActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     // 슬라이드 메뉴 (Drawer) 초기화
     private fun init(){
         var toolbar = findViewById<Toolbar>(R.id.toolbar_st)
-        toolbar.title = "시간 설정정"
+        toolbar.title = "시간 설정"
        if(toolbar!= null) {
             setSupportActionBar(toolbar)
         }
@@ -153,7 +153,7 @@ class SettingTimeActivity : AppCompatActivity(), NavigationView.OnNavigationItem
             R.id.nav_setting_time -> {
                 drawLayout.closeDrawer(GravityCompat.START);
             }
-            R.id.nav_main -> {
+            R.id.nav_left_time -> {
                 val pref = getSharedPreferences("pref", MODE_PRIVATE)
                     //시간을 이미 설정했을때
                 if (pref.getLong("GOAL_HOURS", 0)>0){
