@@ -1,10 +1,13 @@
 package com.example.guru2project
 
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
+import android.widget.CalendarView
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -22,6 +25,14 @@ class HoursOfUse : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
 
     private lateinit var drawLayout: DrawerLayout
 
+    private lateinit var dbManager: DBManager
+    private lateinit var sqlitedb: SQLiteDatabase
+
+    private lateinit var calendarView: CalendarView
+    private lateinit var tvAppName1: TextView
+    private lateinit var tvAppName2: TextView
+    private lateinit var tvAppName3: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,15 +42,48 @@ class HoursOfUse : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         // 캘린더와 텍스트뷰가 있는 파일은 content_hours_of_use 입니다.
         //
 
+        calendarView = findViewById(R.id.calendarView)
+        tvAppName1 = findViewById(R.id.tvAppName1)
+        tvAppName2 = findViewById(R.id.tvAppName2)
+        tvAppName3 = findViewById(R.id.tvAppName3)
+
+        dbManager = DBManager(this, "TimeDB", null, 1)
+        sqlitedb = dbManager.readableDatabase
+
         this.init()
 
         auth  = Firebase.auth
 
+        calendarView.setOnDateChangeListener {CalendarView, Year, Month, DayOfMonth ->
+
+            var date=""
+            var total =0
+            var goal=0
+            var t = 0
+            var cursor= sqlitedb.rawQuery("SELECT * FROM Time WHERE date = '2021-08-09';", null)
+
+            if(cursor.moveToNext()) {
+                date = cursor.getString((cursor.getColumnIndex("date")))
+                total = cursor.getInt((cursor.getColumnIndex("total")))
+                goal = cursor.getInt((cursor.getColumnIndex("goal")))
+                t = cursor.getInt((cursor.getColumnIndex("true")))
+
+            }
+
+            cursor.close()
+            sqlitedb.close()
+            dbManager.close()
+
+            tvAppName1.text=total.toString()
 
 
-
-
+        }
     }
+
+
+
+
+
 
     // 슬라이드 메뉴 (Drawer) 초기화
     private fun init(){
