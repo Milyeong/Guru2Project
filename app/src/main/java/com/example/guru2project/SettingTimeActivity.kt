@@ -1,13 +1,19 @@
 package com.example.guru2project
 
 import android.app.AlertDialog
+import android.app.usage.UsageEvents
+import android.app.usage.UsageStatsManager
+import android.content.Context
 import android.widget.Toast
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -17,9 +23,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 class SettingTimeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    private lateinit var dbManager: DBManager
+    private lateinit var sqlitedb: SQLiteDatabase
 
     private lateinit var auth: FirebaseAuth
     private var setHour : Int = 0
@@ -33,6 +43,7 @@ class SettingTimeActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     var goalHours : Long =0
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting_time)
@@ -43,6 +54,8 @@ class SettingTimeActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         hourSpinner = findViewById(R.id.hour_spinner)
         minuteSpinner = findViewById(R.id.minute_spinner)
         btnTimeSet = findViewById(R.id.btnSetTime)
+
+        dbManager = DBManager(this, "Time", null, 1)
 
         val pref = getSharedPreferences("pref", MODE_PRIVATE)
         val sdf = SimpleDateFormat("yyyy-MM-dd")
@@ -61,12 +74,39 @@ class SettingTimeActivity : AppCompatActivity(), NavigationView.OnNavigationItem
 
         } else {//오늘 처음 실행했을때
 
-            // 설정시간 초기화
-            editor.putLong("GOAL_HOURS", 0)
-            editor.putString("LAST_LAUNCH_DATE", currentDate)
-            editor.apply()
+            //설치후 맨처음
+            if (pref.getString("LAST_LAUNCH_DATE", "nodate")!!.contains("nodate")) {
 
-            // 어제 사용기록 가져온 후 어제 목표(데이터베이스에서 가져오기)보다 작으면 적립(함수로 구현)
+                //처음 안내?
+
+            } else {// 앱을 실행한 최근 날짜의 총사용시간 가져오기
+
+                var lastDate = pref.getString("LAST_LAUNCH_DATE", "nodate")
+                var lastDateTime= sdf.parse(lastDate).time
+                var dtStart = lastDateTime
+                var dtEnd = lastDateTime+24*60*60*1000
+                var lastTotal = totalTimes(dtStart, dtEnd)
+
+                //최근의 사용시간이 최근의 골보다 작을때
+                var lastGoal = pref.getLong("GOAL_HOURS", 0)
+                if(lastTotal - lastGoal < 0) {
+                    //적립
+                    sqlitedb = dbManager.writableDatabase
+                    sqlitedb.execSQL("UPDATE Time SET true = 1 WHERE date = '$lastDate';")
+                    sqlitedb.close()
+                }
+                //어플실행 최근일의 실행기록 데이터베이스에 넣기
+                sqlitedb = dbManager.writableDatabase
+                //var date= pref.getString("LAST_LAUNCH_DATE", "nodate")
+                sqlitedb.execSQL("UPDATE Time SET total = "+lastTotal+" WHERE date = '"+lastDate+"';")
+                sqlitedb.close()
+
+                // 설정시간 초기화
+                editor.putLong("GOAL_HOURS", 0)
+                editor.putString("LAST_LAUNCH_DATE", currentDate)
+                editor.apply()
+            }
+
         }
 
 
@@ -99,7 +139,12 @@ class SettingTimeActivity : AppCompatActivity(), NavigationView.OnNavigationItem
                     //목표시간 pref에 저장
                     goalHours = ( (setHour.toLong() * 60 ) + setMinute.toLong() ) *60*1000
                     editor.putLong("GOAL_HOURS", goalHours)
+                    editor.putString("LAST_LAUNCH_DATE", currentDate)
                     editor.apply()
+                    //데이터베이스에 저장
+                    sqlitedb = dbManager.writableDatabase
+                    sqlitedb.execSQL("INSERT INTO Time VALUES ('" + currentDate + "', '" + 0 + "', " + goalHours.toInt() + ", '" + 0 + "')")
+                    sqlitedb.close()
                     //LeftTime으로
                     val intent = Intent(this, LeftTime::class.java)
                     startActivity(intent)
@@ -113,6 +158,51 @@ class SettingTimeActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         }
 
     }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun totalTimes(startTime: Long, endTime: Long) : Long{
+        var currentEvent: UsageEvents.Event
+        val allEvents: MutableList<UsageEvents.Event> = ArrayList()
+        val map: HashMap<String, Long> = HashMap()
+        val mUsageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+        // 발생 이벤트를 쿼리
+        val usageEvents = mUsageStatsManager.queryEvents(startTime, endTime)
+
+        while (usageEvents.hasNextEvent()) {
+            currentEvent = UsageEvents.Event()
+            usageEvents.getNextEvent(currentEvent)
+            val packageName = currentEvent.packageName
+            //추가 이벤트가 발견되면 이벤트 목록에 추가
+            if (currentEvent.eventType == UsageEvents.Event.ACTIVITY_RESUMED || currentEvent.eventType == UsageEvents.Event.ACTIVITY_PAUSED || currentEvent.eventType == UsageEvents.Event.ACTIVITY_STOPPED) {
+                allEvents.add(currentEvent)
+                if (!map.containsKey(packageName)) {
+                    map[packageName] = 0
+                }
+            }
+        }
+
+        //이벤트 발생시
+        for (i in 0 until (allEvents.size - 1) step 1) {
+            val event0 = allEvents[i]
+            val event1 = allEvents[i + 1]
+
+            //앱 실행할때마다 사용시간 측정
+            if (event0.eventType == UsageEvents.Event.ACTIVITY_RESUMED &&
+                    (event1.eventType == UsageEvents.Event.ACTIVITY_PAUSED || event1.eventType == UsageEvents.Event.ACTIVITY_STOPPED)
+                    && event0.packageName == event1.packageName) {
+                val runtime = event1.timeStamp - event0.timeStamp
+                val tInForeground = map[event0.packageName]!!.plus(runtime)
+                map[event0.packageName] = tInForeground
+            }
+        }
+
+        var totalTime: Long = 0
+        map.forEach {it->
+            totalTime += it.value
+        }
+        return totalTime
+    }
+
 
 
     // 슬라이드 메뉴 (Drawer) 초기화
