@@ -86,56 +86,58 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="0dp"
+                android:layout_height="170dp"
+                android:adjustViewBounds="true"
+                android:background="@color/white"
+                android:scaleType="fitEnd"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/kakaotalk_reading" />
+
             <TextView
                 android:id="@+id/tvAppName1"
                 android:layout_width="190dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="56dp"
                 android:text="사용기록 없음"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvUsageTimes1"
+                android:id="@+id/tvUsageTimes2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="50dp"
+                android:layout_marginEnd="48dp"
                 android:text="시간"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@+id/tvAppName1"
+                app:layout_constraintBottom_toBottomOf="@+id/tvAppName2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvAppName1" />
+                app:layout_constraintTop_toTopOf="@+id/tvAppName2"
+                app:layout_constraintVertical_bias="0.2" />
 
             <TextView
                 android:id="@+id/tvAppName2"
                 android:layout_width="190dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="44dp"
                 android:text="사용기록 없음"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvAppName1" />
 
             <TextView
-                android:id="@+id/tvUsageTimes2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="50dp"
-                android:text="시간"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@+id/tvAppName2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvAppName2" />
-
-            <TextView
                 android:id="@+id/tvAppName3"
                 android:layout_width="190dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="36dp"
                 android:text="사용기록 없음"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -145,12 +147,26 @@
                 android:id="@+id/tvUsageTimes3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="50dp"
+                android:layout_marginEnd="48dp"
                 android:text="시간"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvAppName3"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvAppName3" />
+                app:layout_constraintTop_toTopOf="@+id/tvAppName3"
+                app:layout_constraintVertical_bias="0.8" />
+
+            <TextView
+                android:id="@+id/tvUsageTimes1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="48dp"
+                android:text="시간"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvAppName1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvAppName1"
+                app:layout_constraintVertical_bias="1.0" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
