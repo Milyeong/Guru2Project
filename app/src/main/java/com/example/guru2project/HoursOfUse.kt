@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -12,6 +13,8 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HoursOfUse : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -72,6 +75,27 @@ class HoursOfUse : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                 val intent = Intent(this,PersonalInformationActivity::class.java)
                 startActivity(intent)
                 finish()
+            }
+            R.id.nav_setting_time -> {
+                val pref = getSharedPreferences("pref", MODE_PRIVATE)
+                val sdf = SimpleDateFormat("yyyy-MM-dd")
+                val currentDate = sdf.format(Date())
+                val editor = pref.edit()
+
+                // 오늘 이미 실행했을 때
+                if (pref.getString("LAST_LAUNCH_DATE", "nodate")!!.contains(currentDate)) {
+
+                    //시간을 이미 설정했을때
+                    if (pref.getLong("GOAL_HOURS", 0) > 0) {
+                        drawLayout.closeDrawer(GravityCompat.START);
+                        Toast.makeText(this, "오늘의 시간 약속은 이미 정했습니다.", Toast.LENGTH_LONG).show()
+                    }
+                }
+                else{
+                    val intent = Intent(this, SettingTimeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
             R.id.nav_main -> {
                 super.onBackPressed();

@@ -54,6 +54,8 @@ class MainActivity : AppCompatActivity() {
         btnJoin = findViewById(R.id.btnBackToSignUp)
         btnlogin = findViewById(R.id.btnLogin)
 
+
+
         btnJoin.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)

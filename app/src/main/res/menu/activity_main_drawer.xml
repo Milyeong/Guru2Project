@@ -9,9 +9,13 @@
             android:icon="@drawable/ic_baseline_account_circle_24"
             android:title="사용자 정보" />
         <item
+            android:id="@+id/nav_setting_time"
+            android:icon="@drawable/ic_baseline_update_24"
+            android:title="시간 설정" />
+        <item
             android:id="@+id/nav_main"
             android:icon="@drawable/ic_baseline_timer_24"
-            android:title="시간 확인" />
+            android:title="남은 시간 확인" />
         <item
             android:id="@+id/nav_time_record"
             android:icon="@drawable/ic_baseline_today_24"

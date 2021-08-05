@@ -16,7 +16,7 @@ import android.util.Log
 
 class LoadingActivity : AppCompatActivity() {
 
-    val SPLASH_VIEW_TIME: Long = 1000 //2초간 스플래시 화면을 보여줌 (ms)
+    val SPLASH_VIEW_TIME: Long = 1500 //2초간 스플래시 화면을 보여줌 (ms)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

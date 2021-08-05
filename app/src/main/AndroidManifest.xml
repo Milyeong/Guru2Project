@@ -38,7 +38,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SettingTimeActivity" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity"
+            android:hardwareAccelerated="true"/>
 
         <meta-data
             android:name="preloaded_fonts"
