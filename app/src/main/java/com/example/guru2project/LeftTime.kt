@@ -21,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -111,7 +110,7 @@ class LeftTime : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
     // 슬라이드 메뉴 (Drawer) 초기화
     private fun init(){
         var toolbar = findViewById<Toolbar>(R.id.toolbar_lt)
-        toolbar.title = "남은 시간"
+        toolbar.title = "남은 시간 확인"
         if(toolbar!= null) {
             setSupportActionBar(toolbar)
         }
@@ -145,18 +144,11 @@ class LeftTime : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
             }
             R.id.nav_setting_time -> {
                 val pref = getSharedPreferences("pref", MODE_PRIVATE)
-                val sdf = SimpleDateFormat("yyyy-MM-dd")
-                val currentDate = sdf.format(Date())
-                val editor = pref.edit()
 
-                // 오늘 이미 실행했을 때
-                if (pref.getString("LAST_LAUNCH_DATE", "nodate")!!.contains(currentDate)) {
-
-                    //시간을 이미 설정했을때
-                    if (pref.getLong("GOAL_HOURS", 0) > 0) {
-                        drawLayout.closeDrawer(GravityCompat.START);
-                        Toast.makeText(this, "오늘의 시간 약속은 이미 정했습니다.", Toast.LENGTH_LONG).show()
-                    }
+                //시간을 이미 설정했을때
+                if (pref.getLong("GOAL_HOURS", 0) > 0) {
+                    drawLayout.closeDrawer(GravityCompat.START);
+                    Toast.makeText(this, "오늘의 시간 약속은 이미 정했습니다.", Toast.LENGTH_LONG).show()
                 }
                 else{
                     val intent = Intent(this, SettingTimeActivity::class.java)
@@ -164,7 +156,7 @@ class LeftTime : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
                     finish()
                 }
             }
-            R.id.nav_main ->{
+            R.id.nav_left_time ->{
                 drawLayout.closeDrawer(GravityCompat.START);
             }
             R.id.nav_time_record -> {
