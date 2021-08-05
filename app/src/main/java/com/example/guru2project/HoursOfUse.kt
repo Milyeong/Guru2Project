@@ -1,10 +1,12 @@
 package com.example.guru2project
 
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
+import android.widget.CalendarView
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -13,14 +15,20 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import java.text.SimpleDateFormat
-import java.util.*
 
 class HoursOfUse : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var auth: FirebaseAuth
 
     private lateinit var drawLayout: DrawerLayout
+
+    private lateinit var dbManager: DBManager
+    private lateinit var sqlitedb: SQLiteDatabase
+
+    private lateinit var calendarView: CalendarView
+    private lateinit var tvAppName1: TextView
+    private lateinit var tvAppName2: TextView
+    private lateinit var tvAppName3: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,15 +39,48 @@ class HoursOfUse : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         // 캘린더와 텍스트뷰가 있는 파일은 content_hours_of_use 입니다.
         //
 
+        calendarView = findViewById(R.id.calendarView)
+        tvAppName1 = findViewById(R.id.tvAppName1)
+        tvAppName2 = findViewById(R.id.tvAppName2)
+        tvAppName3 = findViewById(R.id.tvAppName3)
+
+        dbManager = DBManager(this, "TimeDB", null, 1)
+        sqlitedb = dbManager.readableDatabase
+
         this.init()
 
         auth  = Firebase.auth
 
+        calendarView.setOnDateChangeListener {CalendarView, Year, Month, DayOfMonth ->
+
+            var date=""
+            var total =0
+            var goal=0
+            var t = 0
+            var cursor= sqlitedb.rawQuery("SELECT * FROM Time WHERE date = '2021-08-09';", null)
+
+            if(cursor.moveToNext()) {
+                date = cursor.getString((cursor.getColumnIndex("date")))
+                total = cursor.getInt((cursor.getColumnIndex("total")))
+                goal = cursor.getInt((cursor.getColumnIndex("goal")))
+                t = cursor.getInt((cursor.getColumnIndex("true")))
+
+            }
+
+            cursor.close()
+            sqlitedb.close()
+            dbManager.close()
+
+            tvAppName1.text=total.toString()
 
 
-
-
+        }
     }
+
+
+
+
+
 
     // 슬라이드 메뉴 (Drawer) 초기화
     private fun init(){
@@ -75,27 +116,6 @@ class HoursOfUse : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                 val intent = Intent(this,PersonalInformationActivity::class.java)
                 startActivity(intent)
                 finish()
-            }
-            R.id.nav_setting_time -> {
-                val pref = getSharedPreferences("pref", MODE_PRIVATE)
-                val sdf = SimpleDateFormat("yyyy-MM-dd")
-                val currentDate = sdf.format(Date())
-                val editor = pref.edit()
-
-                // 오늘 이미 실행했을 때
-                if (pref.getString("LAST_LAUNCH_DATE", "nodate")!!.contains(currentDate)) {
-
-                    //시간을 이미 설정했을때
-                    if (pref.getLong("GOAL_HOURS", 0) > 0) {
-                        drawLayout.closeDrawer(GravityCompat.START);
-                        Toast.makeText(this, "오늘의 시간 약속은 이미 정했습니다.", Toast.LENGTH_LONG).show()
-                    }
-                }
-                else{
-                    val intent = Intent(this, SettingTimeActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
             }
             R.id.nav_main -> {
                 super.onBackPressed();
