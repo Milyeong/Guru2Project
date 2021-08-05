@@ -19,6 +19,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
 import kotlin.collections.HashMap
@@ -52,10 +53,9 @@ class LeftTime : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
 
         auth =  Firebase.auth
 
-        var tz= TimeZone.getDefault()
-        var tzId= tz.toZoneId()
-        var dtNow = LocalDate.now()
-        var dtStart = dtNow.atStartOfDay(tzId).toInstant().toEpochMilli()
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        var startOfDay = sdf.format(Date())
+        var dtStart = sdf.parse(startOfDay).time
 
         usageMap = mapUsageTimes(dtStart, System.currentTimeMillis())
 
@@ -93,7 +93,7 @@ class LeftTime : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
         //남은 시간
         if(leftHours < 0){
             //목표달성 실패
-            tvLeftTime.text="다음엔 더 노력해 봅시다!!"
+            tvLeftTime.text="목표시간보다 더 많이 써버렸어요ㅠㅠ"
 
         } else{
             val min = (leftHours/ (1000*60))% 60
