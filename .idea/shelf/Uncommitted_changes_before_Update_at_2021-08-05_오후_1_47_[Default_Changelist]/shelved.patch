@@ -1,0 +1,488 @@
+Index: app/src/main/java/com/example/guru2project/HoursOfUse.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.guru2project\r\n\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\n\r\nclass HoursOfUse : AppCompatActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_hours_of_use)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/guru2project/HoursOfUse.kt	(revision 3b8cd4276a03955c2f243891a4d476d54567bc63)
++++ app/src/main/java/com/example/guru2project/HoursOfUse.kt	(date 1628128914891)
+@@ -1,11 +1,97 @@
+ package com.example.guru2project
+ 
+-import androidx.appcompat.app.AppCompatActivity
++import android.app.usage.UsageEvents
++import android.app.usage.UsageStatsManager
++import android.content.Context
++import android.database.Cursor
++import android.database.sqlite.SQLiteDatabase
++import android.os.Build
+ import android.os.Bundle
++import android.widget.CalendarView
++import android.widget.CalendarView.OnDateChangeListener
++import android.widget.TextView
++import androidx.annotation.RequiresApi
++import androidx.appcompat.app.AppCompatActivity
++import java.util.*
++
+ 
+ class HoursOfUse : AppCompatActivity() {
++
++    private lateinit var dbManager: DBManager
++    private lateinit var sqlitedb: SQLiteDatabase
++
++    private lateinit var calendarView: CalendarView
++    private lateinit var tvAppName1: TextView
++    private lateinit var tvAppName2: TextView
++    private lateinit var tvAppName3: TextView
++
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         setContentView(R.layout.activity_hours_of_use)
++
++        calendarView = findViewById(R.id.calendarView)
++        tvAppName1 = findViewById(R.id.tvAppName1)
++        tvAppName2 = findViewById(R.id.tvAppName2)
++        tvAppName3 = findViewById(R.id.tvAppName3)
++
++        dbManager = DBManager(this, "Time", null, 1)
++
++        calendarView.setOnDateChangeListener {CalendarView, Year, Month, DayOfMonth ->
++
++            var Date = "$Year-$Month-$DayOfMonth"
++
++            sqlitedb = dbManager.readableDatabase
++
++            var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM Time WHERE date = '$Date'", null);
++
++            var totalTime:Int = 0
++            while (cursor.moveToNext()) {
++                totalTime=cursor.getInt(1)
++                tvAppName1.text=totalTime.toString()
++            }
++
++            sqlitedb.close()
++
++        }
++    }
++
++    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
++    private fun mapUsageTimes(startTime: Long, endTime: Long) : HashMap<String, Long>{
++        var currentEvent: UsageEvents.Event
++        val allEvents: MutableList<UsageEvents.Event> = ArrayList()
++        val map: HashMap<String, Long> = HashMap()
++        val mUsageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
++        // 발생 이벤트를 쿼리
++        val usageEvents = mUsageStatsManager.queryEvents(startTime, endTime)
++
++        while (usageEvents.hasNextEvent()) {
++            currentEvent = UsageEvents.Event()
++            usageEvents.getNextEvent(currentEvent)
++            val packageName = currentEvent.packageName
++            //추가 이벤트가 발견되면 이벤트 목록에 추가
++            if (currentEvent.eventType == UsageEvents.Event.ACTIVITY_RESUMED || currentEvent.eventType == UsageEvents.Event.ACTIVITY_PAUSED || currentEvent.eventType == UsageEvents.Event.ACTIVITY_STOPPED) {
++                allEvents.add(currentEvent)
++                if (!map.containsKey(packageName)) {
++                    map[packageName] = 0
++                }
++            }
++        }
++
++        //이벤트 발생시
++        for (i in 0 until (allEvents.size - 1) step 1) {
++            val event0 = allEvents[i]
++            val event1 = allEvents[i + 1]
++
++            //앱 실행할때마다 사용시간 측정
++            if (event0.eventType == UsageEvents.Event.ACTIVITY_RESUMED &&
++                    (event1.eventType == UsageEvents.Event.ACTIVITY_PAUSED || event1.eventType == UsageEvents.Event.ACTIVITY_STOPPED)
++                    && event0.packageName == event1.packageName) {
++                val runtime = event1.timeStamp - event0.timeStamp
++                val tInForeground = map[event0.packageName]!!.plus(runtime)
++                map[event0.packageName] = tInForeground
++            }
++        }
++
++        return map
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/guru2project/SettingTimeActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.guru2project\r\n\r\nimport android.app.AlertDialog\r\nimport android.widget.Toast\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.view.View\r\nimport android.widget.*\r\nimport java.text.SimpleDateFormat\r\nimport java.util.*\r\n\r\nclass SettingTimeActivity : AppCompatActivity() {\r\n\r\n\r\n    private var setHour : Int = 0\r\n    private var setMinute : Int = 0\r\n\r\n    private lateinit var hourSpinner: Spinner\r\n    private lateinit var minuteSpinner: Spinner\r\n    private lateinit var btnTimeSet: Button\r\n\r\n    var goalHours : Long =0\r\n\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_setting_time)\r\n\r\n        hourSpinner = findViewById(R.id.hour_spinner)\r\n        minuteSpinner = findViewById(R.id.minute_spinner)\r\n        btnTimeSet = findViewById(R.id.btnSetTime)\r\n\r\n        val pref = getSharedPreferences(\"pref\", MODE_PRIVATE)\r\n        val sdf = SimpleDateFormat(\"yyyy-MM-dd\")\r\n        val currentDate = sdf.format(Date())\r\n        val editor = pref.edit()\r\n\r\n        // 오늘 이미 실행했을 때\r\n        if (pref.getString(\"LAST_LAUNCH_DATE\", \"nodate\")!!.contains(currentDate)) {\r\n\r\n            //시간을 이미 설정했을때\r\n            if (pref.getLong(\"GOAL_HOURS\", 0)>0){\r\n                val intent = Intent(this, LeftTime::class.java)\r\n                startActivity(intent)\r\n                finish()\r\n            }\r\n\r\n        } else {//오늘 처음 실행했을때\r\n\r\n            // 설정시간 초기화\r\n            editor.putLong(\"GOAL_HOURS\", 0)\r\n            editor.putString(\"LAST_LAUNCH_DATE\", currentDate)\r\n            editor.apply()\r\n\r\n            // 어제 사용기록 가져온 후 어제 목표(데이터베이스에서 가져오기)보다 작으면 적립(함수로 구현)\r\n        }\r\n\r\n\r\n        //시간 선택\r\n        hourSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {\r\n            override fun onNothingSelected(parent: AdapterView<*>?) {\r\n            }\r\n            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {\r\n                setHour = hourSpinner.getItemAtPosition(position).toString().toInt()\r\n            }\r\n        }\r\n        //분 선택\r\n        minuteSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {\r\n            override fun onNothingSelected(parent: AdapterView<*>?) {\r\n\r\n            }\r\n            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {\r\n                setMinute = minuteSpinner.getItemAtPosition(position).toString().toInt()\r\n            }\r\n        }\r\n\r\n        //시간설정 확인\r\n        btnTimeSet.setOnClickListener {\r\n            if(setHour == 0 && setMinute == 0) {\r\n                Toast.makeText(this, \"최소 30분부터 설정 가능합니다\", Toast.LENGTH_LONG).show()\r\n            } else{\r\n                var dlg = AlertDialog.Builder(this)\r\n                dlg.setMessage(\"${setHour}시간 ${setMinute}분으로 설정하시겠습니까?\")\r\n                dlg.setPositiveButton( \"확인\") { dialog, which ->\r\n                    //목표시간 pref에 저장\r\n                    goalHours = ( (setHour.toLong() * 60 ) + setMinute.toLong() ) *60*1000\r\n                    editor.putLong(\"GOAL_HOURS\", goalHours)\r\n                    editor.apply()\r\n                    //LeftTime으로\r\n                    val intent = Intent(this, LeftTime::class.java)\r\n                    startActivity(intent)\r\n                    finish()\r\n                }\r\n                dlg.setNegativeButton(\"취소\", null)\r\n                dlg.show()\r\n            }\r\n\r\n\r\n        }\r\n\r\n    }\r\n\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/guru2project/SettingTimeActivity.kt	(revision 3b8cd4276a03955c2f243891a4d476d54567bc63)
++++ app/src/main/java/com/example/guru2project/SettingTimeActivity.kt	(date 1628127721429)
+@@ -1,17 +1,27 @@
+ package com.example.guru2project
+ 
+ import android.app.AlertDialog
++import android.app.usage.UsageEvents
++import android.app.usage.UsageStatsManager
++import android.content.Context
+ import android.widget.Toast
+ import android.content.Intent
++import android.database.sqlite.SQLiteDatabase
++import android.os.Build
+ import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
+ import android.view.View
+ import android.widget.*
++import androidx.annotation.RequiresApi
+ import java.text.SimpleDateFormat
++import java.time.LocalDate
+ import java.util.*
+ 
++
+ class SettingTimeActivity : AppCompatActivity() {
+ 
++    private lateinit var dbManager: DBManager
++    private lateinit var sqlitedb: SQLiteDatabase
+ 
+     private var setHour : Int = 0
+     private var setMinute : Int = 0
+@@ -20,9 +30,10 @@
+     private lateinit var minuteSpinner: Spinner
+     private lateinit var btnTimeSet: Button
+ 
+-    var goalHours : Long =0
++    var goalHours : Long = 0
+ 
+ 
++    @RequiresApi(Build.VERSION_CODES.O)
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         setContentView(R.layout.activity_setting_time)
+@@ -31,6 +42,8 @@
+         minuteSpinner = findViewById(R.id.minute_spinner)
+         btnTimeSet = findViewById(R.id.btnSetTime)
+ 
++        dbManager = DBManager(this, "Time", null, 1)
++
+         val pref = getSharedPreferences("pref", MODE_PRIVATE)
+         val sdf = SimpleDateFormat("yyyy-MM-dd")
+         val currentDate = sdf.format(Date())
+@@ -48,12 +61,39 @@
+ 
+         } else {//오늘 처음 실행했을때
+ 
+-            // 설정시간 초기화
+-            editor.putLong("GOAL_HOURS", 0)
+-            editor.putString("LAST_LAUNCH_DATE", currentDate)
+-            editor.apply()
++            //설치후 맨처음
++            if (pref.getString("LAST_LAUNCH_DATE", "nodate")!!.contains("nodate")) {
++
++                //처음 안내?
++
++            } else {// 앱을 실행한 최근 날짜의 총사용시간 가져오기
++
++                var lastDate = pref.getString("LAST_LAUNCH_DATE", "nodate")
++                var lastDateTime= sdf.parse(lastDate).time
++                var dtStart = lastDateTime
++                var dtEnd = lastDateTime+24*60*60*1000
++                var lastTotal = totalTimes(dtStart, dtEnd)
++
++                //최근의 사용시간이 최근의 골보다 작을때
++                var lastGoal = pref.getLong("GOAL_HOURS", 0)
++                if(lastTotal - lastGoal < 0) {
++                    //적립
++                    sqlitedb = dbManager.writableDatabase
++                    sqlitedb.execSQL("UPDATE Time SET true = 1 WHERE date = '$lastDate';")
++                    sqlitedb.close()
++                }
++                //어플실행 최근일의 실행기록 데이터베이스에 넣기
++                sqlitedb = dbManager.writableDatabase
++                //var date= pref.getString("LAST_LAUNCH_DATE", "nodate")
++                sqlitedb.execSQL("UPDATE Time SET total = "+lastTotal+" WHERE date = '"+lastDate+"';")
++                sqlitedb.close()
++
++                // 설정시간 초기화
++                editor.putLong("GOAL_HOURS", 0)
++                editor.putString("LAST_LAUNCH_DATE", currentDate)
++                editor.apply()
++            }
+ 
+-            // 어제 사용기록 가져온 후 어제 목표(데이터베이스에서 가져오기)보다 작으면 적립(함수로 구현)
+         }
+ 
+ 
+@@ -86,7 +126,12 @@
+                     //목표시간 pref에 저장
+                     goalHours = ( (setHour.toLong() * 60 ) + setMinute.toLong() ) *60*1000
+                     editor.putLong("GOAL_HOURS", goalHours)
++                    editor.putString("LAST_LAUNCH_DATE", currentDate)
+                     editor.apply()
++                    //데이터베이스에 저장
++                    sqlitedb = dbManager.writableDatabase
++                    sqlitedb.execSQL("INSERT INTO Time VALUES ('" + currentDate + "', '" + 0 + "', " + goalHours.toInt() + ", '" + 0 + "')")
++                    sqlitedb.close()
+                     //LeftTime으로
+                     val intent = Intent(this, LeftTime::class.java)
+                     startActivity(intent)
+@@ -101,6 +146,51 @@
+ 
+     }
+ 
++    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
++    private fun totalTimes(startTime: Long, endTime: Long) : Long{
++        var currentEvent: UsageEvents.Event
++        val allEvents: MutableList<UsageEvents.Event> = ArrayList()
++        val map: HashMap<String, Long> = HashMap()
++        val mUsageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
++        // 발생 이벤트를 쿼리
++        val usageEvents = mUsageStatsManager.queryEvents(startTime, endTime)
++
++        while (usageEvents.hasNextEvent()) {
++            currentEvent = UsageEvents.Event()
++            usageEvents.getNextEvent(currentEvent)
++            val packageName = currentEvent.packageName
++            //추가 이벤트가 발견되면 이벤트 목록에 추가
++            if (currentEvent.eventType == UsageEvents.Event.ACTIVITY_RESUMED || currentEvent.eventType == UsageEvents.Event.ACTIVITY_PAUSED || currentEvent.eventType == UsageEvents.Event.ACTIVITY_STOPPED) {
++                allEvents.add(currentEvent)
++                if (!map.containsKey(packageName)) {
++                    map[packageName] = 0
++                }
++            }
++        }
++
++        //이벤트 발생시
++        for (i in 0 until (allEvents.size - 1) step 1) {
++            val event0 = allEvents[i]
++            val event1 = allEvents[i + 1]
++
++            //앱 실행할때마다 사용시간 측정
++            if (event0.eventType == UsageEvents.Event.ACTIVITY_RESUMED &&
++                    (event1.eventType == UsageEvents.Event.ACTIVITY_PAUSED || event1.eventType == UsageEvents.Event.ACTIVITY_STOPPED)
++                    && event0.packageName == event1.packageName) {
++                val runtime = event1.timeStamp - event0.timeStamp
++                val tInForeground = map[event0.packageName]!!.plus(runtime)
++                map[event0.packageName] = tInForeground
++            }
++        }
++
++        var totalTime: Long = 0
++        map.forEach {it->
++            totalTime += it.value
++        }
++        return totalTime
++    }
++
++
+ 
+ 
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/guru2project/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.guru2project\r\n\r\nimport android.annotation.SuppressLint\r\nimport android.app.AlertDialog\r\nimport android.app.AppOpsManager\r\nimport android.content.ContentValues.TAG\r\nimport android.content.Context\r\nimport android.content.Intent\r\nimport android.os.Build\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.os.Process\r\nimport android.provider.Settings\r\nimport android.text.TextUtils\r\nimport android.util.Log\r\nimport android.view.View\r\nimport android.widget.Button\r\nimport android.widget.EditText\r\nimport android.widget.Toast\r\nimport androidx.annotation.RequiresApi\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.auth.ktx.auth\r\nimport com.google.firebase.ktx.Firebase\r\nimport java.text.SimpleDateFormat\r\nimport java.time.LocalDate\r\nimport java.util.*\r\n\r\nclass MainActivity : AppCompatActivity() {\r\n\r\n    private lateinit var auth: FirebaseAuth\r\n    private lateinit var input_email: EditText\r\n    private lateinit var input_pw: EditText\r\n    private lateinit var btnJoin: Button\r\n    private lateinit var btnlogin: Button\r\n\r\n    @RequiresApi(Build.VERSION_CODES.O)\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_login)\r\n//\r\n//        if (!checkForPermission()) {\r\n//            var dlg = AlertDialog.Builder(this)\r\n//            dlg.setTitle(\"권한이 필요한 이유\")\r\n//            dlg.setMessage(\"어플 사용을 위해서 사용정보 접근 허용이 필요합니다.\")\r\n//            dlg.setPositiveButton(\"확인\") { dialog, which ->\r\n//                startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))\r\n//            }\r\n//            dlg.setNegativeButton(\"취소\", null)\r\n//            dlg.show()\r\n//\r\n//        } else { //이미 권한이 허용된 경우\r\n//            //화면 넘어감\r\n//        }\r\n\r\n\r\n//        val pref = getSharedPreferences(\"pref\", MODE_PRIVATE)\r\n//        val sdf = SimpleDateFormat(\"yyyy-MM-dd\")\r\n//        val currentDate = sdf.format(Date())\r\n//        val editor = pref.edit()\r\n//        // 오늘 이미 실행했을 때\r\n//        if (pref.getString(\"LAST_LAUNCH_DATE\", \"nodate\")!!.contains(currentDate)) {\r\n//\r\n//            //시간을 설정했을때\r\n//            if (pref.getLong(\"GOAL_HOURS\", 0)>0){\r\n//                val intent = Intent(this, LeftTime::class.java)\r\n//                startActivity(intent)\r\n//                finish()\r\n//            } else{ //시간을 설정 안했을때\r\n//                val intent = Intent(this, SettingTimeActivity::class.java)\r\n//                startActivity(intent)\r\n//                finish()\r\n//            }\r\n//\r\n//        } else {//오늘 처음 실행했을때\r\n//\r\n//            // 설정시간 초기화\r\n//            editor.putLong(\"GOAL_HOURS\", 0)\r\n//            editor.putString(\"LAST_LAUNCH_DATE\", currentDate)\r\n//            editor.apply()\r\n//\r\n//            // 어제 사용기록 가져온 후 어제 목표(데이터베이스에서 가져오기)보다 작으면 적립(함수로 구현)\r\n//        }\r\n        // 사용자 로그인상태 확인\r\n        auth = Firebase.auth\r\n\r\n        // 사용자가 로그인되어 있다면(자동로그인) SettingTimeAcitivity로\r\n        if (auth.currentUser != null) {\r\n            val intent = Intent(this, SettingTimeActivity::class.java)\r\n            startActivity(intent)\r\n            finish()\r\n        }\r\n\r\n        // 뷰 연결\r\n        input_email = findViewById(R.id.login_email)\r\n        input_pw = findViewById(R.id.login_pw)\r\n        btnJoin = findViewById(R.id.btnBackToSignUp)\r\n        btnlogin = findViewById(R.id.btnLogin)\r\n\r\n        btnJoin.setOnClickListener {\r\n            val intent = Intent(this, SignUpActivity::class.java)\r\n            startActivity(intent)\r\n            finish()\r\n        }\r\n\r\n        btnlogin.setOnClickListener(View.OnClickListener {\r\n            var email = input_email.text.toString()\r\n            var pw = input_pw.text.toString()\r\n\r\n            if (TextUtils.isEmpty(email)) {\r\n                Toast.makeText(applicationContext, \"이메일을 입력해주세요.\", Toast.LENGTH_SHORT).show()\r\n                return@OnClickListener\r\n            }\r\n            if (TextUtils.isEmpty(pw)) {\r\n                Toast.makeText(applicationContext, \"비밀번호를 입력해주세요.\", Toast.LENGTH_SHORT).show()\r\n                return@OnClickListener\r\n            }\r\n\r\n            // 로그인 시도\r\n            auth.signInWithEmailAndPassword(email, pw).addOnCompleteListener(this) { task ->\r\n                if (task.isSuccessful) {\r\n                    Log.d(TAG, \"로그인:성공\")\r\n                    val user = auth.currentUser\r\n\r\n                    val intent = Intent(this, SettingTimeActivity::class.java)\r\n                    startActivity(intent)\r\n                    finish()\r\n                    // updateUi(user) 함수 사용 - 만들어야 함.\r\n                } else {\r\n                    Log.w(TAG, \"로그인:실패\", task.exception)\r\n                    Toast.makeText(baseContext, \"인증에 실패했습니다.\", Toast.LENGTH_SHORT).show()\r\n                    //updateUI(null)\r\n                }\r\n\r\n            }\r\n\r\n        })\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/guru2project/MainActivity.kt	(revision 3b8cd4276a03955c2f243891a4d476d54567bc63)
++++ app/src/main/java/com/example/guru2project/MainActivity.kt	(date 1628128947597)
+@@ -37,50 +37,10 @@
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         setContentView(R.layout.activity_login)
+-//
+-//        if (!checkForPermission()) {
+-//            var dlg = AlertDialog.Builder(this)
+-//            dlg.setTitle("권한이 필요한 이유")
+-//            dlg.setMessage("어플 사용을 위해서 사용정보 접근 허용이 필요합니다.")
+-//            dlg.setPositiveButton("확인") { dialog, which ->
+-//                startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+-//            }
+-//            dlg.setNegativeButton("취소", null)
+-//            dlg.show()
+-//
+-//        } else { //이미 권한이 허용된 경우
+-//            //화면 넘어감
+-//        }
+-
+-
+-//        val pref = getSharedPreferences("pref", MODE_PRIVATE)
+-//        val sdf = SimpleDateFormat("yyyy-MM-dd")
+-//        val currentDate = sdf.format(Date())
+-//        val editor = pref.edit()
+-//        // 오늘 이미 실행했을 때
+-//        if (pref.getString("LAST_LAUNCH_DATE", "nodate")!!.contains(currentDate)) {
+-//
+-//            //시간을 설정했을때
+-//            if (pref.getLong("GOAL_HOURS", 0)>0){
+-//                val intent = Intent(this, LeftTime::class.java)
+-//                startActivity(intent)
+-//                finish()
+-//            } else{ //시간을 설정 안했을때
+-//                val intent = Intent(this, SettingTimeActivity::class.java)
+-//                startActivity(intent)
+-//                finish()
+-//            }
+-//
+-//        } else {//오늘 처음 실행했을때
+-//
+-//            // 설정시간 초기화
+-//            editor.putLong("GOAL_HOURS", 0)
+-//            editor.putString("LAST_LAUNCH_DATE", currentDate)
+-//            editor.apply()
+-//
+-//            // 어제 사용기록 가져온 후 어제 목표(데이터베이스에서 가져오기)보다 작으면 적립(함수로 구현)
+-//        }
+-        // 사용자 로그인상태 확인
++        val intent = Intent(this, HoursOfUse::class.java)
++        startActivity(intent)
++        finish()
++        /*// 사용자 로그인상태 확인
+         auth = Firebase.auth
+ 
+         // 사용자가 로그인되어 있다면(자동로그인) SettingTimeAcitivity로
+@@ -134,5 +94,5 @@
+             }
+ 
+         })
+-    }
+-}
+\ No newline at end of file
++    */}
++}
+Index: app/src/main/java/com/example/guru2project/LeftTime.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.guru2project\r\n\r\nimport android.app.usage.UsageEvents\r\nimport android.app.usage.UsageStatsManager\r\nimport android.content.Context\r\nimport android.content.Intent\r\nimport android.content.pm.PackageManager\r\nimport android.os.Build\r\nimport android.os.Bundle\r\nimport android.view.MenuItem\r\nimport android.widget.TextView\r\nimport androidx.annotation.RequiresApi\r\nimport androidx.appcompat.app.ActionBarDrawerToggle\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.appcompat.widget.Toolbar\r\nimport androidx.core.view.GravityCompat\r\nimport androidx.drawerlayout.widget.DrawerLayout\r\nimport com.google.android.material.navigation.NavigationView\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.auth.ktx.auth\r\nimport com.google.firebase.ktx.Firebase\r\nimport java.time.LocalDate\r\nimport java.util.*\r\nimport kotlin.collections.HashMap\r\n\r\nclass LeftTime : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {\r\n\r\n    private lateinit var drawLayout: DrawerLayout\r\n    private lateinit var appName1: TextView\r\n    private lateinit var appUsageTime1: TextView\r\n    private lateinit var tvHours: TextView\r\n    private lateinit var tvMinuts: TextView\r\n    private lateinit var tvLeftTime: TextView\r\n\r\n    private lateinit var auth: FirebaseAuth\r\n    private lateinit var usageMap: HashMap<String, Long>\r\n\r\n    private var totalTime: Long = 0\r\n    private var goalHours: Long = 0\r\n    private var leftHours: Int = 0\r\n\r\n    @RequiresApi(Build.VERSION_CODES.O)\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_left_time)\r\n\r\n        this.init()\r\n\r\n        tvHours = findViewById(R.id.tvHours)\r\n        tvMinuts = findViewById(R.id.tvMinutes)\r\n        tvLeftTime = findViewById(R.id.LeftTimeText)\r\n\r\n        auth =  Firebase.auth\r\n\r\n        var tz= TimeZone.getDefault()\r\n        var tzId= tz.toZoneId()\r\n        var dtNow = LocalDate.now()\r\n        var dtStart = dtNow.atStartOfDay(tzId).toInstant().toEpochMilli()\r\n\r\n        usageMap = mapUsageTimes(dtStart, System.currentTimeMillis())\r\n\r\n        usageMap.forEach {it->\r\n            totalTime += it.value\r\n        }\r\n\r\n        // 사용시간을 기준으로 내림차순으로 배열\r\n        val result = usageMap.toList().sortedByDescending { (_, value) -> value}\r\n\r\n        var nameId:Int\r\n        var timeId:Int\r\n        for(i in result.indices) {\r\n            if(i==3)\r\n                break\r\n            nameId = resources.getIdentifier(\"tvAppName${i+1}\",\"id\", packageName)\r\n            timeId = resources.getIdentifier(\"tvUsageTimes${i+1}\",\"id\", packageName)\r\n\r\n            var appName = findViewById<TextView>(nameId)\r\n            var appUsageT = findViewById<TextView>(timeId)\r\n\r\n\r\n            var appInfo = packageManager.getApplicationInfo(result[i].first, PackageManager.GET_META_DATA)\r\n            var appLabel = packageManager.getApplicationLabel(appInfo)\r\n\r\n            appName.text=appLabel\r\n            appUsageT.text=\"${(result[i].second / (1000*60*60)) % 24}시간 ${((result[i].second)/(1000*60))%60}분\"\r\n\r\n\r\n        }\r\n        val pref = getSharedPreferences(\"pref\", MODE_PRIVATE)\r\n        goalHours = pref.getLong(\"GOAL_HOURS\", 0)\r\n        leftHours = (goalHours-totalTime).toInt()\r\n\r\n        //남은 시간\r\n        if(leftHours < 0){\r\n            //목표달성 실패\r\n            tvLeftTime.text=\"다음엔 더 노력해 봅시다!!\"\r\n\r\n        } else{\r\n            val min = (leftHours/ (1000*60))% 60\r\n            val hour =(leftHours / (1000*60*60))%24\r\n            tvHours.text=\"$hour\"\r\n            tvMinuts.text=\"$min\"\r\n        }\r\n\r\n\r\n\r\n\r\n    }\r\n\r\n    // 슬라이드 메뉴 (Drawer) 초기화\r\n    private fun init(){\r\n        var toolbar = findViewById<Toolbar>(R.id.toolbar_lt)\r\n        toolbar.title = \"남은 시간\"\r\n        if(toolbar!= null) {\r\n            setSupportActionBar(toolbar)\r\n        }\r\n\r\n        supportActionBar?.setDisplayHomeAsUpEnabled(true)\r\n        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)\r\n\r\n        drawLayout = findViewById<DrawerLayout>(R.id.drawer_layout_lt)\r\n        var navigationView = findViewById<NavigationView>(R.id.nav_view_lt)\r\n\r\n        val actionBarDrawerToggle = ActionBarDrawerToggle(\r\n            this,\r\n            drawLayout,\r\n            toolbar,\r\n            R.string.open,\r\n            R.string.close\r\n        );\r\n\r\n        drawLayout.addDrawerListener(actionBarDrawerToggle);\r\n        actionBarDrawerToggle.syncState()\r\n        navigationView.setNavigationItemSelectedListener(this)\r\n    }\r\n\r\n    // 슬라이드 메뉴에서 메뉴 선택시의 이벤트 처리\r\n    override fun onNavigationItemSelected(item: MenuItem):Boolean{\r\n        when(item.itemId){\r\n            R.id.nav_personnal_information ->{\r\n                val intent = Intent(this,PersonalInformationActivity::class.java)\r\n                startActivity(intent)\r\n                drawLayout.closeDrawer(GravityCompat.START);\r\n            }\r\n            R.id.nav_main ->{\r\n                drawLayout.closeDrawer(GravityCompat.START);\r\n            }\r\n            R.id.nav_time_record -> {\r\n\r\n            }\r\n            R.id.nav_gifticon -> {\r\n                val intent = Intent(this,GifticonListActivity::class.java)\r\n                startActivity(intent)\r\n                drawLayout.closeDrawer(GravityCompat.START);\r\n            }\r\n            R.id.nav_user_gifticon -> {\r\n                val intent = Intent(this,UserGifticonListActivity::class.java)\r\n                startActivity(intent)\r\n                drawLayout.closeDrawer(GravityCompat.START);\r\n            }\r\n            R.id.nav_mileage_record -> {\r\n                val intent = Intent(this,MileageUseActivity::class.java)\r\n                startActivity(intent)\r\n                drawLayout.closeDrawer(GravityCompat.START);\r\n            }\r\n            R.id.nav_logout -> {\r\n                auth.signOut()\r\n                val intent = Intent(this,LoadingActivity::class.java)\r\n                startActivity(intent)\r\n                finish()\r\n            }\r\n        }\r\n\r\n        return true\r\n    }\r\n\r\n    override fun onBackPressed() {\r\n        // Drawer(슬라이드 메뉴)가 열려있으면 닫기\r\n        if (drawLayout.isDrawerOpen(GravityCompat.START)) {\r\n            drawLayout.closeDrawer(GravityCompat.START);\r\n        } else {\r\n            super.onBackPressed();\r\n        }\r\n    }\r\n\r\n\r\n    //하루동안 사용한 앱의 패키지 이름과 사용시간을 Map으로 가져오기\r\n    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)\r\n    private fun mapUsageTimes(startTime: Long, endTime: Long) : HashMap<String, Long>{\r\n        var currentEvent: UsageEvents.Event\r\n        val allEvents: MutableList<UsageEvents.Event> = ArrayList()\r\n        val map: HashMap<String, Long> = HashMap()\r\n        val mUsageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager\r\n        // 발생 이벤트를 쿼리\r\n        val usageEvents = mUsageStatsManager.queryEvents(startTime, endTime)\r\n\r\n        while (usageEvents.hasNextEvent()) {\r\n            currentEvent = UsageEvents.Event()\r\n            usageEvents.getNextEvent(currentEvent)\r\n            val packageName = currentEvent.packageName\r\n            //추가 이벤트가 발견되면 이벤트 목록에 추가\r\n            if (currentEvent.eventType == UsageEvents.Event.ACTIVITY_RESUMED || currentEvent.eventType == UsageEvents.Event.ACTIVITY_PAUSED || currentEvent.eventType == UsageEvents.Event.ACTIVITY_STOPPED) {\r\n                allEvents.add(currentEvent)\r\n                if (!map.containsKey(packageName)) {\r\n                    map[packageName] = 0\r\n                }\r\n            }\r\n        }\r\n\r\n        //이벤트 발생시\r\n        for (i in 0 until (allEvents.size - 1) step 1) {\r\n            val event0 = allEvents[i]\r\n            val event1 = allEvents[i + 1]\r\n\r\n            //앱 실행할때마다 사용시간 측정\r\n            if (event0.eventType == UsageEvents.Event.ACTIVITY_RESUMED &&\r\n                (event1.eventType == UsageEvents.Event.ACTIVITY_PAUSED || event1.eventType == UsageEvents.Event.ACTIVITY_STOPPED)\r\n                && event0.packageName == event1.packageName) {\r\n                val runtime = event1.timeStamp - event0.timeStamp\r\n                val tInForeground = map[event0.packageName]!!.plus(runtime)\r\n                map[event0.packageName] = tInForeground\r\n            }\r\n        }\r\n\r\n        return map\r\n    }\r\n\r\n\r\n}\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/guru2project/LeftTime.kt	(revision 3b8cd4276a03955c2f243891a4d476d54567bc63)
++++ app/src/main/java/com/example/guru2project/LeftTime.kt	(date 1628124502173)
+@@ -19,6 +19,7 @@
+ import com.google.firebase.auth.FirebaseAuth
+ import com.google.firebase.auth.ktx.auth
+ import com.google.firebase.ktx.Firebase
++import java.text.SimpleDateFormat
+ import java.time.LocalDate
+ import java.util.*
+ import kotlin.collections.HashMap
+@@ -52,10 +53,9 @@
+ 
+         auth =  Firebase.auth
+ 
+-        var tz= TimeZone.getDefault()
+-        var tzId= tz.toZoneId()
+-        var dtNow = LocalDate.now()
+-        var dtStart = dtNow.atStartOfDay(tzId).toInstant().toEpochMilli()
++        val sdf = SimpleDateFormat("yyyy-MM-dd")
++        var startOfDay = sdf.format(Date())
++        var dtStart = sdf.parse(startOfDay).time
+ 
+         usageMap = mapUsageTimes(dtStart, System.currentTimeMillis())
+ 
+Index: app/src/main/java/DBManager.kt
+===================================================================
+--- app/src/main/java/DBManager.kt	(revision 3b8cd4276a03955c2f243891a4d476d54567bc63)
++++ app/src/main/java/DBManager.kt	(revision 3b8cd4276a03955c2f243891a4d476d54567bc63)
+@@ -1,18 +0,0 @@
+-import android.content.Context
+-import android.database.sqlite.SQLiteDatabase
+-import android.database.sqlite.SQLiteOpenHelper
+-
+-class DBManager(context: Context?,
+-                name: String?,
+-                factory: SQLiteDatabase.CursorFactory?,
+-                version: Int
+-) : SQLiteOpenHelper(context, name, factory, version) {
+-    override fun onCreate(db: SQLiteDatabase?) {
+-        db!!.execSQL("CREATE TABLE App (date text, name text, time INTEGER, rank INTEGER)")
+-        db!!.execSQL("CREATE TABLE Time(date text, total INTEGER, goal INTEGER, true INTEGER)")
+-    }
+-
+-    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+-        TODO("Not yet implemented")
+-    }
+-}
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_left_time.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.drawerlayout.widget.DrawerLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:id=\"@+id/drawer_layout_lt\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:fitsSystemWindows=\"true\"\r\n    tools:openDrawer=\"start\">\r\n\r\n    <include\r\n        android:id=\"@+id/app_bar_lt\"\r\n        layout=\"@layout/app_bar_left_time\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\" />\r\n\r\n    <com.google.android.material.navigation.NavigationView\r\n        android:id=\"@+id/nav_view_lt\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"match_parent\"\r\n        android:layout_gravity=\"start\"\r\n        android:fitsSystemWindows=\"true\"\r\n        app:menu=\"@menu/activity_main_drawer\"/>\r\n\r\n</androidx.drawerlayout.widget.DrawerLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_left_time.xml	(revision 3b8cd4276a03955c2f243891a4d476d54567bc63)
++++ app/src/main/res/layout/activity_left_time.xml	(date 1628096495061)
+@@ -20,6 +20,6 @@
+         android:layout_height="match_parent"
+         android:layout_gravity="start"
+         android:fitsSystemWindows="true"
+-        app:menu="@menu/activity_main_drawer"/>
++        app:menu="@menu/activity_main_drawer" />
+ 
+ </androidx.drawerlayout.widget.DrawerLayout>
+Index: app/src/main/java/com/example/guru2project/DBManager.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/guru2project/DBManager.kt	(date 1628120259737)
++++ app/src/main/java/com/example/guru2project/DBManager.kt	(date 1628120259737)
+@@ -0,0 +1,21 @@
++package com.example.guru2project
++
++import android.content.Context
++import android.database.sqlite.SQLiteDatabase
++import android.database.sqlite.SQLiteOpenHelper
++
++class DBManager(context: Context?,
++                name: String?,
++                factory: SQLiteDatabase.CursorFactory?,
++                version: Int
++) : SQLiteOpenHelper(context, name, factory, version) {
++    override fun onCreate(db: SQLiteDatabase?) {
++        //db!!.execSQL("CREATE TABLE App (date text, name text, time INTEGER, rank INTEGER)")
++        db!!.execSQL("CREATE TABLE Time (date text, total INTEGER, goal INTEGER, true INTEGER)")
++    }
++
++    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
++        db!!.execSQL("DROP TABLE IF EXISTS App")
++        onCreate(db)
++    }
++}
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_11\" default=\"true\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision 3b8cd4276a03955c2f243891a4d476d54567bc63)
++++ .idea/misc.xml	(date 1628095975322)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: app/src/main/res/values/arrays.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <string-array name=\"hour_array\">\r\n        <item>0</item>\r\n        <item>1</item>\r\n        <item>2</item>\r\n        <item>3</item>\r\n        <item>4</item>\r\n        <item>5</item>\r\n    </string-array>\r\n    <string-array name=\"minute_array\">\r\n        <item>00</item>\r\n        <item>30</item>\r\n    </string-array>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/arrays.xml	(revision 3b8cd4276a03955c2f243891a4d476d54567bc63)
++++ app/src/main/res/values/arrays.xml	(date 1628119455987)
+@@ -7,6 +7,7 @@
+         <item>3</item>
+         <item>4</item>
+         <item>5</item>
++        <item>20</item>
+     </string-array>
+     <string-array name="minute_array">
+         <item>00</item>
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_2021-08-04__10_45__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Update_at_2021-08-04__10_45__Default_Changelist_.xml

@@ -18,4 +18,5 @@
 
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="total">총 사용시간</string>
 </resources>
