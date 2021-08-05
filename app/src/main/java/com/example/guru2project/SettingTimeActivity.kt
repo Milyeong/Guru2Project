@@ -3,6 +3,7 @@ package com.example.guru2project
 import android.app.AlertDialog
 import android.app.usage.UsageEvents
 import android.app.usage.UsageStatsManager
+import android.content.ContentValues
 import android.content.Context
 import android.widget.Toast
 import android.content.Intent
@@ -10,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
@@ -21,10 +23,16 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
+import kotlin.math.pow
 
 class SettingTimeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -32,8 +40,10 @@ class SettingTimeActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     private lateinit var sqlitedb: SQLiteDatabase
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var mileageRef: DatabaseReference
     private var setHour : Int = 0
     private var setMinute : Int = 0
+    private var mileage = 0
 
     private lateinit var drawLayout: DrawerLayout
     private lateinit var hourSpinner: Spinner
@@ -49,6 +59,30 @@ class SettingTimeActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         setContentView(R.layout.activity_setting_time)
 
         auth = Firebase.auth
+        // 유저 마일리지 정보 불러오기.
+        var user = auth.currentUser
+        if (user != null){
+            var uid = user.uid
+            mileageRef = Firebase.database.reference.child("users").child(uid).child("mileage")
+
+            val mileageListener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    // Get Post object and use the values to update the UI
+                    val data = dataSnapshot.getValue().toString()
+                    mileage = data.toInt()
+                    Log.d(ContentValues.TAG, "마일리지"+ mileage)
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    // Getting Post failed, log a message
+                    Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
+                }
+            }
+            mileageRef.addValueEventListener(mileageListener)
+        } else {
+            Toast.makeText(this, "사용자 정보를 가져올 수 없습니다.", Toast.LENGTH_SHORT).show()
+        }
+
         this.init()
 
         hourSpinner = findViewById(R.id.hour_spinner)
@@ -90,7 +124,19 @@ class SettingTimeActivity : AppCompatActivity(), NavigationView.OnNavigationItem
                 //최근의 사용시간이 최근의 골보다 작을때
                 var lastGoal = pref.getLong("GOAL_HOURS", 0)
                 if(lastTotal - lastGoal < 0) {
-                    //적립
+                    //마일리지 적립
+                    var user = auth.currentUser
+                    if (user != null) {
+                        var result = 0
+                        var n = 11 - (lastTotal / (1000* 60) / 30).toInt()
+                        if(n % 2 == 0 ){
+                            result = (mileage + 2*(2.0).pow(n/2)).toInt()
+                        }else{
+                            result = (mileage + 3*(2.0).pow((n-1)/2)).toInt()
+                        }
+                        mileageRef.setValue(result)
+                    }
+
                     sqlitedb = dbManager.writableDatabase
                     sqlitedb.execSQL("UPDATE Time SET true = 1 WHERE date = '$lastDate';")
                     sqlitedb.close()
