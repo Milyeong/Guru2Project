@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
+import java.time.Month
 import java.util.*
 
 class HoursOfUse : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -30,8 +31,9 @@ class HoursOfUse : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
 
     private lateinit var calendarView: CalendarView
     private lateinit var tvAppName1: TextView
-    private lateinit var tvAppName2: TextView
-    private lateinit var tvAppName3: TextView
+    private lateinit var tvUsageTimes1: TextView
+
+    var totalTime: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,11 +46,9 @@ class HoursOfUse : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
 
         calendarView = findViewById(R.id.calendarView)
         tvAppName1 = findViewById(R.id.tvAppName1)
-        tvAppName2 = findViewById(R.id.tvAppName2)
-        tvAppName3 = findViewById(R.id.tvAppName3)
+        tvUsageTimes1 = findViewById(R.id.tvUsageTimes1)
 
-        dbManager = DBManager(this, "TimeDB", null, 1)
-        sqlitedb = dbManager.readableDatabase
+
 
         this.init()
 
@@ -56,30 +56,28 @@ class HoursOfUse : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
 
         calendarView.setOnDateChangeListener {CalendarView, Year, Month, DayOfMonth ->
 
-            var date=""
-            var total =0
-            var goal=0
-            var t = 0
-            var cursor= sqlitedb.rawQuery("SELECT * FROM Time WHERE date = '2021-08-09';", null)
-
-            if(cursor.moveToNext()) {
-                date = cursor.getString((cursor.getColumnIndex("date")))
-                total = cursor.getInt((cursor.getColumnIndex("total")))
-                goal = cursor.getInt((cursor.getColumnIndex("goal")))
-                t = cursor.getInt((cursor.getColumnIndex("true")))
-
+            dbManager = DBManager(this, "Time", null, 1)
+            sqlitedb = dbManager.readableDatabase
+            //var date="$Year-${Month+1}-$DayOfMonth"
+            var date="2021-08-11"
+            //var date=year+"-"+month+"-"+dayOfmonth
+            //println(date)
+            var cursor= sqlitedb.rawQuery("SELECT total FROM Time WHERE date = '$date';", null)
+            if(cursor.moveToNext()){
+                totalTime =cursor.getInt(cursor.getColumnIndex("total"))
             }
+            var min = (totalTime/ (1000*60))% 60
+            var hour =(totalTime / (1000*60*60))%24
 
             cursor.close()
             sqlitedb.close()
             dbManager.close()
 
-            tvAppName1.text=total.toString()
+            tvUsageTimes1.text="${hour}시간 ${min}분"
 
 
         }
     }
-
 
 
 
