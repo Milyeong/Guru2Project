@@ -93,7 +93,7 @@ class LeftTime : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
         //남은 시간
         if(leftHours < 0){
             //목표달성 실패
-            tvLeftTime.text="목표시간보다 더 많이 써버렸어요ㅠㅠ"
+            tvLeftTime.text="약속시간을\n초과했어요!"
 
         } else{
             val min = (leftHours/ (1000*60))% 60

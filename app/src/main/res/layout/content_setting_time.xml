@@ -21,6 +21,28 @@
         android:scaleType="centerCrop"
         app:srcCompat="@drawable/kakaotalk_idea" />
 
+
+    <TextView
+        android:id="@+id/minute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="164dp"
+        android:layout_toRightOf="@id/minute_spinner"
+        android:text="@string/minute"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="119dp"
+        android:fontFamily="@font/hangul_font"
+        android:text="스마트폰 사용시간을 정해주세요" />
+
     <Spinner
         android:id="@+id/hour_spinner"
         android:layout_width="100dp"
@@ -28,7 +50,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="49dp"
-        android:layout_marginTop="145dp"
+        android:layout_marginTop="164dp"
         android:entries="@array/hour_array"
         android:spinnerMode="dialog"
         android:textAlignment="center" />
@@ -39,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="13dp"
-        android:layout_marginTop="145dp"
+        android:layout_marginTop="164dp"
         android:layout_toRightOf="@id/hour_spinner"
         android:text="@string/hours"
         android:textSize="18dp" />
@@ -51,24 +73,12 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="213dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="145dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="164dp"
         android:layout_toRightOf="@+id/hour"
         android:entries="@array/minute_array"
         android:spinnerMode="dialog"
         android:textAlignment="center" />
-
-
-    <TextView
-        android:id="@+id/minute"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="145dp"
-        android:layout_toRightOf="@id/minute_spinner"
-        android:text="@string/minute"
-        android:textSize="18dp" />
 
     <Button
         android:id="@+id/btnSetTime"
